@@ -1,0 +1,17 @@
+ul {
+  float: right;
+}
+
+ul:after {
+  content: "";
+  clear: both;
+}
+
+ul li {
+  float: left;
+  padding: 10px 20px;
+}
+
+ul li.box {
+  border: 1px solid #ccc;
+}
