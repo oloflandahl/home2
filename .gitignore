@@ -2,7 +2,9 @@ node_modules
 typings
 
 .DS_Store
+.tscache
 *.log
 
 app/**/*.js
 app/**/*.js.map
+app/**/*.css
