@@ -1,0 +1,33 @@
+@import 'variables';
+
+.text-font() {
+  font-family: @font-primary;
+}
+
+.text-size() {
+  font-size: @textSize;
+}
+
+.text-primary() {
+  .text-font;
+  .text-size;
+  color: @textColor-primary;
+}
+
+.text-color() {
+  .text-font;
+  .text-size;
+  color: @textColor-secondary;
+}
+
+.h1() {
+  font-size: @textSize-h1;
+}
+
+.h2() {
+  font-size: @textSize-h2;
+}
+
+.h3() {
+  font-size: @textSize-h3;
+}

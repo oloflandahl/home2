@@ -16,10 +16,10 @@ module.exports = function(grunt) {
             report: 'min' // minification results
         },
         expand: true, // set to true to enable options following options:
-        cwd: "app", // all sources relative to this path
-        src: "**/*.less", // source folder patterns to match, relative to cwd
-        dest: "app", // dest folder patterns to match, relative to cwd
-        ext: ".css", // replace any existing extension with this value in dest folder
+        cwd: 'app', // all sources relative to this path
+        src: ['**/*.less', '!less-library/*'], // source folder patterns to match, relative to cwd
+        dest: 'app', // dest folder patterns to match, relative to cwd
+        ext: '.css', // replace any existing extension with this value in dest folder
         flatten: false  // flatten folder structure to single level
       }
     },
