@@ -1,41 +1,68 @@
 @import '../less-library/variables'; 
 @import '../less-library/mixins'; 
 
+.active-item() {
+  border-bottom: 3px solid @color-primary;
+}
+
+.uppercase() {
+  text-transform: uppercase;
+}
+
+
 .app-header {
   min-height: 50px;
-  padding: 20px;
+  padding: @padding;
 
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+  .clearfix;
 
   .app-header__title {
     float: left;
-    padding: 20px;
+    padding: @padding;
+    .uppercase;
   }
 
   .app-header__navbar {
     float: right;
   }
 
-  .navbar:after {
-    content: "";
-    display: table;
-    clear: both;
+  .navbar {
+    .clearfix;
   }
 
   .navbar__item {
     float: left;
-    padding: 20px;
+    padding: @padding - 5px;
+    margin-left: @padding;
+
+    a {
+      padding: (@padding-half - 5px) 0;
+      font-size: @textSize-small;
+      font-weight: @textWeight-bold;
+      text-decoration: none;
+      .uppercase;
+    }
+
+    &:hover {
+      a {
+        .active-item;
+      }
+    }
   }
 
   .navbar__item--active {
-    color: red;
+    a {
+      .active-item;
+    }
   }
 
   .navbar__item--box {
-    .btn;
+    .border-primary;
+
+    &:hover {
+      a {
+        border: none;
+      }
+    }
   }
 }
