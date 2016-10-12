@@ -1,16 +1,28 @@
 
 /* Colors */
 
-@color-primary: #e86767;
+@black: #000;
+@grey: #d1d1d1;
+@grey-light: #d8dadc;
+@grey-lighter: #efefef;
+@white: #fff;
 
-@bgColor-primary: #efefef;
-@bgColor-secondary: #fff;
+@grey-blue-dark: #3d4451;
 
-@textColor-primary: #3d4451;
+@red-light: #e86767;
+
+
+@color-primary: @red-light;
+
+@bgColor-primary: @grey-lighter;
+@bgColor-secondary: @white;
+
+@textColor-primary: @grey-blue-dark;
 @textColor-secondary: @color-primary;
+@textColor-onDark: @white;
 
-@borderColor-primary: #d1d1d1;
-@borderColor-secondary: #d8dadc;
+@borderColor-primary: @grey;
+@borderColor-secondary: @grey-light;
 
 
 /* Text */
@@ -34,3 +46,11 @@
 @padding: 20px;
 @padding-half: @padding / 2;
 @padding-double: @padding * 2;
+
+
+/* Z position */
+@z-back: -1;
+@z-1: 10;
+@z-2: 20;
+@z-3: 30;
+@z-front: 100;

@@ -1,0 +1,24 @@
+@import '../less-library/variables';
+
+.app-back-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 500px;
+  z-index: @z-back;
+
+  background-color: #000;
+
+  &:after {
+    content: "";
+    display: block;
+    height: 100%;
+
+    background-image: url(app/app-back-img/bg1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+  }
+}
