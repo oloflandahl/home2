@@ -12,7 +12,9 @@
 
 @this-itemLink-unknownSpace:  2px;
 
-@this-sticky-height: 2 * (@this-sticky-pad-v + @this-item-pad) + @textSize-small + @this-activeLink-border + @this-itemLink-unknownSpace;
+@this-inner-height: 2 * (@this-item-pad) + @textSize-small + @this-activeLink-border + @this-itemLink-unknownSpace;
+@this-height: 2 * @this-pad + @this-inner-height;
+@this-sticky-height: 2 * @this-sticky-pad-v + @this-inner-height;
 
 .active-item() {
   border-bottom: @this-activeLink-border solid @color-primary;
@@ -30,10 +32,18 @@
 
 
 .app-header {
-  padding: @this-pad;
-  .transition;
+  margin-top: -1 * @this-height;
+  padding: @this-pad @this-pad @this-pad+@this-height @this-pad;
+  transition: margin-top @transitionTiming @transitionDuration-long, 
+    padding @transitionTiming @transitionDuration-long, 
+    background @transitionTiming @transitionDuration-normal;
 
   .clearfix;
+
+  &.app-header--init {
+    margin-top: 0;
+    padding: @this-pad;
+  }
 
   .app-header__title {
     float: left;
