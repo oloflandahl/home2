@@ -1,11 +1,16 @@
 @import 'variables';
 
+.font-size(@size) {
+  font-size: @size;
+  line-height: @size;
+}
+
 .text-font() {
   font-family: @font-primary;
 }
 
 .text-size() {
-  font-size: @textSize;
+  .font-size(@textSize);
 }
 
 .text-primary() {

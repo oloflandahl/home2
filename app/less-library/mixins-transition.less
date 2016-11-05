@@ -1,0 +1,13 @@
+@import 'variables';
+
+.transition(@prop:all, @time:@transitionDuration-normal) {
+  transition: @prop @transitionTiming @time;
+}
+
+.transition-short(@prop:all) {
+  .transition(@prop, @transitionDuration-short);
+}
+
+.transition-long(@prop:all) {
+  .transition(@prop, @transitionDuration-long);
+}
