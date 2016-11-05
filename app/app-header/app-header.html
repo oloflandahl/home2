@@ -1,4 +1,4 @@
-<div class="app-header">
+<div class="app-header" [class.app-header--sticky]="isSticky">
   <div class="app-header__title">oloflandahl.com</div>
   <nav class="app-header__navbar">
     <ul class="navbar">
@@ -13,3 +13,4 @@
     </ul>
   </nav>
 </div>
+<div class="app-header-sticky-placeholder" [class.app-header-sticky-placeholder--visible]="isSticky"></div>

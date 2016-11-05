@@ -1,25 +1,44 @@
-@import '../less-library/variables'; 
-@import '../less-library/mixins'; 
+@import '../less-library/variables';
+@import '../less-library/mixins';
+
+@this-pad:                @padding;
+@this-sticky-pad-v:       @padding-half;
+@this-sticky-pad-h:       @padding;
+
+@this-item-pad:           @padding-three-quarter;
+
+@this-itemLink-fontSize:  @textSize-small;
+@this-activeLink-border:  3px;
+
+@this-itemLink-unknownSpace:  2px;
+
+@this-sticky-height: 2 * (@this-sticky-pad-v + @this-item-pad) + @textSize-small + @this-activeLink-border + @this-itemLink-unknownSpace;
 
 .active-item() {
-  border-bottom: 3px solid @color-primary;
+  border-bottom: @this-activeLink-border solid @color-primary;
 }
 
-.uppercase() {
+.header-text() {
+  color: @textColor-onDark;
   text-transform: uppercase;
+  .transition-long(color);
+}
+
+.header-text--sticky() {
+  color: @textColor-primary;
 }
 
 
 .app-header {
-  min-height: 50px;
-  padding: @padding;
+  padding: @this-pad;
+  .transition;
 
   .clearfix;
 
   .app-header__title {
     float: left;
-    padding: @padding;
-    .uppercase;
+    padding: @this-item-pad;
+    .header-text;
   }
 
   .app-header__navbar {
@@ -32,15 +51,14 @@
 
   .navbar__item {
     float: left;
-    padding: @padding - 5px;
+    padding: @this-item-pad;
     margin-left: @padding;
 
     a {
-      padding: (@padding-half - 5px) 0;
-      font-size: @textSize-small;
+      padding: @padding-quarter 0;
+      .font-size(@this-itemLink-fontSize);
       font-weight: @textWeight-bold;
-      color: @text-color-onDark;
-      .uppercase;
+      .header-text;
     }
 
     &:hover {
@@ -64,5 +82,32 @@
         border: none;
       }
     }
+  }
+
+  &.app-header--sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: @this-sticky-pad-v @this-sticky-pad-h;
+    background: @bgColor-secondary;
+    .borderShadow-strong;
+
+    .app-header__title {
+      .header-text--sticky;
+    }
+
+    .navbar__item a {
+      .header-text--sticky;
+    }
+  }
+}
+
+.app-header-sticky-placeholder {
+  display: none;
+  height: @this-sticky-height;
+
+  &.app-header-sticky-placeholder--visible {
+    display: block;
   }
 }
