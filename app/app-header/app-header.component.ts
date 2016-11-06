@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject } from "@angular/core";
+import { Component, HostListener, Inject, OnInit } from "@angular/core";
 import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
@@ -12,7 +12,9 @@ export class AppHeaderComponent implements OnInit {
   public isInit: boolean = false;
   public isSticky: boolean = false;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document) { }
+
+  ngOnInit() {
     var self = this;
     setTimeout(function() {
       self.isInit = true;
