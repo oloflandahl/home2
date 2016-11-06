@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AppBackImgComponent implements OnInit {
-  public bgNo: int = 1;
+  public bgNo: number = 1;
 
   constructor() { }
 
