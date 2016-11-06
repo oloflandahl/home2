@@ -1,5 +1,12 @@
 @import '../less-library/variables';
 
+// TODO Use smaller files, < 1MB
+@this-baseUrl: 'app/app-back-img/';
+@this-img1: '@{this-baseUrl}bg1.jpg';
+@this-img2: '@{this-baseUrl}bg2.jpg';
+@this-img3: '@{this-baseUrl}bg3.jpg';
+@this-img4: '@{this-baseUrl}bg4.jpg';
+
 .app-back-img {
   position: absolute;
   left: 0;
@@ -11,14 +18,29 @@
   background-color: #000;
 
   &:after {
-    content: "";
+    content: '';
     display: block;
     height: 100%;
 
-    background-image: url(app/app-back-img/bg1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     opacity: 0.5;
+  }
+
+  &.app-back-img--1:after {
+    background-image: url(@this-img1);
+  }
+
+  &.app-back-img--2:after {
+    background-image: url(@this-img2);
+  }
+
+  &.app-back-img--3:after {
+    background-image: url(@this-img3);
+  }
+
+  &.app-back-img--4:after {
+    background-image: url(@this-img4);
   }
 }

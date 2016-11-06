@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-back-img',
@@ -6,4 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['app/app-back-img/app-back-img.css']
 })
 
-export class AppBackImgComponent { }
+export class AppBackImgComponent implements OnInit {
+  public bgNo: int = 1;
+
+  constructor() { }
+
+  ngOnInit() {
+    this.bgNo = getRandomInt(1, 4);
+  }
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
