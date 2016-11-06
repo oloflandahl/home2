@@ -2,14 +2,14 @@
   <div class="app-header__title">oloflandahl.com</div>
   <nav class="app-header__navbar">
     <ul class="navbar">
-      <li class="navbar__item navbar__item--active"><a href="#">Item1</a></li>
-      <li class="navbar__item"><a href="#">Item2</a></li>
-      <li class="navbar__item"><a href="#">Item3</a></li>
-      <li class="navbar__item"><a href="#">Item4</a></li>
-      <li class="navbar__item"><a href="#">Item5</a></li>
-      <li class="navbar__item"><a href="#">Item6</a></li>
-      <li class="navbar__item"><a href="#">Item7</a></li>
-      <li class="navbar__item navbar__item--box"><a href="#">EN</a></li>
+      <li class="navbar__item navbar__item--active"><a href="#">{{ 'Item' | translate }}1</a></li>
+      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}2</a></li>
+      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}3</a></li>
+      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}4</a></li>
+      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}5</a></li>
+      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}6</a></li>
+      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}7</a></li>
+      <li class="navbar__item navbar__item--box"><a href="#" (click)="switchLanguage()">{{ currentLang }}</a></li>
     </ul>
   </nav>
 </div>
