@@ -5,7 +5,8 @@ module.exports = function(grunt) {
       default : {
         src: ['**/*.ts', '!node_modules/**'],
         options: {
-          experimentalDecorators: true
+          experimentalDecorators: true,
+          emitDecoratorMetadata: true
         }
       }
     },
