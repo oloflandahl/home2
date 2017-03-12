@@ -2,6 +2,9 @@ import { Component, HostListener, Inject, OnInit } from "@angular/core";
 import { DOCUMENT } from '@angular/platform-browser';
 import { TranslateService } from 'ng2-translate';
 
+import { MenuItem } from './menu-item';
+import { MENU_ITEMS } from './app-header-menu-items';
+
 @Component({
   selector: 'app-header',
   templateUrl: 'app/app-header/app-header.html',
@@ -13,9 +16,12 @@ export class AppHeaderComponent implements OnInit {
   public isInit: boolean = false;
   public isSticky: boolean = false;
   public currentLang: string;
+  public items: MenuItem[];
 
   constructor(@Inject(DOCUMENT) private document: Document, private translate: TranslateService) {
     this.currentLang = this.translate.currentLang;
+
+    this.items = MENU_ITEMS;
   }
 
   ngOnInit() {
@@ -31,6 +37,8 @@ export class AppHeaderComponent implements OnInit {
     currentIndex = currentIndex < allLangs.length - 1 ? currentIndex + 1 : 0;
     this.currentLang = allLangs[currentIndex];
     this.translate.use(this.currentLang);
+
+    return false;
   }
 
   @HostListener("window:scroll", [])

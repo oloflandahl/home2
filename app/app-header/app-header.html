@@ -2,14 +2,10 @@
   <div class="app-header__title">oloflandahl.com</div>
   <nav class="app-header__navbar">
     <ul class="navbar">
-      <li class="navbar__item navbar__item--active"><a href="#">{{ 'Item' | translate }}1</a></li>
-      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}2</a></li>
-      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}3</a></li>
-      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}4</a></li>
-      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}5</a></li>
-      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}6</a></li>
-      <li class="navbar__item"><a href="#">{{ 'Item' | translate }}7</a></li>
-      <li class="navbar__item navbar__item--box"><a href="#" (click)="switchLanguage()">{{ currentLang }}</a></li>
+      <li *ngFor="let item of items;" class="navbar__item" [class.navbar__item--active]="item.isActive">
+        <a href="#">{{ item.translationKey | translate }}</a>
+      </li>
+      <li class="navbar__item navbar__item--box"><a href="#" title="{{ 'SwitchLanguage_Tooltip' | translate }}" (click)="switchLanguage()">{{ currentLang }}</a></li>
     </ul>
   </nav>
 </div>
