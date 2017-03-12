@@ -5,6 +5,7 @@ import { TranslateService } from 'ng2-translate';
 import { MenuItem } from './menu-item';
 import { MENU_ITEMS } from './app-header-menu-items';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: 'app/app-header/app-header.html',
@@ -18,15 +19,14 @@ export class AppHeaderComponent implements OnInit {
   public currentLang: string;
   public items: MenuItem[];
 
-  constructor(@Inject(DOCUMENT) private document: Document, private translate: TranslateService) {
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject(Window) private _window: Window, private translate: TranslateService) {
     this.currentLang = this.translate.currentLang;
-
     this.items = MENU_ITEMS;
   }
 
   ngOnInit() {
     let self = this;
-    setTimeout(function() {
+    this._window.setTimeout(function() {
       self.isInit = true;
     }, 0);
   }

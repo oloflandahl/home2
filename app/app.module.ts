@@ -13,6 +13,9 @@ import { AppBackImgComponent }   from './app-back-img/app-back-img.component';
     HttpModule, 
     TranslateModule.forRoot()
   ],
+  providers: [
+    { provide: Window, useValue: window }
+  ],
   declarations: [ AppComponent, AppHeaderComponent, AppBackImgComponent ],
   bootstrap:    [ AppComponent ]
 })
