@@ -23,15 +23,20 @@
         background-color: #000;
       }
 
-      .bg-cover {
+      #bg-cover {
         width: 100%;
         height: 100%;
         background: url('app/app-back-img/bg3.jpg') no-repeat center center fixed;
         background-size: cover;
-        opacity: 0.2;
+        opacity: 0;
       }
 
-      .text {
+      #bg-cover.loaded {
+        opacity: 0.2;
+        transition: opacity 5s ease-in-out;
+      }
+
+      #text {
         position: absolute;
         width: 100%;
         top: 50%;
@@ -50,13 +55,13 @@
         animation-timing-function: ease-in-out;
       }
 
-      .icons {
+      #icons {
         position: absolute;
         bottom: 1rem;
         right: 1rem;
       }
 
-      .icons a {
+      #icons a {
         padding: 0 0.5rem;
         color: #f4f4f4;
         font-size: 2rem;
@@ -66,7 +71,7 @@
         transition: all 0.2s ease-in-out;
       }
 
-      .icons a:hover {
+      #icons a:hover {
         opacity: 1;
       }
 
@@ -81,12 +86,22 @@
   </head>
 
   <body>
-    <div class="bg-cover"></div>
-    <div class="text">Under konstruktion</div>
-    <div class="icons">
+    <div id="bg-cover"></div>
+    <div id="text">Under konstruktion</div>
+    <div id="icons">
       <a href="/assets/oloflandahl_cv_swe.pdf" title="CV"><i class="fa fa-file-text-o"></i></a>
       <a href="https://www.linkedin.com/in/olof-landahl-91782a37/" title="LinkedIn Profile"><i class="fa fa-linkedin-square"></i></a>
     </div>
+
+    <script>
+      (function() {
+        var bgimage = document.createElement('img');      
+        bgimage.src='app/app-back-img/bg3.jpg';
+        bgimage.addEventListener('load', function(){
+          document.getElementById('bg-cover').className += ' loaded'; 
+        }); 
+      })();
+    </script>
   </body>
 
 </html>
