@@ -1,4 +1,6 @@
-node_modules
+node_modules/*
+!node_modules/font-awesome
+
 typings
 
 .DS_Store
