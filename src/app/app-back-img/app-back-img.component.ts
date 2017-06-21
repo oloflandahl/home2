@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-back-img',
-  templateUrl: 'app-back-img.html',
-  styleUrls: ['app-back-img.less']
+  templateUrl: 'app-back-img.component.html',
+  styleUrls: ['app-back-img.component.less']
 })
 
 export class AppBackImgComponent implements OnInit {
-  public bgNo: number = 1;
+  public bgNo = 1;
 
   constructor() { }
 

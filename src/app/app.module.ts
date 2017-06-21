@@ -1,16 +1,16 @@
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { TranslateModule } from "ng2-translate";
+import { TranslateModule } from 'ng2-translate';
 
-import { AppComponent }   from './app.component';
-import { AppHeaderComponent }   from './app-header/app-header.component';
-import { AppBackImgComponent }   from './app-back-img/app-back-img.component';
+import { AppComponent } from './app.component';
+import { AppHeaderComponent } from './app-header/app-header.component';
+import { AppBackImgComponent } from './app-back-img/app-back-img.component';
 
 @NgModule({
-  imports: [ 
-    BrowserModule, 
-    HttpModule, 
+  imports: [
+    BrowserModule,
+    HttpModule,
     TranslateModule.forRoot()
   ],
   providers: [
