@@ -8,8 +8,8 @@ import { MENU_ITEMS } from './app-header-menu-items';
 
 @Component({
   selector: 'app-header',
-  templateUrl: 'app/app-header/app-header.html',
-  styleUrls: ['app/app-header/app-header.css']
+  templateUrl: 'app-header.component.html',
+  styleUrls: ['app-header.component.less']
 })
 
 export class AppHeaderComponent implements OnInit {
