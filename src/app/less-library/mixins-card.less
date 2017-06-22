@@ -1,6 +1,11 @@
 @import 'variables';
 @import 'mixins-border';
 
+.card {
+  background: @white;
+  .borderShadow;
+}
+
 .card-action() {
   &:hover {
     .borderShadow-hover;
@@ -9,10 +14,8 @@
 
 .card-fullSize() {
   padding: @padding-double;
-  .borderShadow;
 }
 
 .card-halfSize() {
   padding: @padding;
-  .borderShadow;
 }
