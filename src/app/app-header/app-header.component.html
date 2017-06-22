@@ -5,7 +5,7 @@
       <li *ngFor="let item of items;" class="navbar__item" [class.navbar__item--active]="item.isActive">
         <a href="#">{{ item.translationKey | translate }}</a>
       </li>
-      <li class="navbar__item navbar__item--box"><a href="#" title="{{ 'SwitchLanguage_Tooltip' | translate }}" (click)="switchLanguage()">{{ currentLang }}</a></li>
+      <li class="navbar__item navbar__item--box" (click)="switchLanguage()"><a href="#" title="{{ 'SwitchLanguage_Tooltip' | translate }}">{{ currentLang }}</a></li>
     </ul>
   </nav>
 </div>
