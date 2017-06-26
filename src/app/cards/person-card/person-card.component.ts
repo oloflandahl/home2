@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { SocialLinkItem } from './social-link-item';
+import { LINK_ITEMS } from './person-card-social-link-items';
+
 @Component({
   selector: 'person-card',
   templateUrl: 'person-card.component.html',
@@ -7,5 +10,10 @@ import { Component } from '@angular/core';
 })
 
 export class PersonCardComponent {
-  constructor() { }
+
+  items: SocialLinkItem[];
+
+  constructor() {
+  	this.items = LINK_ITEMS;
+  }
 }

@@ -4,15 +4,8 @@
     <div class='person-card__info col-md-8'>INFO</div>
   </div>
   <div class='person-card__footer'>
-    <!-- TODO Convert to foreach list -->
-    <a class='person-card__socialLink'>
-      <i class='fa fa-github'></i>
-    </a>
-    <a class='person-card__socialLink'>
-      <i class='fa fa-linkedin'></i>
-    </a>
-    <a class='person-card__socialLink'>
-      <i class='fa fa-google-plus'></i>
+    <a *ngFor="let item of items;" href='{{item.url}}' target='_blank' class='person-card__socialLink' title='{{item.title}}'>
+      <i class='fa fa-{{item.iconName}}'></i>
     </a>
   </div>
 </div>
