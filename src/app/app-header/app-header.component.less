@@ -90,11 +90,8 @@
   }
 
   &.app-header--sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 99999;
+    .position(fixed, 0, 0, auto, 0);
+    z-index: @z-front;
     padding: @this-sticky-pad-v @this-sticky-pad-h;
     background: @bgColor-secondary;
     .borderShadow-strong;
@@ -110,10 +107,10 @@
 }
 
 .app-header-sticky-placeholder {
-  display: none;
+  .hidden;
   height: @this-sticky-height;
 
   &.app-header-sticky-placeholder--visible {
-    display: block;
+    .display-block;
   }
 }

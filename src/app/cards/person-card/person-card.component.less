@@ -21,28 +21,35 @@
     text-align: center;
     background: @red-light;
 
-    .person-card__socialLink {
-      @iconSize: @textSize-icon;
-      @iconPadding: @padding-half;
-      @linkSize: @iconSize + (2 * @iconPadding);
+    .person-card__social-links {
 
-      display: inline-block;
-      width: @linkSize;
-      height: @linkSize;
-      margin: 0 @iconPadding;
-      
-      font-size: @iconSize;
-      line-height: @linkSize;
-      color: @textColor-onDark;
+      .person-card__social-link {
+        @iconSize: @textSize-icon;
+        @iconPadding: @padding-half;
+        @linkSize: @iconSize + (2 * @iconPadding);
 
-      border-radius: 50%;
-      background: transparent;
+        display: inline-block;
+        width: @linkSize;
+        height: @linkSize;
+        margin: 0 @iconPadding;
+        
+        font-size: @iconSize;
+        line-height: @linkSize;
 
-      .transition-short(background);
+        .border-circular;
+        background: transparent;
 
-      &:hover {
-        background: rgba(0,0,0, 0.1);
+        .transition-short(background);
+
+        &:hover {
+          background: rgba(0,0,0, 0.1);
+        }
+
+        a {
+          .text-on-dark;
+        }
       }
     }
+    
   }
 }
