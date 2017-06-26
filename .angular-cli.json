@@ -21,8 +21,8 @@
       "styles": [
         "styles.less",
         "../node_modules/reset-css/reset.less",
-        "../node_modules/flexboxgrid/dist/flexboxgrid.min.css",
-        "../node_modules/font-awesome/less/font-awesome.less"
+        "../node_modules/font-awesome/less/font-awesome.less",
+        "../bootstrap/css/bootstrap.min.css"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

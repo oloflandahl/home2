@@ -1,10 +1,21 @@
 <div class='person-card'>
   <div class='row person-card__content'>
-    <div class='person-card__photo col-md-4'>PHOTO</div>
-    <div class='person-card__info col-md-8'>INFO</div>
+    <div class='col-sm-4'>
+      <div class='person-card__photo'></div>
+    </div>
+    <div class='col-sm-8'>
+      <div class='person-card__info'>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+    </div>
   </div>
   <div class='person-card__footer'>
-    <a *ngFor="let item of items;" href='{{item.url}}' target='_blank' class='person-card__socialLink' title='{{item.title}}'>
+    <a *ngFor='let item of items;' href='{{item.url}}' target='_blank' class='person-card__socialLink' title='{{item.title}}'>
       <i class='fa fa-{{item.iconName}}'></i>
     </a>
   </div>

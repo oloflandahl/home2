@@ -1,0 +1,9 @@
+{
+  "vars": {},
+  "css": [
+    "grid.less",
+    "responsive-utilities.less"
+  ],
+  "js": [],
+  "customizerUrl": "http://getbootstrap.com/customize/?id=3b27132dd569c808c87afefce2b1aa7e"
+}
