@@ -13,7 +13,7 @@
         </div>
         <ul class="person-card__info-items">
           <li class="row person-card__info-item" *ngFor="let item of infoItems;">
-            <div class="col-md-4 person-card__info-item-left">{{ item.translationKey | translate }}</div>
+            <div class="col-md-4 person-card__info-item-left">{{ item.key | translate }}</div>
             <div class="col-md-8 person-card__info-item-right">{{item.value}}</div>
           </li>
         </ul>

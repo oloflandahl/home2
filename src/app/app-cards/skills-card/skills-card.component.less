@@ -1,0 +1,42 @@
+@import '../../less-library/variables';
+@import '../../less-library/mixins';
+
+.skills-card {
+  .card;
+  .card-padding;
+
+  .skills-card__title {
+    .card-title;
+  }
+
+  .skills-card__skills {
+    
+    .skill {
+      padding: @padding;
+
+      .skill__title {
+        margin-bottom: @padding-half;
+      }
+
+      .skill__bar-container {
+        position: relative;
+
+        .skill__bar {
+          position: absolute;
+          height: 5px;
+          .bg-color;
+
+          &.skill__bar--full {
+            width: 100%;
+            opacity: 0.3;
+            z-index: @z-1;
+          }
+
+          &.skill__bar--fill {
+            z-index: @z-2;
+          }
+        }
+      }
+    }
+  }
+}

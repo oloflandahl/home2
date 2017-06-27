@@ -11,8 +11,19 @@
   background: @white;
 }
 
+.card-padding() {
+  padding: @padding-double;
+}
+
 .card-action() {
   &:hover {
     .borderShadow-hover;
   }
+}
+
+.card-title() {
+  .h2;
+  text-align: center;
+  margin-bottom: @padding-double;
+  text-transform: capitalize;
 }

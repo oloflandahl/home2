@@ -2,9 +2,9 @@ import dateService from '../../services/date-service';
 import {KeyValueItem} from '../key-value-item';
 
 export const INFO_ITEMS: KeyValueItem[] = [
-    {translationKey: 'PersonInfo_Age', value: String(dateService.getYearsToNow(1982, 8, 3))},
-    {translationKey: 'PersonInfo_Years_Experience', value: String(dateService.getYearsToNow(2008, 2, 15))},
-    {translationKey: 'PersonInfo_City', value: 'Lund'},
-    {translationKey: 'PersonInfo_Employment', value: 'HiQ Skåne'},
-    {translationKey: 'PersonInfo_Email', value: 'oloflandahl@gmail.com'},
+    {key: 'PersonInfo_Age', value: dateService.getYearsToNow(1982, 8, 3)},
+    {key: 'PersonInfo_Years_Experience', value: dateService.getYearsToNow(2008, 2, 15)},
+    {key: 'PersonInfo_City', value: 'Lund'},
+    {key: 'PersonInfo_Employment', value: 'HiQ Skåne'},
+    {key: 'PersonInfo_Email', value: 'oloflandahl@gmail.com'},
 ];
