@@ -1,0 +1,20 @@
+@import '../less-library/variables';
+@import '../less-library/mixins';
+
+.resume-summary {
+  .card-margin;
+  text-align: center;
+
+  .resume-summary__link {
+    .display-inline-block;
+    .btn;
+    .btn-lg;
+    .text-bold;
+    margin-bottom: @padding-double;
+  }
+
+  .resume-summary__text {
+    .font-size(@textSize-h3, 2*@textSize-h3);
+    .text-light;
+  }
+}

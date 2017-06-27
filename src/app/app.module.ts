@@ -8,6 +8,7 @@ import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppBackImgComponent } from './app-back-img/app-back-img.component';
 
 import { PersonCardComponent } from './app-cards/person-card/person-card.component';
+import { ResumeSummaryComponent } from './app-resume-summary/resume-summary.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { PersonCardComponent } from './app-cards/person-card/person-card.compone
     AppComponent, 
     AppHeaderComponent, 
     AppBackImgComponent, 
-    PersonCardComponent
+    PersonCardComponent,
+    ResumeSummaryComponent
   ],
   bootstrap: [ AppComponent ]
 })

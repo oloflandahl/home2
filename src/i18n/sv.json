@@ -13,5 +13,9 @@
    "PersonInfo_City": "Stad",
    "PersonInfo_Employment": "Anställning",
    "PersonInfo_Years_Experience": "År i branchen",
-   "PersonInfo_Email": "Epost"
+   "PersonInfo_Email": "Epost",
+
+   "ResumeSummary_Filename": "oloflandahl_cv_swe.pdf",
+   "ResumeSummary_ButtonLabel": "Hämta CV",
+   "ResumeSummary_Text": "Jag är Front End utecklare med bred kunskap inom .NET. Jag har jobbat i både små och stora team, i olika projektformer, med olika nationaliteter och både som konsult och fastanställd."
 }

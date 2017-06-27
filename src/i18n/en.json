@@ -13,5 +13,9 @@
    "PersonInfo_City": "City",
    "PersonInfo_Employment": "Employment",
    "PersonInfo_Years_Experience": "Years in the business",
-   "PersonInfo_Email": "Email"
+   "PersonInfo_Email": "Email",
+
+   "ResumeSummary_Filename": "oloflandahl_cv_eng.pdf",
+   "ResumeSummary_ButtonLabel": "Download Resume",
+   "ResumeSummary_Text": "I'm a Front End with vast knowledge in .NET. I've worked in small and large teams, in different types of projects, with different nationalities and both as consultant and employed."
 }

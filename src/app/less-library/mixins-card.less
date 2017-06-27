@@ -1,10 +1,14 @@
 @import 'variables';
 @import 'mixins-border';
 
+.card-margin() {
+  margin-top: @card-margin;
+}
+
 .card {
-  margin-top: @padding-quad;
-  background: @white;
+  .card-margin;
   .borderShadow;
+  background: @white;
 }
 
 .card-action() {
