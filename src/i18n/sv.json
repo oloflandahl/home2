@@ -9,5 +9,8 @@
    "PersonInfo_Hello": "Hej",
    "PersonInfo_IAm": "Jag är",
    "PersonInfo_Developer": "Utvecklare",
-   "PersonInfo_Age": "Ålder"
+   "PersonInfo_Age": "Ålder",
+   "PersonInfo_City": "Stad",
+   "PersonInfo_Employment": "Anställning",
+   "PersonInfo_Email": "Epost"
 }

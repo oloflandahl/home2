@@ -5,29 +5,26 @@
   line-height: @size;
 }
 
-.text-font() {
+
+.text-primary() {
+  .font-size(@textSize);
+  color: @textColor-primary;
   font-family: @font-primary;
 }
 
-.text-size() {
-  .font-size(@textSize);
-}
 
-.text-primary() {
-  .text-font;
-  .text-size;
-  color: @textColor-primary;
+.text-grey() {
+  color: @textColor-light;
 }
 
 .text-color() {
-  .text-font;
-  .text-size;
-  color: @textColor-secondary;
+  color: @textColor-color;
 }
 
 .text-on-dark() {
   color: @textColor-onDark;
 }
+
 
 .text-light() {
   font-weight: @textWeight-light;
@@ -40,6 +37,7 @@
 .text-bolder() {
   font-weight: @textWeight-bolder;
 }
+
 
 .h1() {
   .font-size(@textSize-h1);
@@ -59,7 +57,6 @@
 
 .link() {
   text-decoration: none !important;
-  .text-primary;
   cursor: pointer;
 }
 

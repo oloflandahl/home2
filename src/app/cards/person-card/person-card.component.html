@@ -6,13 +6,15 @@
     <div class="col-sm-8">
         <div class="person-card__info-header">
           <div class="person-card__greeting">{{ 'PersonInfo_Hello' | translate }}!</div>
-          <div class="person-card__name">{{ 'PersonInfo_IAm' | translate }} <strong class="stronger">Olof Landahl</strong></div>
+          <div class="person-card__name">
+            <span class="light">{{ 'PersonInfo_IAm' | translate }}</span>
+            <strong class="stronger">Olof Landahl</strong></div>
           <div class="person-card__title">{{ 'PersonInfo_Developer' | translate }}</div>
         </div>
         <ul class="person-card__info-items">
-          <li class="person-card__info-item" *ngFor="let item of infoItems;">
-            <strong>{{ item.translationKey | translate }}</strong>
-            <div>{{item.value}}</div>
+          <li class="row person-card__info-item" *ngFor="let item of infoItems;">
+            <div class="col-md-3 person-card__info-item-left">{{ item.translationKey | translate }}</div>
+            <div class="col-md-9 person-card__info-item-right">{{item.value}}</div>
           </li>
         </ul>
     </div>

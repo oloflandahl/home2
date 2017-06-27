@@ -8,6 +8,7 @@
     padding: @padding-double;
 
     .person-card__info-header {
+      margin-bottom: @padding;
       border-bottom: 1px solid @borderColor-secondary;
 
       .person-card__greeting {
@@ -18,12 +19,30 @@
         .h1;
         .text-light;
         margin-top: @padding;
-        margin-bottom: @padding-quarter;
+        margin-bottom: @padding-half;
       }
 
       .person-card__title {
         .h4;
         margin-bottom: @padding-double;
+      }
+    }
+
+    .person-card__info-items {
+      .person-card__info-item {
+        padding: @padding-half 0;
+
+        .person-card__info-item-left {
+
+          text-transform: uppercase;
+          font-size: @textSize-small;
+          .text-bold;
+        }
+
+        .person-card__info-item-right {
+          .text-grey;
+          .text-light;
+        }
       }
     }
 

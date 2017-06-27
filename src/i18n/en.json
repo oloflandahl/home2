@@ -9,5 +9,8 @@
    "PersonInfo_Hello": "Hello",
    "PersonInfo_IAm": "I'm",
    "PersonInfo_Developer": "Developer",
-   "PersonInfo_Age": "Age"
+   "PersonInfo_Age": "Age",
+   "PersonInfo_City": "City",
+   "PersonInfo_Employment": "Employment",
+   "PersonInfo_Email": "Email"
 }
