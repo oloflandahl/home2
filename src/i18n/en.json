@@ -12,5 +12,6 @@
    "PersonInfo_Age": "Age",
    "PersonInfo_City": "City",
    "PersonInfo_Employment": "Employment",
+   "PersonInfo_Years_Experience": "Years in the business",
    "PersonInfo_Email": "Email"
 }

@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppBackImgComponent } from './app-back-img/app-back-img.component';
 
-import { PersonCardComponent } from './cards/person-card/person-card.component';
+import { PersonCardComponent } from './app-cards/person-card/person-card.component';
 
 @NgModule({
   imports: [
