@@ -19,10 +19,10 @@
       "prefix": "app",
       "scripts": [],
       "styles": [
-        "styles.less",
         "../node_modules/reset-css/reset.less",
         "../node_modules/font-awesome/less/font-awesome.less",
-        "../bootstrap/css/bootstrap.min.css"
+        "../bootstrap/css/bootstrap.min.css",
+        "styles.less"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { KeyValueItem } from '../key-value-item';
+import { INFO_ITEMS } from './person-card-info-items';
 import { SocialLinkItem } from './social-link-item';
 import { LINK_ITEMS } from './person-card-social-link-items';
 
@@ -11,9 +13,11 @@ import { LINK_ITEMS } from './person-card-social-link-items';
 
 export class PersonCardComponent {
 
-  items: SocialLinkItem[];
+  infoItems: KeyValueItem[];
+  socialLinkItems: SocialLinkItem[];
 
   constructor() {
-  	this.items = LINK_ITEMS;
+    this.infoItems = INFO_ITEMS;
+    this.socialLinkItems = LINK_ITEMS;
   }
 }

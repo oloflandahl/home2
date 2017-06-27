@@ -4,5 +4,10 @@
    "Experience_Title": "Erfarenheter",
    "Lang_English": "Engelska",
    "Lang_Swedish": "Svenska",
-   "SwitchLanguage_Tooltip": "Switch to English"
+   "SwitchLanguage_Tooltip": "Switch to English",
+
+   "PersonInfo_Hello": "Hej",
+   "PersonInfo_IAm": "Jag är",
+   "PersonInfo_Developer": "Utvecklare",
+   "PersonInfo_Age": "Ålder"
 }

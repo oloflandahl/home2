@@ -5,21 +5,21 @@
     </div>
     <div class="col-sm-8">
         <div class="person-card__info-header">
-          <div class="person-card__greeting">Hello</div>
-          <div class="person-card__name">I'm Olof Landahl</div>
-          <div class="person-card__title">Developer</div>
+          <div class="person-card__greeting">{{ 'PersonInfo_Hello' | translate }}!</div>
+          <div class="person-card__name">{{ 'PersonInfo_IAm' | translate }} <strong class="stronger">Olof Landahl</strong></div>
+          <div class="person-card__title">{{ 'PersonInfo_Developer' | translate }}</div>
         </div>
         <ul class="person-card__info-items">
-          <li class="person-card__info-item">
-            <strong>Age</strong>
-            <div>35</div>
+          <li class="person-card__info-item" *ngFor="let item of infoItems;">
+            <strong>{{ item.translationKey | translate }}</strong>
+            <div>{{item.value}}</div>
           </li>
         </ul>
     </div>
   </div>
   <div class="person-card__footer">
     <ul class="person-card__social-links">
-      <li *ngFor="let item of items;" class="person-card__social-link">
+      <li *ngFor="let item of socialLinkItems;" class="person-card__social-link">
         <a href="{{item.url}}" target="_blank" title="{{item.title}}">
           <i class="fa fa-{{item.iconName}}"></i>
         </a>

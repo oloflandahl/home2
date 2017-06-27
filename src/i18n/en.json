@@ -4,5 +4,10 @@
    "Experience_Title": "Experience",
    "Lang_English": "English",
    "Lang_Swedish": "Swedish",
-   "SwitchLanguage_Tooltip": "Byt till Svenska"
+   "SwitchLanguage_Tooltip": "Byt till Svenska",
+
+   "PersonInfo_Hello": "Hello",
+   "PersonInfo_IAm": "I'm",
+   "PersonInfo_Developer": "Developer",
+   "PersonInfo_Age": "Age"
 }
