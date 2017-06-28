@@ -31,6 +31,11 @@ export class AppHeaderComponent implements OnInit {
     }, 0);
   }
 
+  select(item: MenuItem) {
+    this.items.filter(i => i.isActive)[0].isActive = false;
+    item.isActive = true;
+  }
+
   switchLanguage() {
     const allLangs = this.translate.getLangs();
     let currentIndex =  allLangs.indexOf(this.currentLang);

@@ -1,4 +1,4 @@
-import dateService from '../../services/date-service';
+import dateService from '../../services/date.service';
 import {KeyValueItem} from '../key-value-item';
 
 export const INFO_ITEMS: KeyValueItem[] = [

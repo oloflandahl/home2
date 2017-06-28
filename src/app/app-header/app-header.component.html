@@ -3,7 +3,7 @@
   <nav class="app-header__navbar">
     <ul class="navbar">
       <li *ngFor="let item of items;" class="navbar__item" [class.navbar__item--active]="item.isActive">
-        <a href="#">{{ item.translationKey | translate }}</a>
+        <a href="#{{item.id}}" pageScroll (click)="select(item)">{{ item.translationKey | translate }}</a>
       </li>
       <li class="navbar__item navbar__item--box" (click)="switchLanguage()"><a href="#" title="{{ 'SwitchLanguage_Tooltip' | translate }}">{{ currentLang }}</a></li>
     </ul>
