@@ -11,6 +11,7 @@ import { AppBackImgComponent } from './app-back-img/app-back-img.component';
 import { PersonCardComponent } from './app-cards/person-card/person-card.component';
 import { ResumeSummaryComponent } from './app-resume-summary/resume-summary.component';
 import { SkillsCardComponent } from './app-cards/skills-card/skills-card.component';
+import { TimelineComponent } from './app-cards/timeline/timeline.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { SkillsCardComponent } from './app-cards/skills-card/skills-card.compone
     AppBackImgComponent, 
     PersonCardComponent,
     ResumeSummaryComponent,
-    SkillsCardComponent
+    SkillsCardComponent,
+    TimelineComponent
   ],
   bootstrap: [ AppComponent ]
 })

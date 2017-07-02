@@ -1,0 +1,102 @@
+@import '../../less-library/variables';
+@import '../../less-library/mixins';
+
+.timeline {
+  .card-margin;
+
+  .timeline__title {
+    .card-title;
+  }
+
+  .timeline-cards-container {
+
+    position: relative;
+
+    &:before {
+      @lineOffset: floor(@lineWidth-thick / 2);
+      @linePos: ~"calc( 50% - " @lineOffset ~")";
+
+      content: '';
+      .position(absolute, 0, @linePos, 0);
+      z-index: @z-back;
+      width: @lineWidth-thick;
+      .bg-bar;
+    }
+
+    .timeline-card-container {
+
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      padding: @padding 0;
+
+      .timeline-card {
+        position: relative;
+        .card-half;
+        .card-padding;
+      }
+
+      @media (min-width: 992px) {
+
+        width: 50%;
+
+        // TODO Complete and consider creating an arrow mixin used both here and in .bubble
+        .timeline-card:before {
+          content: '';
+          position: absolute;
+          display: block;
+          .size(0, 0);
+          background-color: @bgColor-secondary; // TODO Create card bg color variable
+
+          border-style: solid;
+          border-color: transparent;
+          border-left-color: @bgColor-secondary;
+        }
+
+        &:before {
+          @dotSize: 2 * @lineWidth-thick + 1;
+
+          content: '';
+          position: absolute;
+          .size(@dotSize, @dotSize);
+          .border-circular;
+          .bg-color;
+        }
+
+        &.timeline-card-container--left {
+          padding-right: @padding-double;
+
+          &:before {
+            top: @padding-double;
+            right: -@lineWidth-thick;
+          }
+
+          .timeline-card:before {
+            top: @padding-double;
+            right: -@lineWidth-thick;
+            border-width: 0 10px 10px 0;
+
+          }
+        }
+
+        &.timeline-card-container--right {
+          padding-left: @padding-double;
+
+          &:before {
+            bottom: @padding-double;
+            left: -@lineWidth-thick - 1;
+          }
+
+          .timeline-card:before {
+            bottom: @padding-double;
+            left: -@lineWidth-thick - 1;
+            border-width: 10px 0 0 10px;
+          }
+        }
+
+      }
+      
+    }
+  }
+  
+}

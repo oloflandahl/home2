@@ -5,10 +5,19 @@
   margin-top: @card-margin;
 }
 
-.card {
-  .card-margin;
+.card() {
   .borderShadow;
-  background: @white;
+  background: @bgColor-secondary;
+}
+
+.card-full() {
+  .card;
+  .card-margin;
+}
+
+.card-half() {
+  .card;
+  .border-top-bar;
 }
 
 .card-padding() {
