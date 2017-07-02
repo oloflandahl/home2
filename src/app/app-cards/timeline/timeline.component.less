@@ -32,11 +32,16 @@
 
       .timeline-card {
         position: relative;
+        min-height: 200px;
         .card-half;
         .card-padding;
       }
 
-      @media (min-width: 992px) {
+      @media (min-width: 992px) { // TODO Move to variables
+        @arrowWidth: 10px;
+        @arrowHeight: 20px;
+        @arrowOffset: @padding;
+        @cardSpacing: @padding-double;
 
         width: 50%;
 
@@ -44,13 +49,13 @@
         .timeline-card:before {
           content: '';
           position: absolute;
-          display: block;
-          .size(0, 0);
-          background-color: @bgColor-secondary; // TODO Create card bg color variable
-
           border-style: solid;
           border-color: transparent;
-          border-left-color: @bgColor-secondary;
+          border-width: @arrowHeight @arrowWidth;
+
+          background-image: url(arrows.png);
+          background-repeat: no-repeat;
+          background-position-y: -@arrowOffset; 
         }
 
         &:before {
@@ -64,33 +69,34 @@
         }
 
         &.timeline-card-container--left {
-          padding-right: @padding-double;
+          padding-right: @cardSpacing;
 
           &:before {
-            top: @padding-double;
+            top: @arrowOffset + @cardSpacing;
             right: -@lineWidth-thick;
           }
 
           .timeline-card:before {
-            top: @padding-double;
-            right: -@lineWidth-thick;
-            border-width: 0 10px 10px 0;
-
+            top: @arrowOffset;
+            right: -2 * @arrowWidth;
+            border-left-color: @bgColor-secondary;
+            background-position-x: -28px;
           }
         }
 
         &.timeline-card-container--right {
-          padding-left: @padding-double;
+          padding-left: @cardSpacing;
 
           &:before {
-            bottom: @padding-double;
+            bottom: @arrowOffset + @cardSpacing;
             left: -@lineWidth-thick - 1;
           }
 
           .timeline-card:before {
-            bottom: @padding-double;
-            left: -@lineWidth-thick - 1;
-            border-width: 10px 0 0 10px;
+            bottom: @arrowOffset + @lineWidth-thick;
+            left: -2 * @arrowWidth;
+            border-right-color: @bgColor-secondary;
+            background-position-x: -2px;
           }
         }
 
