@@ -27,6 +27,7 @@
 
     @timelinePosY: @dotOffset;
 
+    @logoSpacing: @padding-half;
     @citySpacing: @padding;
 
 
@@ -61,6 +62,24 @@
           .text-color;
         }
 
+        .timeline-card__logo {
+          position: absolute;
+          top: @logoSpacing;
+          left: @logoSpacing;
+          .size(30px, 30px);
+          background-size: cover;
+          opacity: 0.4;
+
+          .logo-helper(securitas);
+          .logo-helper(tunstall);
+          .logo-helper(telia);
+          .logo-helper(hiq);
+          .logo-helper(vodafone);
+          .logo-helper(spotfire);
+          .logo-helper(carmenta);
+          .logo-helper(liu);
+        }
+
         .timeline-card__city {
           position: absolute;
           top: @citySpacing;
@@ -88,6 +107,16 @@
 
         .timeline-card__description {
           .text-body;
+        }
+
+        &:hover {
+          .card-action;
+          cursor: pointer;
+
+          .timeline-card__logo {
+            opacity: 1;
+            .transition(opacity);
+          }
         }
       }
 
@@ -153,6 +182,11 @@
               background-position-x: -2px;
             }
 
+            .timeline-card__logo {
+              right: @logoSpacing;
+              left: auto;
+            }
+
             .timeline-card__city {
               left: @citySpacing;
               right: auto;
@@ -163,6 +197,13 @@
 
       }
       
+    }
+  }
+
+  .logo-helper(@logo) {
+    &.timeline-card__logo--@{logo} {
+      @logoFilename: "./@{logo}.png";
+      background-image: url(@logoFilename);
     }
   }
   
