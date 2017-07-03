@@ -10,42 +10,49 @@
 
   .timeline-cards-container {
 
+    @timelineWidth: @lineWidth-thick;
+    @timelineOffset: floor(@timelineWidth / 2);
+    @timelinePos: ~"calc( 50% - " @timelineOffset ~")";
+
+    @cardMinHeight: 200px;
+    @cardSpacing-v: @padding;
+    @cardSpacing-h: @padding-one-and-half;
+
+    @arrowWidth: 10px;
+    @arrowHeight: 20px;
+    @arrowOffset: @padding-one-and-half;
+
+    @dotOffset: @arrowOffset + @arrowHeight + @cardSpacing-v;
+    @dotSize: 2 * @timelineWidth + 1;
+
     position: relative;
 
     &:before {
-      @lineOffset: floor(@lineWidth-thick / 2);
-      @linePos: ~"calc( 50% - " @lineOffset ~")";
-
       content: '';
-      .position(absolute, 0, @linePos, 0);
+      .position(absolute, 0, @timelinePos, 0);
       z-index: @z-back;
-      width: @lineWidth-thick;
+      width: @timelineWidth;
       .bg-bar;
     }
 
     .timeline-card-container {
-
       position: relative;
       display: inline-block;
       width: 100%;
-      padding: @padding 0;
+      padding: @cardSpacing-v 0;
 
       .timeline-card {
         position: relative;
-        min-height: 200px;
+        min-height: @cardMinHeight;
         .card-half;
         .card-padding;
       }
 
-      @media (min-width: 992px) { // TODO Move to variables
-        @arrowWidth: 10px;
-        @arrowHeight: 20px;
-        @arrowOffset: @padding;
-        @cardSpacing: @padding-double;
+      @media (min-width: @mq-md-min) {
 
         width: 50%;
 
-        // TODO Complete and consider creating an arrow mixin used both here and in .bubble
+        // Arrow
         .timeline-card:before {
           content: '';
           position: absolute;
@@ -55,12 +62,11 @@
 
           background-image: url(arrows.png);
           background-repeat: no-repeat;
-          background-position-y: -@arrowOffset; 
+          background-position-y: -@arrowHeight; 
         }
 
+        // Dot
         &:before {
-          @dotSize: 2 * @lineWidth-thick + 1;
-
           content: '';
           position: absolute;
           .size(@dotSize, @dotSize);
@@ -69,33 +75,37 @@
         }
 
         &.timeline-card-container--left {
-          padding-right: @cardSpacing;
+          padding-right: @cardSpacing-h;
 
+          // Dot (left)
           &:before {
-            top: @arrowOffset + @cardSpacing;
-            right: -@lineWidth-thick;
+            top: @dotOffset;
+            right: -@timelineWidth;
           }
 
+          // Arrow (left)
           .timeline-card:before {
             top: @arrowOffset;
             right: -2 * @arrowWidth;
-            border-left-color: @bgColor-secondary;
+            border-left-color: @bgColor-card;
             background-position-x: -28px;
           }
         }
 
         &.timeline-card-container--right {
-          padding-left: @cardSpacing;
+          padding-left: @cardSpacing-h;
 
+          // Dot (right)
           &:before {
-            bottom: @arrowOffset + @cardSpacing;
-            left: -@lineWidth-thick - 1;
+            bottom: @dotOffset;
+            left: -@timelineWidth - 1;
           }
 
+          // Arrow (right)
           .timeline-card:before {
             bottom: @arrowOffset + @lineWidth-thick;
             left: -2 * @arrowWidth;
-            border-right-color: @bgColor-secondary;
+            border-right-color: @bgColor-card;
             background-position-x: -2px;
           }
         }

@@ -1,6 +1,8 @@
 
 /* Size */
 
+@mq-md-min: 992px;
+
 @minWidth: 400px;
 @maxCardWidth: 970px;
 
@@ -27,6 +29,7 @@
 
 @bgColor-primary: @grey-lightest;
 @bgColor-secondary: @white;
+@bgColor-card: @bgColor-secondary;
 
 @textColor-primary: @grey-blue-dark;
 @textColor-light: @grey;
@@ -64,8 +67,11 @@
 @padding-quarter: @padding / 4;
 @padding-half: @padding / 2;
 @padding-three-quarter: 3 * @padding / 4;
+@padding-one-and-half: @padding + @padding-half;
 @padding-double: @padding * 2;
 @padding-quad: @padding * 4;
+
+@card-padding: @padding-double;
 @card-margin: @padding-quad;
 
 
