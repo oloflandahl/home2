@@ -7,7 +7,6 @@
 
 @this-item-pad:           @padding-three-quarter;
 
-@this-itemLink-fontSize:  @textSize-small;
 @this-activeLink-border:  3px;
 
 @this-itemLink-unknownSpace:  2px;
@@ -22,7 +21,7 @@
 
 .header-text() {
   color: @textColor-onDark;
-  text-transform: uppercase;
+  .text-uppercase;
   .transition-long(color);
 }
 
@@ -66,7 +65,7 @@
 
     a {
       padding: 2px 0;
-      .font-size(@this-itemLink-fontSize);
+      .text-small;
       font-weight: @textWeight-bold;
       .header-text;
     }

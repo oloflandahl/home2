@@ -4,8 +4,8 @@
 .btn() {
   padding: @padding;
   .border-primary;
-  font-size: @textSize-small;
-  text-transform: uppercase;
+  .text-small;
+  .text-uppercase;
   text-decoration: none;
   cursor: pointer;
   transition: box-shadow 0.3s ease-out; // TODO
@@ -17,10 +17,10 @@
 
 .btn-sm() {
   padding: @padding-half;
-  font-size: @textSize-small;
+  .text-small;
 }
 
 .btn-lg() {
   padding: @padding @padding-double;
-  font-size: @textSize;
+  .text-large;
 }

@@ -26,6 +26,6 @@ export class AppComponent {
 
     initPageScroll() {
       PageScrollConfig.defaultScrollOffset = 100;
-      PageScrollConfig.defaultDuration = 800;
+      PageScrollConfig.defaultDuration = 500;
     }
 }

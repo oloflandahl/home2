@@ -14,6 +14,12 @@ export class TimelineComponent {
   timelineItems: TimelineItem[];
 
   constructor() {
-    this.timelineItems = TIMELINE_ITEMS;
+    this.timelineItems = TIMELINE_ITEMS.sort((a, b) : number => {
+	    if (a.startYear === b.startYear) {
+        return b.endYear - a.endYear;
+      }
+
+      return b.startYear - a.startYear;
+    });
   }
 }

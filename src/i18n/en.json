@@ -21,10 +21,15 @@
 
    "Role_WebDeveloper": "Web Developer",
    "Role_SoftwareDeveloper": "Software Developer",
+   "Role_CodeTestVerifier": "Code test reviewer",
    "Degree_Medieteknik": "Master in Media Technology and Engineering",
 
    "Experience_Linkoping": "Computer science program with focus on visualisation, programming, image processing and computer graphics.",
    "Experience_Carmenta": "I worked mostly with GIS applications but was also responsible for quality checks on geographical data.",
+   "Experience_Tibco": "Worked in the Visualisations team with both the Windows and the web client. I was mostly doing front end work, focused on visualisations and user interfaces but also back end, data access, client-server integration, etc.",
+   "Experience_Vodafone": "Consultant at DiUS, working at Vodafone. Built an internal responsive framework to refresh vodafone.com.au (VCA), create reusable components and make look and feel consistent across all three Vodafone sites. I also did other work on VCA and myvodafone.com.au. Worked in agile teams and attended several training sessions in agile methodologies.",
+   "Experience_Telia": "Was part of an agile team that worked with different parts of telia.se, mainly My Pages.",
+   "Experience_HiQ": "Created a code test for recruitment of frontend developers and reviewed the solutions from candidates.",
    "Experience_Tunstall": "Modernised and improved the optimisation of routes in an app for home care.",
    "Experience_Securitas": "Developed internal web applications for invoicing, quote calculation, payroll correction, and more"
 }

@@ -21,10 +21,15 @@
 
    "Role_WebDeveloper": "Webbutvecklare",
    "Role_SoftwareDeveloper": "Mjukvaruutvecklare",
+   "Role_CodeTestVerifier": "Granskare av arbetsprov",
    "Degree_Medieteknik": "Civilingenjör i Medieteknik",
 
    "Experience_Linkoping": "En utbildning som liknar datateknik men med fokus på visualisering och bildbehandling.",
-   "Experience_Carmenta": "Jobbade främst i ett projekt som tar fram flygmanualer för piloter. Anställningen varade bara 4 månader pga. nedskärningar.",
+   "Experience_Carmenta": "Jag jobbade framför allt med GIS-applikationer men var även ansvarig för kvalitetssäkring av geografisk data.",
+   "Experience_Tibco": "Jobbade i Visualiserings-teamet med både Windows- och webklient. Jag implementerade mest 'front end', framför allt visualiseringar och användargränssnitt men även 'back end', data access, klient-serverintegration, etc.",
+   "Experience_Vodafone": "Anställd av DiUS, jobbade på Vodafone. Byggde upp ett nytt internt responsivt ramverk för att fräscha upp vodafone.com.au (VCA), skapa återanvändbara web-komponenter och göra designen mer konsekvent över alla tre Vodafone-sajterna. Jag gjorde även andra jobb på VCA och myvodafone.com.au. Arbetade i agila team och var på flera utbildningssessioner i agila metoder.",
+   "Experience_Telia": "Var en del av ett agilt team som jobbade med olika delar av telia.se, främst Mina Sidor.",
+   "Experience_HiQ": "Utformade ett arbetsprov för rekrytering av frontend-utvecklare och utvärderade de lösningar som kom in från sökande.",
    "Experience_Tunstall": "Moderniserade och förbättrade optimering av ruttplanering inom hemtjänsten.",
    "Experience_Securitas": "Utvecklar interna webb-applikationer för fakturering, affärskalkylering, ärendehantering, m.m."
 }

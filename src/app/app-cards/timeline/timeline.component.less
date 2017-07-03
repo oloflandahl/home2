@@ -27,6 +27,8 @@
 
     @timelinePosY: @dotOffset;
 
+    @citySpacing: @padding;
+
 
     position: relative;
 
@@ -45,26 +47,28 @@
       width: 100%;
       padding: @cardSpacing-v 0;
 
-      &:first-child {
-        padding-top: 0;
-      }
-
       .timeline-card {
         position: relative;
         min-height: @cardMinHeight;
         .card-half;
-        .card-padding-half;
-
-        &:hover {
-          .card-action;
-          cursor: pointer;
-        }
+        .card-padding;
+        padding-top: @padding;
 
         .timeline-card__years {
           margin-bottom: @padding-three-quarter;
           text-align: center;
           .text-bolder;
           .text-color;
+        }
+
+        .timeline-card__city {
+          position: absolute;
+          top: @citySpacing;
+          right: @citySpacing;
+          .text-bold;
+          .text-grey;
+          .text-uppercase;
+          .text-small;
         }
 
         .timeline-card__title {
@@ -77,8 +81,8 @@
         .timeline-card__subtitle {
           margin-bottom: @padding;
           text-align: center;
-          text-transform: uppercase;
-          .font-size(@textSize-small);
+          .text-uppercase;
+          .text-small;
           .text-grey;
         }
 
@@ -140,13 +144,21 @@
             left: -@timelineWidth - 1;
           }
 
-          // Arrow (right)
-          .timeline-card:before {
-            bottom: @arrowOffset + @lineWidth-thick;
-            left: -2 * @arrowWidth;
-            border-right-color: @bgColor-card;
-            background-position-x: -2px;
+          .timeline-card {
+            // Arrow (right)
+            &:before {
+              bottom: @arrowOffset + @lineWidth-thick;
+              left: -2 * @arrowWidth;
+              border-right-color: @bgColor-card;
+              background-position-x: -2px;
+            }
+
+            .timeline-card__city {
+              left: @citySpacing;
+              right: auto;
+            }
           }
+
         }
 
       }
