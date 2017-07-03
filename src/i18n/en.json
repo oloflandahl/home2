@@ -17,5 +17,14 @@
 
    "ResumeSummary_Filename": "oloflandahl_cv_eng.pdf",
    "ResumeSummary_ButtonLabel": "Download Resume",
-   "ResumeSummary_Text": "I'm a Front End with vast knowledge in .NET. I've worked in small and large teams, in different types of projects, with different nationalities and both as consultant and employed."
+   "ResumeSummary_Text": "I'm a Front End with vast knowledge in .NET. I've worked in small and large teams, in different types of projects, with different nationalities and both as consultant and employed.",
+
+   "Role_WebDeveloper": "Web Developer",
+   "Role_SoftwareDeveloper": "Software Developer",
+   "Degree_Medieteknik": "Master in Media Technology and Engineering",
+
+   "Experience_Linkoping": "Computer science program with focus on visualisation, programming, image processing and computer graphics.",
+   "Experience_Carmenta": "I worked mostly with GIS applications but was also responsible for quality checks on geographical data.",
+   "Experience_Tunstall": "Modernised and improved the optimisation of routes in an app for home care.",
+   "Experience_Securitas": "Developed internal web applications for invoicing, quote calculation, payroll correction, and more"
 }

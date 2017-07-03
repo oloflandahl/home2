@@ -17,5 +17,14 @@
 
    "ResumeSummary_Filename": "oloflandahl_cv_swe.pdf",
    "ResumeSummary_ButtonLabel": "Hämta CV",
-   "ResumeSummary_Text": "Jag är Front End utecklare med bred kunskap inom .NET. Jag har jobbat i både små och stora team, i olika projektformer, med olika nationaliteter och både som konsult och fastanställd."
+   "ResumeSummary_Text": "Jag är Front End utecklare med bred kunskap inom .NET. Jag har jobbat i både små och stora team, i olika projektformer, med olika nationaliteter och både som konsult och fastanställd.",
+
+   "Role_WebDeveloper": "Webbutvecklare",
+   "Role_SoftwareDeveloper": "Mjukvaruutvecklare",
+   "Degree_Medieteknik": "Civilingenjör i Medieteknik",
+
+   "Experience_Linkoping": "En utbildning som liknar datateknik men med fokus på visualisering och bildbehandling.",
+   "Experience_Carmenta": "Jobbade främst i ett projekt som tar fram flygmanualer för piloter. Anställningen varade bara 4 månader pga. nedskärningar.",
+   "Experience_Tunstall": "Moderniserade och förbättrade optimering av ruttplanering inom hemtjänsten.",
+   "Experience_Securitas": "Utvecklar interna webb-applikationer för fakturering, affärskalkylering, ärendehantering, m.m."
 }
