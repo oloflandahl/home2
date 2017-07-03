@@ -22,10 +22,12 @@
     @arrowHeight: 20px;
     @arrowOffset: @padding-one-and-half;
 
-    @dotOffset: @arrowOffset + @arrowHeight + @cardSpacing-v;
     @dotSize: 2 * @timelineWidth + 1;
+    @dotOffsetY: @arrowOffset + @arrowHeight + @cardSpacing-v;
+    @outerDotSize: 4 * @timelineWidth + 1;
+    @outerDotRelOffset: (@dotSize - @outerDotSize) / 2;
 
-    @timelinePosY: @dotOffset;
+    @timelinePosY: @dotOffsetY;
 
     @logoSpacing: @padding-half;
     @citySpacing: @padding;
@@ -108,17 +110,24 @@
         .timeline-card__description {
           .text-body;
         }
+      }
 
-        &:hover {
+      &:hover {
+        .timeline-card {
           .card-action;
-          cursor: pointer;
+            cursor: pointer;
 
-          .timeline-card__logo {
+            .timeline-card__logo {
+              opacity: 1;
+              .transition(opacity);
+            }
+          }
+
+          &:before, &:after {
             opacity: 1;
             .transition(opacity);
           }
         }
-      }
 
       @media (min-width: @mq-md-min) {
 
@@ -144,15 +153,31 @@
           .size(@dotSize, @dotSize);
           .border-circular;
           .bg-color;
+          opacity: 0.5;
         }
+
+        // Outer dot
+        &:after {
+          content: '';
+          position: absolute;
+          .size(@outerDotSize, @outerDotSize);
+          .border-circular;
+          border: 3px solid @color-primary;
+          opacity: 0;
+        }
+
 
         &.timeline-card-container--left {
           padding-right: @cardSpacing-h;
 
           // Dot (left)
-          &:before {
-            top: @dotOffset;
+          &:before, &:after {
+            top: @dotOffsetY;
             right: -@timelineWidth;
+          }
+          &:after {
+            top: @dotOffsetY + @outerDotRelOffset;
+            right: -@timelineWidth + @outerDotRelOffset;
           }
 
           // Arrow (left)
@@ -169,8 +194,12 @@
 
           // Dot (right)
           &:before {
-            bottom: @dotOffset;
+            bottom: @dotOffsetY;
             left: -@timelineWidth - 1;
+          }
+          &:after {
+            bottom: @dotOffsetY + @outerDotRelOffset;
+            left: -@timelineWidth + @outerDotRelOffset - 1;
           }
 
           .timeline-card {
