@@ -1,39 +1,43 @@
 @import '../../less-library/variables';
 @import '../../less-library/mixins';
 
-.skills-card {
-  .card-full;
-  .card-padding;
-
+.skills-card-container {
+  .card-container;
+  
   .skills-card__title {
     .card-title;
   }
 
-  .skills-card__skills {
-    
-    .skill {
-      padding: @padding;
+  .skills-card {
+    .card-full;
+    .card-padding;
 
-      .skill__title {
-        margin-bottom: @padding-half;
-      }
+    .skills-card__skills {
+      
+      .skill {
+        padding: @padding;
 
-      .skill__bar-container {
-        position: relative;
+        .skill__title {
+          margin-bottom: @padding-half;
+        }
 
-        .skill__bar {
-          position: absolute;
-          height: @lineWidth-thick;
+        .skill__bar-container {
+          position: relative;
 
-          &.skill__bar--full {
-            width: 100%;
-            .bg-bar;
-            z-index: @z-1;
-          }
+          .skill__bar {
+            position: absolute;
+            height: @lineWidth-thick;
 
-          &.skill__bar--fill {
-            z-index: @z-2;
-            .bar;
+            &.skill__bar--full {
+              width: 100%;
+              .bg-bar;
+              z-index: @z-1;
+            }
+
+            &.skill__bar--fill {
+              z-index: @z-2;
+              .bar;
+            }
           }
         }
       }

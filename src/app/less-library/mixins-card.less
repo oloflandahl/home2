@@ -1,7 +1,7 @@
 @import 'variables';
 @import 'mixins-border';
 
-.card-margin() {
+.card-container() {
   margin-top: @card-margin;
 }
 
@@ -12,7 +12,6 @@
 
 .card-full() {
   .card;
-  .card-margin;
 }
 
 .card-half() {
@@ -31,6 +30,6 @@
 .card-title() {
   .h2;
   text-align: center;
-  margin-bottom: @padding-double;
+  margin-bottom: @card-title-margin;
   text-transform: capitalize;
 }

@@ -1,38 +1,37 @@
 @import '../../less-library/variables';
 @import '../../less-library/mixins';
 
+@timelineWidth: @lineWidth-thick;
+@timelineOffsetX: floor(@timelineWidth / 2);
+@timelinePosX: ~"calc( 50% - " @timelineOffsetX ~")";
+
+@cardMinHeight: 200px;
+@cardSpacing-v: @padding;
+@cardSpacing-h: @padding-one-and-half;
+
+@arrowWidth: 10px;
+@arrowHeight: 20px;
+@arrowOffset: @padding-one-and-half;
+
+@dotSize: 2 * @timelineWidth + 1;
+@dotOffsetY: @arrowOffset + @arrowHeight + @cardSpacing-v;
+@outerDotSize: 4 * @timelineWidth + 1;
+@outerDotRelOffset: (@dotSize - @outerDotSize) / 2;
+
+@timelinePosY: @dotOffsetY;
+
+@logoSpacing: @padding-half;
+@citySpacing: @padding;
+
 .timeline {
-  .card-margin;
+  .card-container;
 
   .timeline__title {
     .card-title;
+    margin-bottom: @padding-double - @cardSpacing-v;
   }
 
   .timeline-cards-container {
-
-    @timelineWidth: @lineWidth-thick;
-    @timelineOffsetX: floor(@timelineWidth / 2);
-    @timelinePosX: ~"calc( 50% - " @timelineOffsetX ~")";
-
-    @cardMinHeight: 200px;
-    @cardSpacing-v: @padding;
-    @cardSpacing-h: @padding-one-and-half;
-
-    @arrowWidth: 10px;
-    @arrowHeight: 20px;
-    @arrowOffset: @padding-one-and-half;
-
-    @dotSize: 2 * @timelineWidth + 1;
-    @dotOffsetY: @arrowOffset + @arrowHeight + @cardSpacing-v;
-    @outerDotSize: 4 * @timelineWidth + 1;
-    @outerDotRelOffset: (@dotSize - @outerDotSize) / 2;
-
-    @timelinePosY: @dotOffsetY;
-
-    @logoSpacing: @padding-half;
-    @citySpacing: @padding;
-
-
     position: relative;
 
     // Timeline

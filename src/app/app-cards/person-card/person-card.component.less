@@ -1,100 +1,104 @@
 @import '../../less-library/variables';
 @import '../../less-library/mixins';
 
-.person-card {
-  .card-full;
+.person-card-container {
+  .card-container;
 
-  .person-card__content {
-    padding: @padding-double;
+  .person-card {
+    .card-full;
 
-    .person-card__info-header {
-      margin-bottom: @padding;
-      border-bottom: 1px solid @borderColor-secondary;
+    .person-card__content {
+      padding: @padding-double;
 
-      .person-card__greeting {
-        .text-bubble;
-      }
-
-      .person-card__name {
-        .h1;
-        .text-light;
-        margin-top: @padding;
-        margin-bottom: @padding-half;
-      }
-
-      .person-card__title {
-        .h4;
-        margin-bottom: @padding-double;
-      }
-    }
-
-    .person-card__info-items {
-      .person-card__info-item {
-        padding: @padding-half 0;
-
-        .person-card__info-item-left {
-
-          .text-uppercase;
-          .text-small;
-          .text-bold;
-        }
-
-        .person-card__info-item-right {
-          .text-grey;
-          .text-light;
-        }
-      }
-    }
-
-    .person-card__photo {
-      height: 350px;
-      // TODO Use png instead
-      background-image: url('me.jpg');
-      background-repeat: no-repeat;
-      background-position: center;
-
-      &.person-card__photo--large {
-        height: 500px;
+      .person-card__info-header {
         margin-bottom: @padding;
-        background-size: cover;
-      }
-    }
-  }
+        border-bottom: 1px solid @borderColor-secondary;
 
-  .person-card__footer {
-    padding: @padding;
-    text-align: center;
-    background: @red-light;
-
-    .person-card__social-links {
-
-      .person-card__social-link {
-        @iconSize: @textSize-icon;
-        @iconPadding: @padding-half;
-        @linkSize: @iconSize + (2 * @iconPadding);
-
-        display: inline-block;
-        width: @linkSize;
-        height: @linkSize;
-        margin: 0 @iconPadding;
-        
-        font-size: @iconSize;
-        line-height: @linkSize;
-
-        .border-circular;
-        background: transparent;
-
-        .transition-short(background);
-
-        &:hover {
-          background: rgba(0,0,0, 0.1);
+        .person-card__greeting {
+          .text-bubble;
         }
 
-        a {
-          .text-on-dark;
+        .person-card__name {
+          .h1;
+          .text-light;
+          margin-top: @padding;
+          margin-bottom: @padding-half;
+        }
+
+        .person-card__title {
+          .h4;
+          margin-bottom: @padding-double;
+        }
+      }
+
+      .person-card__info-items {
+        .person-card__info-item {
+          padding: @padding-half 0;
+
+          .person-card__info-item-left {
+
+            .text-uppercase;
+            .text-small;
+            .text-bold;
+          }
+
+          .person-card__info-item-right {
+            .text-grey;
+            .text-light;
+          }
+        }
+      }
+
+      .person-card__photo {
+        height: 350px;
+        // TODO Use png instead
+        background-image: url('me.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &.person-card__photo--large {
+          height: 500px;
+          margin-bottom: @padding;
+          background-size: cover;
         }
       }
     }
-    
+
+    .person-card__footer {
+      padding: @padding;
+      text-align: center;
+      background: @red-light;
+
+      .person-card__social-links {
+
+        .person-card__social-link {
+          @iconSize: @textSize-icon;
+          @iconPadding: @padding-half;
+          @linkSize: @iconSize + (2 * @iconPadding);
+
+          display: inline-block;
+          width: @linkSize;
+          height: @linkSize;
+          margin: 0 @iconPadding;
+          
+          font-size: @iconSize;
+          line-height: @linkSize;
+
+          .border-circular;
+          background: transparent;
+
+          .transition-short(background);
+
+          &:hover {
+            background: rgba(0,0,0, 0.1);
+          }
+
+          a {
+            .text-on-dark;
+          }
+        }
+      }
+      
+    }
   }
 }
