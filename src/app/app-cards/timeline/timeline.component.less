@@ -54,6 +54,7 @@
         position: relative;
         min-height: @cardMinHeight;
         .card-half;
+        .card-action;
         .card-padding;
         padding-top: @padding;
 
@@ -70,7 +71,10 @@
           left: @logoSpacing;
           .size(30px, 30px);
           background-size: cover;
-          opacity: 0.4;
+
+          opacity: 0.5;
+          filter: grayscale(100%);
+          .transition(all);
 
           .logo-helper(securitas);
           .logo-helper(tunstall);
@@ -114,20 +118,18 @@
 
       &:hover {
         .timeline-card {
-          .card-action;
-            cursor: pointer;
+          cursor: pointer;
 
-            .timeline-card__logo {
-              opacity: 1;
-              .transition(opacity);
-            }
-          }
-
-          &:before, &:after {
+          .timeline-card__logo {
             opacity: 1;
-            .transition(opacity);
+            filter: grayscale(0%);
           }
         }
+
+        &:before, &:after {
+          opacity: 1;
+        }
+      }
 
       @media (min-width: @mq-md-min) {
 
@@ -153,7 +155,9 @@
           .size(@dotSize, @dotSize);
           .border-circular;
           .bg-color;
+
           opacity: 0.5;
+          .transition(opacity);
         }
 
         // Outer dot
@@ -163,7 +167,9 @@
           .size(@outerDotSize, @outerDotSize);
           .border-circular;
           border: 3px solid @color-primary;
+          
           opacity: 0;
+          .transition(opacity);
         }
 
 
