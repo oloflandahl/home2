@@ -2,8 +2,10 @@
   <div class="timeline__title">{{ 'Experience_Title' | translate }}</div>
   <div class="timeline-cards-container">
     <div class="timeline-card-container" *ngFor="let item of timelineItems; let odd = odd; let even = even;" [ngClass]="{ 'timeline-card-container--left': even, 'timeline-card-container--right': odd }">
+      <span class="timeline__dot"></span>
       <a [href]="item.url" target="_blank">
         <div class="timeline-card">
+          <span class="timeline-card__arrow"></span>
           <div class="timeline-card__years">
             <span>{{item.startYear}}</span>
             <span [hidden]="!item.endYear || item.startYear === item.endYear">- {{item.endYear}}</span>

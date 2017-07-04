@@ -126,7 +126,7 @@
           }
         }
 
-        &:before, &:after {
+        .timeline__dot {
           opacity: 1;
         }
       }
@@ -136,20 +136,19 @@
         width: 50%;
 
         // Arrow
-        .timeline-card:before {
-          content: '';
+        .timeline-card__arrow {
           position: absolute;
           border-style: solid;
           border-color: transparent;
           border-width: @arrowHeight @arrowWidth;
 
-          background-image: url(arrows.png);
+          background-image: url(./img/arrows.png);
           background-repeat: no-repeat;
           background-position-y: -@arrowHeight; 
         }
 
         // Dot
-        &:before {
+        .timeline__dot {
           content: '';
           position: absolute;
           .size(@dotSize, @dotSize);
@@ -158,36 +157,29 @@
 
           opacity: 0.5;
           .transition(opacity);
-        }
 
-        // Outer dot
-        &:after {
-          content: '';
-          position: absolute;
-          .size(@outerDotSize, @outerDotSize);
-          .border-circular;
-          border: 3px solid @color-primary;
-          
-          opacity: 0;
-          .transition(opacity);
+          // Outer dot
+          &:before {
+            content: '';
+            position: absolute;
+            margin: @outerDotRelOffset;
+            .size(@outerDotSize, @outerDotSize);
+            .border-circular;
+            border: 3px solid @color-primary;
+          }
         }
-
 
         &.timeline-card-container--left {
           padding-right: @cardSpacing-h;
 
           // Dot (left)
-          &:before, &:after {
+          .timeline__dot {
             top: @dotOffsetY;
             right: -@timelineWidth;
           }
-          &:after {
-            top: @dotOffsetY + @outerDotRelOffset;
-            right: -@timelineWidth + @outerDotRelOffset;
-          }
 
           // Arrow (left)
-          .timeline-card:before {
+          .timeline-card__arrow {
             top: @arrowOffset;
             right: -2 * @arrowWidth;
             border-left-color: @bgColor-card;
@@ -199,18 +191,14 @@
           padding-left: @cardSpacing-h;
 
           // Dot (right)
-          &:before {
+          .timeline__dot {
             bottom: @dotOffsetY;
             left: -@timelineWidth - 1;
-          }
-          &:after {
-            bottom: @dotOffsetY + @outerDotRelOffset;
-            left: -@timelineWidth + @outerDotRelOffset - 1;
           }
 
           .timeline-card {
             // Arrow (right)
-            &:before {
+            .timeline-card__arrow {
               bottom: @arrowOffset + @lineWidth-thick;
               left: -2 * @arrowWidth;
               border-right-color: @bgColor-card;
@@ -237,7 +225,7 @@
 
   .logo-helper(@logo) {
     &.timeline-card__logo--@{logo} {
-      @logoFilename: "./@{logo}.png";
+      @logoFilename: "./img/@{logo}.png";
       background-image: url(@logoFilename);
     }
   }
