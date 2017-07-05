@@ -4,6 +4,10 @@ import { HttpModule } from '@angular/http';
 import { TranslateModule } from 'ng2-translate';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
+import { ScrollSectionService } from './services/scroll-section.service';
+
+import { ScrollSectionDirective } from './directives/scroll-section.directive';
+
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppBackImgComponent } from './app-back-img/app-back-img.component';
@@ -21,9 +25,11 @@ import { TimelineComponent } from './app-cards/timeline/timeline.component';
     Ng2PageScrollModule.forRoot()
   ],
   providers: [
+    ScrollSectionService,
     { provide: Window, useValue: window }
   ],
   declarations: [
+    ScrollSectionDirective,
     AppComponent,
     AppHeaderComponent,
     AppBackImgComponent,
