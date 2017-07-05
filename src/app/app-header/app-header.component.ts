@@ -48,7 +48,7 @@ export class AppHeaderComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    var scrollTop = document.documentElement && document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollTop = document.documentElement && document.documentElement.scrollTop || document.body.scrollTop;
     this.isSticky = scrollTop > 0;
   }
 }

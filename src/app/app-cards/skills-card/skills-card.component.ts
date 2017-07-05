@@ -4,7 +4,7 @@ import { KeyValueItem } from '../key-value-item';
 import { SKILL_ITEMS } from './skills-card-skill-items';
 
 @Component({
-  selector: 'skills-card',
+  selector: 'app-skills-card',
   templateUrl: 'skills-card.component.html',
   styleUrls: ['skills-card.component.less']
 })

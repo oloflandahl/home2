@@ -6,7 +6,7 @@ import { SocialLinkItem } from './social-link-item';
 import { LINK_ITEMS } from './person-card-social-link-items';
 
 @Component({
-  selector: 'person-card',
+  selector: 'app-person-card',
   templateUrl: 'person-card.component.html',
   styleUrls: ['person-card.component.less']
 })

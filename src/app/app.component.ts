@@ -14,7 +14,7 @@ export class AppComponent {
       this.initPageScroll();
     }
 
-    initLanguage(translate) {
+    initLanguage(translate): void {
       const defaultLang = 'en';
 
       translate.addLangs([defaultLang, 'sv']);
@@ -24,7 +24,7 @@ export class AppComponent {
       translate.use(browserLang.match(/en|sv/) ? browserLang : defaultLang);
     }
 
-    initPageScroll() {
+    initPageScroll(): void {
       PageScrollConfig.defaultScrollOffset = 100;
       PageScrollConfig.defaultDuration = 500;
     }

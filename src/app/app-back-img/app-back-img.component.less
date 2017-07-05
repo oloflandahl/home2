@@ -1,10 +1,5 @@
 @import '../less-library/variables';
 
-@this-img1: 'bg1.jpg';
-@this-img2: 'bg2.jpg';
-@this-img3: 'bg3.jpg';
-@this-img4: 'bg4.jpg';
-
 .app-back-img {
   position: absolute;
   left: 0;
@@ -26,19 +21,15 @@
     opacity: 0.5;
   }
 
-  &.app-back-img--1:after {
-    background-image: url(@this-img1);
-  }
+  .bg-helper(1);
+  .bg-helper(2);
+  .bg-helper(3);
+  .bg-helper(4);
 
-  &.app-back-img--2:after {
-    background-image: url(@this-img2);
-  }
-
-  &.app-back-img--3:after {
-    background-image: url(@this-img3);
-  }
-
-  &.app-back-img--4:after {
-    background-image: url(@this-img4);
+  .bg-helper(@bgNo) {
+    &.app-back-img--@{bgNo}:after {
+      @bgFilename: "./img/bg@{bgNo}.jpg";
+      background-image: url(@bgFilename);
+    }
   }
 }

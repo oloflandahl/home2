@@ -2,8 +2,8 @@
 // TODO Make service into an injectable provider?
 class DateService {
 
-  getYearsToNow(year: number, month: number, day: number) : number {
-    const then = new Date(year, month-1, day);
+  getYearsToNow(year: number, month: number, day: number): number {
+    const then = new Date(year, month - 1, day);
     const now = new Date();
     const monthsDiff = now.getMonth() - then.getMonth();
     let yearsDiff = now.getFullYear() - then.getFullYear();
@@ -14,7 +14,6 @@ class DateService {
 
     return yearsDiff;
   }
-  
 }
 
 export default new DateService();

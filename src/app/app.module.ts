@@ -23,10 +23,10 @@ import { TimelineComponent } from './app-cards/timeline/timeline.component';
   providers: [
     { provide: Window, useValue: window }
   ],
-  declarations: [ 
-    AppComponent, 
-    AppHeaderComponent, 
-    AppBackImgComponent, 
+  declarations: [
+    AppComponent,
+    AppHeaderComponent,
+    AppBackImgComponent,
     PersonCardComponent,
     ResumeSummaryComponent,
     SkillsCardComponent,
