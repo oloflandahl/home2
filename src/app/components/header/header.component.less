@@ -130,21 +130,21 @@
       }
     }
 
+    &.navbar__item--close-icon {
+      .hidden;
+      .font-size(@textSize-icon);
+      padding: @padding @padding-double;
+      text-align: right;
+      cursor: pointer;
+
+      @media (max-width: @mq-sm-min) {
+        .display-block;
+      }
+    }
+
     &:hover {
       cursor: pointer;
       .active-item;
-    }
-  }
-
-  .navbar__close-icon {
-    .hidden;
-    .font-size(@textSize-icon);
-    padding: @padding;
-    text-align: right;
-    cursor: pointer;
-
-    @media (max-width: @mq-sm-min) {
-      .display-block;
     }
   }
 

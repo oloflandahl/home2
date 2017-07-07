@@ -5,7 +5,7 @@
       <i class="fa fa-bars"></i>
     </div>
     <ul class="navbar" [class.navbar--open]="isMenuOpen">
-      <li class="navbar__close-icon" (click)="closeMenu()"><i class="fa fa-close"></i></li>
+      <li class="navbar__item navbar__item--close-icon" (click)="closeMenu()"><i class="fa fa-close"></i></li>
       <li *ngFor="let item of items;" class="navbar__item" [class.navbar__item--active]="item.isActive">
         <a href="#{{item.id}}" pageScroll (click)="select(item)">{{ item.translationKey | translate }}</a>
       </li>
