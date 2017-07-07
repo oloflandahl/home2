@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
 
   public isInit = false;
   public isSticky = false;
+  public stickyIsHidden = false;
   public isMenuOpen = false;
   public currentLang: string;
   public items: MenuItem[];
@@ -40,6 +41,11 @@ export class HeaderComponent implements OnInit {
 
   closeMenu() {
     this.isMenuOpen = false;
+  }
+
+  hideSticky() {
+    this.closeMenu();
+    this.stickyIsHidden = true;
   }
 
   select(item: MenuItem) {
