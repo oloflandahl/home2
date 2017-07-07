@@ -9,13 +9,12 @@ import { ScrollSectionService } from './services/scroll-section.service';
 import { ScrollSectionDirective } from './directives/scroll-section.directive';
 
 import { AppComponent } from './app.component';
-import { AppHeaderComponent } from './app-header/app-header.component';
-import { AppBackImgComponent } from './app-back-img/app-back-img.component';
-
-import { PersonCardComponent } from './app-cards/person-card/person-card.component';
-import { ResumeSummaryComponent } from './app-resume-summary/resume-summary.component';
-import { SkillsCardComponent } from './app-cards/skills-card/skills-card.component';
-import { TimelineComponent } from './app-cards/timeline/timeline.component';
+import { HeaderComponent } from './components/header/header.component';
+import { BackImgComponent } from './components/back-img/back-img.component';
+import { PersonCardComponent } from './components/cards/person-card/person-card.component';
+import { ResumeSummaryComponent } from './components/resume-summary/resume-summary.component';
+import { SkillsCardComponent } from './components/cards/skills-card/skills-card.component';
+import { TimelineComponent } from './components/cards/timeline/timeline.component';
 
 @NgModule({
   imports: [
@@ -31,8 +30,8 @@ import { TimelineComponent } from './app-cards/timeline/timeline.component';
   declarations: [
     ScrollSectionDirective,
     AppComponent,
-    AppHeaderComponent,
-    AppBackImgComponent,
+    HeaderComponent,
+    BackImgComponent,
     PersonCardComponent,
     ResumeSummaryComponent,
     SkillsCardComponent,

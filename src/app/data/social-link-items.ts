@@ -1,6 +1,6 @@
-import {SocialLinkItem} from './social-link-item';
+import { SocialLinkItem } from '../models/social-link-item';
 
-export const LINK_ITEMS: SocialLinkItem[] = [
+export const SOCIAL_LINK_ITEMS: SocialLinkItem[] = [
     {url: 'https://www.facebook.com/olof.landahl', iconName: 'facebook', title: 'Facebook'},
     {url: 'https://www.linkedin.com/in/olof-landahl-91782a37', iconName: 'linkedin', title: 'LinkedIn'},
     {url: 'https://github.com/oloflandahl', iconName: 'github', title: 'Github'},

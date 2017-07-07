@@ -2,8 +2,8 @@ import { Inject, Injectable, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 
 import { Line } from '../models/line.model';
-import { ScrollSectionItem } from './scroll-section-item';
-import { MENU_ITEMS } from '../app-header/app-header-menu-items';
+import { ScrollSectionItem } from '../models/scroll-section-item';
+import { MENU_ITEMS } from '../data/menu-items';
 
 
 @Injectable()

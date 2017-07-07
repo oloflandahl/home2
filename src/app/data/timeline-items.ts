@@ -1,4 +1,4 @@
-import {TimelineItem} from './timeline-item';
+import { TimelineItem } from '../models/timeline-item';
 
 // TODO Add technologies
 export const TIMELINE_ITEMS: TimelineItem[] = [

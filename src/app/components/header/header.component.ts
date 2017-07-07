@@ -2,19 +2,19 @@ import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { TranslateService } from 'ng2-translate';
 
-import { ScrollSectionService } from '../services/scroll-section.service';
+import { ScrollSectionService } from '../../services/scroll-section.service';
 
-import { MenuItem } from './menu-item';
-import { MENU_ITEMS } from './app-header-menu-items';
+import { MenuItem } from '../../models/menu-item';
+import { MENU_ITEMS } from '../../data/menu-items';
 
 
 @Component({
   selector: 'app-header',
-  templateUrl: 'app-header.component.html',
-  styleUrls: ['app-header.component.less']
+  templateUrl: 'header.component.html',
+  styleUrls: ['header.component.less']
 })
 
-export class AppHeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit {
 
   public isInit = false;
   public isSticky = false;

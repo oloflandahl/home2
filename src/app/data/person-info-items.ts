@@ -1,5 +1,5 @@
-import dateService from '../../services/date.service';
-import {KeyValueItem} from '../key-value-item';
+import dateService from '../services/date.service';
+import { KeyValueItem } from '../models/key-value-item';
 
 export const INFO_ITEMS: KeyValueItem[] = [
     {key: 'PersonInfo_Age', value: dateService.getYearsToNow(1982, 8, 3)},

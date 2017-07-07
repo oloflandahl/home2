@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
-import { KeyValueItem } from '../key-value-item';
-import { INFO_ITEMS } from './person-card-info-items';
-import { SocialLinkItem } from './social-link-item';
-import { LINK_ITEMS } from './person-card-social-link-items';
+import { KeyValueItem } from '../../../models/key-value-item';
+import { SocialLinkItem } from '../../../models/social-link-item';
+
+import { INFO_ITEMS } from '../../../data/person-info-items';
+import { SOCIAL_LINK_ITEMS } from '../../../data/social-link-items';
 
 @Component({
   selector: 'app-person-card',
@@ -18,6 +19,6 @@ export class PersonCardComponent {
 
   constructor() {
     this.infoItems = INFO_ITEMS;
-    this.socialLinkItems = LINK_ITEMS;
+    this.socialLinkItems = SOCIAL_LINK_ITEMS;
   }
 }

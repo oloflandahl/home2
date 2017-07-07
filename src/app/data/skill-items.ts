@@ -1,4 +1,4 @@
-import {KeyValueItem} from '../key-value-item';
+import { KeyValueItem } from '../models/key-value-item';
 
 export const SKILL_ITEMS: KeyValueItem[] = [
     {key: 'JavaScript', value: 90},

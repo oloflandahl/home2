@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { TimelineItem } from './timeline-item';
-import { TIMELINE_ITEMS } from './timeline-items';
+import { TimelineItem } from '../../../models/timeline-item';
+import { TIMELINE_ITEMS } from '../../../data/timeline-items';
 
 @Component({
   selector: 'app-timeline',

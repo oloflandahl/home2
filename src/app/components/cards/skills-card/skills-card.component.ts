@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { KeyValueItem } from '../key-value-item';
-import { SKILL_ITEMS } from './skills-card-skill-items';
+import { KeyValueItem } from '../../../models/key-value-item';
+import { SKILL_ITEMS } from '../../../data/skill-items';
 
 @Component({
   selector: 'app-skills-card',

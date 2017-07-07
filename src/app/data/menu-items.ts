@@ -1,4 +1,4 @@
-import {MenuItem} from './menu-item';
+import { MenuItem } from '../models/menu-item';
 
 export const MENU_ITEMS: MenuItem[] = [
   {id: 'about', translationKey: 'About_Title', isActive: true},
