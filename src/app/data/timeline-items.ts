@@ -10,7 +10,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Securitas',
     url: 'http://www.securitas.se/',
-    technologies: ['ASP.NET', 'MVC', 'KnockoutJS', 'JQuery', 'Git', 'Kanban']
+    technologies: ['ASP.NET', 'MVC', 'KnockoutJS', 'JQuery', 'Jasmine', 'NUnit', 'SQL', 'Git', 'Kanban']
   },
   {
     startYear: 2015,
@@ -21,7 +21,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Tunstall',
     url: 'http://www.tunstall.se/',
-    technologies: ['ASP.NET', 'MVC', 'KnockoutJS', 'Git', 'Kanban']
+    technologies: ['ASP.NET', 'MVC', 'KnockoutJS', 'Jasmine', 'NUnit', 'SQL', 'Git', 'Kanban']
   },
   {
     startYear: 2016,
@@ -43,7 +43,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Telia',
     url: 'https://www.telia.se/privat',
-    technologies: ['AngularJS', 'HTML', 'CSS', 'MagnoliaCMS', 'Git', 'Scrum']
+    technologies: ['AngularJS', 'JQuery', 'Jasmine', 'LESS', 'Magnolia', 'Grunt', 'Git', 'Scrum']
   },
   {
     startYear: 2013,
@@ -54,7 +54,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Vodafone',
     url: 'http://www.vodafone.com.au/',
-    technologies: ['AngularJS', 'BackboneJS', 'JQuery', 'HTML', 'CSS', 'SASS', 'FatWireCMS', 'Git', 'Scrum']
+    technologies: ['AngularJS', 'BackboneJS', 'JQuery', 'JavaScript', 'Jasmine', 'SASS', 'FatWire', 'Git', 'SVN', 'Scrum']
   },
   {
     startYear: 2008,
@@ -65,7 +65,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_SoftwareDeveloper',
     descriptionTranslationKey: 'Experience_Tibco',
     url: 'https://spotfire.tibco.com/',
-    technologies: ['C#', 'ASP.NET', 'Windows Forms', 'JQuery', 'SVN']
+    technologies: ['.NET', 'ASP.NET', 'WinForms', 'C#', 'JQuery', 'JavaScript', 'NUnit', 'SVN']
   },
   {
     startYear: 2008,
@@ -76,7 +76,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_SoftwareDeveloper',
     descriptionTranslationKey: 'Experience_Carmenta',
     url: 'http://www.carmenta.com',
-    technologies: ['.NET', 'C#']
+    technologies: ['.NET', 'C#', 'C++']
   },
   {
     startYear: 2002,

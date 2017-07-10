@@ -26,9 +26,6 @@
 .timeline {
   .card-container;
 
-  filter: grayscale(0%);
-  .transition-extra-long(filter);
-
   .timeline__title {
     .card-title;
     margin-bottom: @padding-double - @cardSpacing-v;
@@ -150,17 +147,21 @@
 
         .timeline-card__technologies {
           .clearfix;
-          .text-light-grey;
           .text-uppercase;
           .text-small;
 
           .timeline-card__technology {
             float: left;
             padding: @padding-quarter;
+            opacity: 0.5;
 
-            &:hover, 
+            &:hover {
+              opacity: 1;
+            }
+
             &.timeline-card__technology--selected {
               .text-color;
+              opacity: 1;
             }
           }
         }
@@ -288,8 +289,6 @@
   }
 
   &.not-in-view {
-    filter: grayscale(100%) !important;
-
     .timeline-cards-container:before, 
     .timeline__dot {
       opacity: 0 !important;

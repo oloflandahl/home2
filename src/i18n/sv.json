@@ -8,7 +8,7 @@
 
    "PersonInfo_Hello": "Hej",
    "PersonInfo_IAm": "Jag är",
-   "PersonInfo_Developer": "Utvecklare",
+   "PersonInfo_Developer": "Webb & mjukvaruutvecklare",
    "PersonInfo_Age": "Ålder",
    "PersonInfo_City": "Stad",
    "PersonInfo_Employment": "Anställning",
@@ -17,7 +17,7 @@
 
    "ResumeSummary_Filename": "oloflandahl_cv_swe.pdf",
    "ResumeSummary_ButtonLabel": "Hämta CV",
-   "ResumeSummary_Text": "Jag är Front End utecklare med bred kunskap inom .NET. Jag har jobbat i både små och stora team, i olika projektformer, med olika nationaliteter och både som konsult och fastanställd.",
+   "ResumeSummary_Text": "Jag är fullstack-utecklare med fokus på frontend och bred kunskap inom .NET. Som person är jag lugn och lätt att ha att göra med.",
 
    "Role_WebDeveloper": "Webbutvecklare",
    "Role_SoftwareDeveloper": "Mjukvaruutvecklare",
