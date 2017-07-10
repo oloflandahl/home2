@@ -7,4 +7,5 @@ export interface TimelineItem {
   subTitleTranslationKey: string;
   descriptionTranslationKey: string;
   url: string;
+  technologies: string[];
 }

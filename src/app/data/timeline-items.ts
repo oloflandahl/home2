@@ -1,6 +1,5 @@
 import { TimelineItem } from '../models/timeline-item';
 
-// TODO Add technologies
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     startYear: 2016,
@@ -10,7 +9,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: 'HiQ - Securitas',
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Securitas',
-    url: 'http://www.securitas.se/'
+    url: 'http://www.securitas.se/',
+    technologies: ['ASP.NET', 'MVC', 'KnockoutJS', 'JQuery', 'Git', 'Kanban']
   },
   {
     startYear: 2015,
@@ -20,7 +20,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: 'HiQ - Tunstall',
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Tunstall',
-    url: 'http://www.tunstall.se/'
+    url: 'http://www.tunstall.se/',
+    technologies: ['ASP.NET', 'MVC', 'KnockoutJS', 'Git', 'Kanban']
   },
   {
     startYear: 2016,
@@ -30,7 +31,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: 'HiQ',
     subTitleTranslationKey: 'Role_CodeTestVerifier',
     descriptionTranslationKey: 'Experience_HiQ',
-    url: 'http://hiq.se/'
+    url: 'http://hiq.se/',
+    technologies: ['JavaScript', 'HTML', 'CSS']
   },
   {
     startYear: 2014,
@@ -40,7 +42,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: 'HiQ - Telia',
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Telia',
-    url: 'https://www.telia.se/privat'
+    url: 'https://www.telia.se/privat',
+    technologies: ['AngularJS', 'HTML', 'CSS', 'MagnoliaCMS', 'Git', 'Scrum']
   },
   {
     startYear: 2013,
@@ -50,7 +53,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: 'DiUS - Vodafone',
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Vodafone',
-    url: 'http://www.vodafone.com.au/'
+    url: 'http://www.vodafone.com.au/',
+    technologies: ['AngularJS', 'BackboneJS', 'JQuery', 'HTML', 'CSS', 'SASS', 'FatWireCMS', 'Git', 'Scrum']
   },
   {
     startYear: 2008,
@@ -60,7 +64,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: 'TIBCO Spotfire',
     subTitleTranslationKey: 'Role_SoftwareDeveloper',
     descriptionTranslationKey: 'Experience_Tibco',
-    url: 'https://spotfire.tibco.com/'
+    url: 'https://spotfire.tibco.com/',
+    technologies: ['C#', 'ASP.NET', 'Windows Forms', 'JQuery', 'SVN']
   },
   {
     startYear: 2008,
@@ -70,7 +75,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: 'Carmenta',
     subTitleTranslationKey: 'Role_SoftwareDeveloper',
     descriptionTranslationKey: 'Experience_Carmenta',
-    url: 'http://www.carmenta.com'
+    url: 'http://www.carmenta.com',
+    technologies: ['.NET', 'C#']
   },
   {
     startYear: 2002,
@@ -80,6 +86,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: 'Linköpings Universitet',
     subTitleTranslationKey: 'Degree_Medieteknik',
     descriptionTranslationKey: 'Experience_Linkoping',
-    url: 'http://liu.se/'
+    url: 'http://liu.se/',
+    technologies: []
   }
 ]

@@ -1,5 +1,15 @@
 <div class="timeline" scrollSection="experience">
   <div class="timeline__title">{{ 'Experience_Title' | translate }}</div>
+  <!-- TODO Either show this summary or just a temporary element with the count for the just clicked tech -->
+<!--   <div class="timeline__technologies-summary" [class.hidden]="selectedTechnologies.length === 0">
+    <div class="timeline__selected-technology" *ngFor="let selectedTech of selectedTechnologies;">
+      <span>{{selectedTech}}</span>:
+      <span>{{techCount[selectedTech]}}</span>
+    </div>
+    <span class="timeline__technologies-close" (click)="clearSelectedTechnologies()">
+      <i class="fa fa-close"></i>
+    </span>
+  </div> -->
   <div class="timeline-cards-container">
     <div class="timeline-card-container" *ngFor="let item of timelineItems; let odd = odd; let even = even;" [ngClass]="{ 'timeline-card-container--left': even, 'timeline-card-container--right': odd }">
       <span class="timeline__dot"></span>
@@ -15,9 +25,11 @@
           <div class="timeline-card__title">{{item.title}}</div>
           <div class="timeline-card__subtitle">{{item.subTitleTranslationKey | translate}}</div>
           <div class="timeline-card__description">{{item.descriptionTranslationKey | translate}}</div>
+          <div class="timeline-card__technologies">
+            <span class="timeline-card__technology" *ngFor="let t of item.technologies;" [ngClass]="{ 'timeline-card__technology--selected': isTechSelected(t) }" (click)="toggleTechnology(t)">{{t}}</span>
+          </div>
         </div>
       </a>
-      
     </div>
   </div>
 </div>
