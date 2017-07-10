@@ -127,6 +127,10 @@
 
         .timeline__dot {
           opacity: 1;
+
+          &:before {
+            opacity: 1;
+          }
         }
       }
 
@@ -165,6 +169,9 @@
             .size(@outerDotSize, @outerDotSize);
             .border-circular;
             border: 3px solid @color-primary;
+
+            opacity: 0;
+            .transition(opacity);
           }
         }
 
