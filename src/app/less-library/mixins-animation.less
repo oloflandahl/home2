@@ -7,14 +7,15 @@
 }
 
 @move-animation-start: 200%;
+@move-animation-duration: 600ms;
 
 .from-left-animation() {
-  animation: fromLeft 1s ease-out both;
+  animation: fromLeft @move-animation-duration ease-out both;
   transform: translate3d(-@move-animation-start, 0, 0);
 }
 
 .from-right-animation() {
-  animation: fromRight 1s ease-out both;
+  animation: fromRight @move-animation-duration ease-out both;
   transform: translate3d(@move-animation-start, 0, 0);
 }
 

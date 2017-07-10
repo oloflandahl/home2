@@ -1,6 +1,5 @@
 
-// TODO Make service into an injectable provider?
-class DateService {
+class DateServiceInstance {
 
   getYearsToNow(year: number, month: number, day: number): number {
     const then = new Date(year, month - 1, day);
@@ -16,4 +15,4 @@ class DateService {
   }
 }
 
-export default new DateService();
+export default new DateServiceInstance();
