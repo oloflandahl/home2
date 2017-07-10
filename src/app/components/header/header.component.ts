@@ -24,7 +24,10 @@ export class HeaderComponent implements OnInit {
   public currentLang: string;
   public items: MenuItem[];
 
-  constructor(@Inject(Window) private _window: Window, private translate: TranslateService, private scrollService: ScrollService, private scrollSectionService: ScrollSectionService) {
+  constructor(@Inject(Window) private _window: Window,
+    private translate: TranslateService,
+    private scrollService: ScrollService,
+    private scrollSectionService: ScrollSectionService) {
     this.currentLang = this.translate.currentLang;
     this.items = MENU_ITEMS;
   }

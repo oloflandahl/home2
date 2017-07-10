@@ -28,11 +28,11 @@ export class ScrollSectionService {
   }
 
   getSectionInView(viewLine: Line): ScrollSectionItem {
-    let sectionMeasures = this.sections.map(s => {
-      var el = s.element.nativeElement;
-      var elLine = { start: el.offsetTop, length: el.clientHeight };
-      return { 
-        section: s, 
+    const sectionMeasures = this.sections.map(s => {
+      const el = s.element.nativeElement;
+      const elLine = { start: el.offsetTop, length: el.clientHeight };
+      return {
+        section: s,
         overlap: viewLine.getOverlap(elLine),
         distance: viewLine.getDistanceFromTop(elLine.start)
       }

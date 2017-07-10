@@ -33,7 +33,7 @@ export class TimelineComponent {
   }
 
   toggleTechnology(t) {
-    var indexOfTech = this.selectedTechnologies.indexOf(t);
+    const indexOfTech = this.selectedTechnologies.indexOf(t);
     if (indexOfTech >= 0) {
       this.selectedTechnologies.splice(indexOfTech, 1);
     } else {
@@ -43,7 +43,7 @@ export class TimelineComponent {
         this.techCount[t] = this.timelineItems.filter(item => item.technologies.indexOf(t) !== -1).length;
       }
     }
-    
+
     return false;
   }
 

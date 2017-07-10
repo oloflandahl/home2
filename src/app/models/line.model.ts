@@ -1,5 +1,5 @@
 
-interface ILine {    
+interface ILine {
   start: number;
   length: number;
 }
