@@ -3,7 +3,7 @@ import { Directive, OnInit, Input, Renderer, ElementRef } from '@angular/core';
 import { ScrollSectionService } from '../services/scroll-section.service';
 
 @Directive({
-  selector: '[scrollSection]',
+  selector: '[appScrollSection]',
   host: {
     '[id]': 'id'
   }
@@ -11,12 +11,12 @@ import { ScrollSectionService } from '../services/scroll-section.service';
 
 export class ScrollSectionDirective implements OnInit {
 
-  @Input('scrollSection') id: string;
+  @Input('appScrollSection') id: string;
 
   constructor(private scrollService: ScrollSectionService, private renderer: Renderer, private element: ElementRef) {
 
   }
- 
+
   ngOnInit() {
     this.scrollService.registerSection({
       id: this.id,
