@@ -1,4 +1,6 @@
-export interface TimelineItem {
+import { LinkItem } from './link-item';
+
+export interface TimelineItem extends LinkItem {
   startYear: number;
   endYear: number;
   logo: string;
@@ -6,6 +8,5 @@ export interface TimelineItem {
   title: string;
   subTitleTranslationKey: string;
   descriptionTranslationKey: string;
-  url: string;
   technologies: string[];
 }

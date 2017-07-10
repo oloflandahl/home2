@@ -1,5 +1,4 @@
-export interface SocialLinkItem {
-  url: string;
-  iconName: string;
-  title: string;
-}
+import { IconItem } from './icon-item';
+import { LinkItem } from './link-item';
+
+export interface SocialLinkItem extends IconItem, LinkItem {}

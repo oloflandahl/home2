@@ -16,6 +16,7 @@ import { PersonCardComponent } from './components/cards/person-card/person-card.
 import { ResumeSummaryComponent } from './components/resume-summary/resume-summary.component';
 import { SkillsCardComponent } from './components/cards/skills-card/skills-card.component';
 import { TimelineComponent } from './components/cards/timeline/timeline.component';
+import { InterestsCardComponent } from './components/cards/interests-card/interests-card.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { TimelineComponent } from './components/cards/timeline/timeline.componen
     PersonCardComponent,
     ResumeSummaryComponent,
     SkillsCardComponent,
-    TimelineComponent
+    TimelineComponent,
+    InterestsCardComponent
   ],
   bootstrap: [ AppComponent ]
 })

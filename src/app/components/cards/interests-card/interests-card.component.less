@@ -1,0 +1,42 @@
+@import '../../../less-library/variables';
+@import '../../../less-library/mixins';
+
+.interests-card-container {
+  .card-container;
+
+  .interests-card__title {
+    .card-title;
+  }
+
+  .interests-card {
+    .card-full;
+    .card-padding;
+    padding-bottom: 0;
+    text-align: center;
+
+    .interests-card__interest {
+      .display-inline-block;
+
+      margin-left: @padding-double;
+      margin-bottom: @padding-double;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      .interests-card__interest-title {
+        .text-small;
+        .text-grey;
+        .text-uppercase;
+        margin-bottom: @padding-quarter;
+      }
+
+      .interests-card__interest-icon {
+        .font-size(@textSize-large-icon);
+        .text-color;
+        .border-primary;
+        padding: @padding-double;
+      }
+    }
+  }
+}

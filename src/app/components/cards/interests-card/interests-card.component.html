@@ -1,0 +1,11 @@
+<div class="interests-card-container" appScrollSection="interests">
+  <div class="interests-card__title">{{ 'Interests_Title' | translate }}</div>
+  <div class="interests-card">
+    <div class="interests-card__interest" *ngFor="let item of interestItems">
+      <div class="interests-card__interest-title">{{ item.title | translate }}</div>
+      <div class="interests-card__interest-icon">
+        <i class="map-icon map-icon-{{item.iconName}}"></i>
+      </div>
+    </div>
+  </div>
+</div>
