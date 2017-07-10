@@ -26,6 +26,9 @@
 .timeline {
   .card-container;
 
+  filter: grayscale(0%);
+  .transition-extra-long(filter);
+
   .timeline__title {
     .card-title;
     margin-bottom: @padding-double - @cardSpacing-v;
@@ -57,7 +60,6 @@
         .card-action;
         .card-padding;
         padding-top: @padding;
-        .transition-extra-long(border-top-color);
 
         .timeline-card__years {
           margin-bottom: @padding-three-quarter;
@@ -179,6 +181,7 @@
 
         &.timeline-card-container--left {
           padding-right: @cardSpacing-h;
+          .from-left-animation;
 
           // Dot (left)
           .timeline__dot {
@@ -197,6 +200,7 @@
 
         &.timeline-card-container--right {
           padding-left: @cardSpacing-h;
+          .from-right-animation;
 
           // Dot (right)
           .timeline__dot {
@@ -226,19 +230,41 @@
 
         }
 
+        .animation-delay-helper(1);
+        .animation-delay-helper(2);
+        .animation-delay-helper(3);
+        .animation-delay-helper(4);
+        .animation-delay-helper(5);
       }
       
     }
   }
 
   &.not-in-view {
-    .timeline-card {
-      border-top-color: #ccc !important;
-    }
+    filter: grayscale(100%) !important;
 
     .timeline-cards-container:before, 
     .timeline__dot {
       opacity: 0 !important;
+    }
+
+    .timeline-card-container--left {
+      animation: none !important;
+    }
+
+    .timeline-card-container--right {
+      animation: none !important;
+    }
+  }
+
+  .animation-delay-helper(@n) {
+    @nth1: 2 * @n;
+    @nth2: @nth1 + 1;
+    &:nth-child(@{nth1}) {
+      animation-delay: @n * 200ms;
+    }
+    &:nth-child(@{nth2}) {
+      animation-delay: @n * 200ms - 20ms;
     }
   }
 

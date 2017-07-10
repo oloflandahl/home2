@@ -16,14 +16,14 @@ export class ScrollSectionService {
 
   private scrollTimeout: number;
 
-  readonly InViewClassName = 'not-in-view';
+  readonly NotInViewClass = 'not-in-view';
 
   constructor(private scrollService: ScrollService) {
     this.sections = [];
   }
 
   registerSection(section: ScrollSectionItem): void {
-    section.element.nativeElement.classList.add(this.InViewClassName);
+    section.element.nativeElement.classList.add(this.NotInViewClass);
     this.sections.push(section);
   }
 
@@ -52,8 +52,8 @@ export class ScrollSectionService {
       newActiveItem.isActive = true;
 
       const sectionEl = section.element.nativeElement;
-      if (sectionEl.classList.contains(this.InViewClassName)) {
-        sectionEl.classList.remove(this.InViewClassName);
+      if (sectionEl.classList.contains(this.NotInViewClass)) {
+        sectionEl.classList.remove(this.NotInViewClass);
       }
     }
   }
