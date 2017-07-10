@@ -41,6 +41,7 @@
       z-index: @z-back;
       width: @timelineWidth;
       .bg-bar;
+      .transition-extra-long(opacity);
     }
 
     .timeline-card-container {
@@ -56,6 +57,7 @@
         .card-action;
         .card-padding;
         padding-top: @padding;
+        .transition-extra-long(border-top-color);
 
         .timeline-card__years {
           margin-bottom: @padding-three-quarter;
@@ -147,7 +149,7 @@
 
           background-image: url(./img/arrows.png);
           background-repeat: no-repeat;
-          background-position-y: -@arrowHeight; 
+          background-position-y: -@arrowHeight;
         }
 
         // Dot
@@ -159,7 +161,7 @@
           .bg-color;
 
           opacity: 0.5;
-          .transition(opacity);
+          .transition-extra-long(opacity);
 
           // Outer dot
           &:before {
@@ -226,6 +228,17 @@
 
       }
       
+    }
+  }
+
+  &.not-in-view {
+    .timeline-card {
+      border-top-color: #ccc !important;
+    }
+
+    .timeline-cards-container:before, 
+    .timeline__dot {
+      opacity: 0 !important;
     }
   }
 

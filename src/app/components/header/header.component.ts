@@ -2,6 +2,7 @@ import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { TranslateService } from 'ng2-translate';
 
+import { ScrollService } from '../../services/scroll.service';
 import { ScrollSectionService } from '../../services/scroll-section.service';
 
 import { MenuItem } from '../../models/menu-item';
@@ -23,7 +24,7 @@ export class HeaderComponent implements OnInit {
   public currentLang: string;
   public items: MenuItem[];
 
-  constructor(@Inject(DOCUMENT) private _document: Document, @Inject(Window) private _window: Window, private translate: TranslateService, private scrollService: ScrollSectionService) {
+  constructor(@Inject(Window) private _window: Window, private translate: TranslateService, private scrollService: ScrollService, private scrollSectionService: ScrollSectionService) {
     this.currentLang = this.translate.currentLang;
     this.items = MENU_ITEMS;
   }
@@ -66,9 +67,9 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    const scrollTop = this._document.documentElement && this._document.documentElement.scrollTop || this._document.body.scrollTop;
+    const scrollTop = this.scrollService.getScrollTop();
     this.isSticky = scrollTop > 0;
 
-    this.scrollService.onWindowScroll();
+    this.scrollSectionService.onWindowScroll();
   }
 }

@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { TranslateModule } from 'ng2-translate';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
+import { ScrollService } from './services/scroll.service';
 import { ScrollSectionService } from './services/scroll-section.service';
 
 import { ScrollSectionDirective } from './directives/scroll-section.directive';
@@ -24,6 +25,7 @@ import { TimelineComponent } from './components/cards/timeline/timeline.componen
     Ng2PageScrollModule.forRoot()
   ],
   providers: [
+    ScrollService,
     ScrollSectionService,
     { provide: Window, useValue: window }
   ],

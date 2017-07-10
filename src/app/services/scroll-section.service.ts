@@ -1,6 +1,8 @@
 import { Inject, Injectable, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 
+import { ScrollService } from '../services/scroll.service';
+
 import { Line } from '../models/line.model';
 import { ScrollSectionItem } from '../models/scroll-section-item';
 import { MENU_ITEMS } from '../data/menu-items';
@@ -14,54 +16,46 @@ export class ScrollSectionService {
 
   private scrollTimeout: number;
 
-  constructor(@Inject(DOCUMENT) private _document: Document, @Inject(Window) private _window: Window) {
+  readonly InViewClassName = 'not-in-view';
+
+  constructor(private scrollService: ScrollService) {
     this.sections = [];
   }
 
   registerSection(section: ScrollSectionItem): void {
+    section.element.nativeElement.classList.add(this.InViewClassName);
     this.sections.push(section);
   }
 
-  getSectionInView(viewLine: Line): string {
+  getSectionInView(viewLine: Line): ScrollSectionItem {
     let sectionMeasures = this.sections.map(s => {
       var el = s.element.nativeElement;
       var elLine = { start: el.offsetTop, length: el.clientHeight };
       return { 
-        id: s.id, 
+        section: s, 
         overlap: viewLine.getOverlap(elLine),
         distance: viewLine.getDistanceFromTop(elLine.start)
       }
     });
 
-    return sectionMeasures.sort((a, b) => a.distance - b.distance || b.overlap - a.overlap)[0].id;
+    return sectionMeasures.sort((a, b) => a.distance - b.distance || b.overlap - a.overlap)[0].section;
   }
 
   onWindowScroll() {
-    if (this.scrollTimeout) {
-      this._window.clearTimeout(this.scrollTimeout);
-    }
-
-    const scrollTop = this._document.documentElement && this._document.documentElement.scrollTop || this._document.body.scrollTop;
-    this.scrollTimeout = this._window.setTimeout(this.onWindowScrollWithDelay.bind(this), 100, scrollTop);
-  }
-
-  onWindowScrollWithDelay(scrollTop) {
-    console.log('scroll');
-    const windowVerticalLine = new Line({
-      start: scrollTop,
-      length: this._window.innerHeight,
-    });
-
-    const id = this.getSectionInView(windowVerticalLine);
+    const viewLine = this.scrollService.getViewLine();
+    const section = this.getSectionInView(viewLine);
 
     const activeItem = this.menuItems.filter(i => i.isActive)[0];
-    const newActiveItem = this.menuItems.filter(i => i.id === id)[0];
+    const newActiveItem = this.menuItems.filter(i => i.id === section.id)[0];
     if (activeItem !== newActiveItem) {
       activeItem.isActive = false;
       newActiveItem.isActive = true;
-    }
 
-    this.scrollTimeout = null;
+      const sectionEl = section.element.nativeElement;
+      if (sectionEl.classList.contains(this.InViewClassName)) {
+        sectionEl.classList.remove(this.InViewClassName);
+      }
+    }
   }
 
 }

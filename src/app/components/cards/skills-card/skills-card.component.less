@@ -37,10 +37,17 @@
             &.skill__bar--fill {
               z-index: @z-2;
               .bar;
+              .transition-extra-long(width);
             }
           }
         }
       }
+    }
+  }
+
+  &.not-in-view {
+    .skill__bar.skill__bar--fill {
+      width: 0 !important;
     }
   }
 }
