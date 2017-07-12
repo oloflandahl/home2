@@ -90,7 +90,7 @@
   }
 }
 
-.text-bubble {
+.text-bubble(@arrowDown: true) {
   @arrowSize: 8px;
   @arrowOffset: 5px;
 
@@ -105,12 +105,17 @@
   &:before {
     content: '';
     border-style: solid;
-    border-width: 0 0 @arrowSize @arrowSize;
     border-color: transparent;
     border-left-color: @red-light;
-
     .display-block;
     .size(0, 0);
+
+    border-width: 0 0 @arrowSize @arrowSize;
     .position(absolute, 100%, auto, auto, @arrowOffset);
+
+    & when (@arrowDown = false) {
+      border-width: @arrowSize 0 0 @arrowSize;
+      .position(absolute, auto, auto, 100%, @arrowOffset);
+    }
   }
 }

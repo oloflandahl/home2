@@ -41,5 +41,13 @@
    "Interest_Football": "Football",
    "Interest_Surfing": "Surf",
    "Interest_Photo": "Photo",
-   "Interest_Music": "Music"
+   "Interest_Music": "Music",
+
+   "Interest_Food_Description": "I Sydney blev jag frälst av mat och gillar att prova nya rätter.",
+   "Interest_Beer_Description": "Att dricka en riktigt god öl är det inte mycket som slår.",
+   "Interest_Football_Description": "Jag kollar en del på fotboll, i synnerhet IFK Göteborg som jag också har årskort till.",
+   "Interest_Surfing_Description": "Även om jag hade provat på att surfa tidigare var det i Sydney det tog fart. Jag surfar även här i Sverige men det blir inte jätteofta pga vågorna.",
+   "Interest_Photo_Description": "På senaste åren har mitt fotointresse svalnat men ibland är det riktigt kul att ta fram kameran och utmana sig själv.",
+   "Interest_Music_Description": "Jag växte upp med mycket musik och intrument omkring mig. Jag spelar gitarr och har spelat i band.",
+   "Interest_Nature_Description": "Jag gillar att vara i naturen och vandra."
 }
