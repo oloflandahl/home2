@@ -1,6 +1,7 @@
 <div class="interests-card-container" appScrollSection="interests">
   <div class="interests-card__title">{{ 'Interests_Title' | translate }}</div>
   <div class="interests-card">
+    <!-- TODO Show text for an active interest -->
     <div class="interests-card__interest" *ngFor="let item of interestItems">
       <div class="interests-card__interest-title hidden-xs">{{ item.title | translate }}</div>
       <div class="interests-card__interest-icon">
