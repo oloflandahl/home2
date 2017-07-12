@@ -9,11 +9,15 @@
   }
 
   .interests-card {
+    .clearfix;
     .card-full;
     .card-padding;
+    margin: 0 -@padding-three-quarter;
 
     .interests-card__interest {
-
+      float: left;
+      width: 14.28571428571429%; // 1/7 of total width
+      padding-left: @padding-three-quarter;
       text-align: center;
 
       .interests-card__interest-title {
