@@ -49,7 +49,7 @@ export class ScrollSectionService {
     if (this.scrollTimeout) {
       this._window.clearTimeout(this.scrollTimeout);
     }
-    
+
     this.scrollTimeout = this._window.setTimeout(this.onWindowScrollDelay.bind(this), 100);
   }
 
@@ -68,7 +68,7 @@ export class ScrollSectionService {
     sectionsInView.map(s => s.element.nativeElement.classList).forEach(cl => {
       cl.remove(this.NotActivatedClass);
     });
-    
+
     this.scrollTimeout = null;
   }
 

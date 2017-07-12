@@ -11,7 +11,7 @@ import { SOCIAL_LINK_ITEMS } from '../../data/social-link-items';
 
 export class SocialLinksComponent {
 
-  @Input() theme: string = 'normal';
+  @Input() theme = 'normal';
 
   socialLinkItems: SocialLinkItem[];
 
