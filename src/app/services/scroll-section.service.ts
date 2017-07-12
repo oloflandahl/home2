@@ -16,18 +16,19 @@ export class ScrollSectionService {
 
   private scrollTimeout: number;
 
-  readonly NotInViewClass = 'not-in-view';
+  readonly NotActivatedClass = 'not-activated';
 
-  constructor(private scrollService: ScrollService) {
+  constructor(private scrollService: ScrollService, @Inject(Window) private _window: Window) {
     this.sections = [];
   }
 
   registerSection(section: ScrollSectionItem): void {
-    section.element.nativeElement.classList.add(this.NotInViewClass);
+    section.element.nativeElement.classList.add(this.NotActivatedClass);
     this.sections.push(section);
   }
 
-  getSectionInView(viewLine: Line): ScrollSectionItem {
+  // Ordered by 'view points'
+  getSectionsInView(viewLine: Line): ScrollSectionItem[] {
     const sectionMeasures = this.sections.map(s => {
       const el = s.element.nativeElement;
       const elLine = { start: el.offsetTop, length: el.clientHeight };
@@ -38,24 +39,37 @@ export class ScrollSectionService {
       }
     });
 
-    return sectionMeasures.sort((a, b) => a.distance - b.distance || b.overlap - a.overlap)[0].section;
+    return sectionMeasures
+      .filter(item => item.overlap > 100)
+      .sort((a, b) => a.distance - b.distance || b.overlap - a.overlap)
+      .map(item => item.section);
   }
 
   onWindowScroll() {
+    if (this.scrollTimeout) {
+      this._window.clearTimeout(this.scrollTimeout);
+    }
+    
+    this.scrollTimeout = this._window.setTimeout(this.onWindowScrollDelay.bind(this), 100);
+  }
+
+  onWindowScrollDelay() {
     const viewLine = this.scrollService.getViewLine();
-    const section = this.getSectionInView(viewLine);
+    const sectionsInView = this.getSectionsInView(viewLine);
+    const sectionToActivate = sectionsInView[0];
 
     const activeItem = this.menuItems.filter(i => i.isActive)[0];
-    const newActiveItem = this.menuItems.filter(i => i.id === section.id)[0];
+    const newActiveItem = this.menuItems.filter(i => i.id === sectionToActivate.id)[0];
     if (activeItem !== newActiveItem) {
       activeItem.isActive = false;
       newActiveItem.isActive = true;
-
-      const sectionEl = section.element.nativeElement;
-      if (sectionEl.classList.contains(this.NotInViewClass)) {
-        sectionEl.classList.remove(this.NotInViewClass);
-      }
     }
+
+    sectionsInView.map(s => s.element.nativeElement.classList).forEach(cl => {
+      cl.remove(this.NotActivatedClass);
+    });
+    
+    this.scrollTimeout = null;
   }
 
 }
