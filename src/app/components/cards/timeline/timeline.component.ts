@@ -12,8 +12,7 @@ import { TIMELINE_ITEMS } from '../../../data/timeline-items';
 export class TimelineComponent {
 
   timelineItems: TimelineItem[];
-  selectedTechnologies: string[];
-  techCount: { [name: string]: number };
+  selectedTech: string;
 
   constructor() {
     this.timelineItems = TIMELINE_ITEMS.sort((a, b): number => {
@@ -23,31 +22,12 @@ export class TimelineComponent {
 
       return b.startYear - a.startYear;
     });
-
-    this.selectedTechnologies = [];
-    this.techCount = {};
-  }
-
-  isTechSelected(t): boolean {
-    return this.selectedTechnologies.indexOf(t) !== -1;
   }
 
   toggleTechnology(t) {
-    const indexOfTech = this.selectedTechnologies.indexOf(t);
-    if (indexOfTech >= 0) {
-      this.selectedTechnologies.splice(indexOfTech, 1);
-    } else {
-      this.selectedTechnologies.push(t);
-
-      if (!this.techCount[t]) {
-        this.techCount[t] = this.timelineItems.filter(item => item.technologies.indexOf(t) !== -1).length;
-      }
-    }
+    this.selectedTech = this.selectedTech === t ? null : t;
 
     return false;
   }
 
-  clearSelectedTechnologies() {
-    this.selectedTechnologies = [];
-  }
 }
