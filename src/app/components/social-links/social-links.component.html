@@ -1,0 +1,7 @@
+<ul class="social-links social-links--{{theme}}">
+  <li *ngFor="let item of socialLinkItems;" class="social-links__link">
+    <a href="{{item.url}}" target="_blank" title="{{item.title}}">
+      <i class="fa fa-{{item.iconName}}"></i>
+    </a>
+  </li>
+</ul>

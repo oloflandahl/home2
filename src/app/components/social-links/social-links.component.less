@@ -1,0 +1,50 @@
+@import '../../less-library/variables';
+@import '../../less-library/mixins';
+
+.social-links {
+  padding: @padding;
+  text-align: center;
+
+  &.social-links--color {
+    background: @red-light;
+  }
+
+  .social-links__link {
+    @iconSize: @textSize-icon;
+    @iconPadding: @padding-half;
+    @linkSize: @iconSize + (2 * @iconPadding);
+
+    display: inline-block;
+    width: @linkSize;
+    height: @linkSize;
+    margin: 0 @iconPadding;
+    
+    font-size: @iconSize;
+    line-height: @linkSize;
+
+    .border-circular;
+    background: transparent;
+
+    .transition-short(background);
+
+    a {
+      .text-light-grey;
+    }
+
+    &:hover {
+      background: rgba(0,0,0, 0.1);
+
+      a {
+        .text-dark;
+      }
+    }
+  }
+
+  &.social-links--color {
+    .social-links__link {
+      a, a:hover {
+        .text-on-dark;
+      }
+    }
+  }
+}

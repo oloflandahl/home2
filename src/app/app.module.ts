@@ -12,6 +12,8 @@ import { ScrollSectionDirective } from './directives/scroll-section.directive';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BackImgComponent } from './components/back-img/back-img.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { SocialLinksComponent } from './components/social-links/social-links.component';
 import { PersonCardComponent } from './components/cards/person-card/person-card.component';
 import { ResumeSummaryComponent } from './components/resume-summary/resume-summary.component';
 import { SkillsCardComponent } from './components/cards/skills-card/skills-card.component';
@@ -35,6 +37,8 @@ import { InterestsCardComponent } from './components/cards/interests-card/intere
     AppComponent,
     HeaderComponent,
     BackImgComponent,
+    FooterComponent,
+    SocialLinksComponent,
     PersonCardComponent,
     ResumeSummaryComponent,
     SkillsCardComponent,

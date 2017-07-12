@@ -63,42 +63,5 @@
         }
       }
     }
-
-    .person-card__footer {
-      padding: @padding;
-      text-align: center;
-      background: @red-light;
-
-      .person-card__social-links {
-
-        .person-card__social-link {
-          @iconSize: @textSize-icon;
-          @iconPadding: @padding-half;
-          @linkSize: @iconSize + (2 * @iconPadding);
-
-          display: inline-block;
-          width: @linkSize;
-          height: @linkSize;
-          margin: 0 @iconPadding;
-          
-          font-size: @iconSize;
-          line-height: @linkSize;
-
-          .border-circular;
-          background: transparent;
-
-          .transition-short(background);
-
-          &:hover {
-            background: rgba(0,0,0, 0.1);
-          }
-
-          a {
-            .text-on-dark;
-          }
-        }
-      }
-      
-    }
   }
 }

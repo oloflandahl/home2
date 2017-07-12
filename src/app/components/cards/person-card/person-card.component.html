@@ -22,13 +22,7 @@
       </div>
     </div>
     <div class="person-card__footer">
-      <ul class="person-card__social-links">
-        <li *ngFor="let item of socialLinkItems;" class="person-card__social-link">
-          <a href="{{item.url}}" target="_blank" title="{{item.title}}">
-            <i class="fa fa-{{item.iconName}}"></i>
-          </a>
-        </li>
-      </ul>
+      <app-social-links [theme]="'color'"></app-social-links>
     </div>
   </div>
 </div>
