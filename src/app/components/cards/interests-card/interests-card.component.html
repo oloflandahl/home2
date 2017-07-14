@@ -3,7 +3,6 @@
   <div class="interests-card">
     <div class="interests-card__interests">
       <div class="interests-card__interest" [class.interests-card__interest--active]="activeItem === item" *ngFor="let item of interestItems; let index = index" (click)="select(item, index)">
-        <div class="interests-card__interest-title hidden-xs">{{ item.title | translate }}</div>
         <div class="interests-card__interest-icon">
           <i class="{{item.iconPrefix}} {{item.iconPrefix}}-{{item.iconName}}"></i>
         </div>
