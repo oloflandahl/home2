@@ -5,6 +5,10 @@
   padding: @padding;
   text-align: center;
 
+  @media (max-width: @mq-sm-min) {
+    padding: @padding @padding-half;
+  }
+
   &.social-links--color {
     background: @red-light;
   }
@@ -19,8 +23,12 @@
     height: @linkSize;
     padding: @iconPadding;
     margin: 0 @iconPadding;
-    
+
     .font-size(@iconSize);
+
+    @media (max-width: @mq-sm-min) {
+      margin: 0;
+    }
 
     .border-circular;
     background: transparent;
