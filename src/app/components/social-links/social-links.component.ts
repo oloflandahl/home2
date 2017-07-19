@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { SocialLinkItem } from '../../models/social-link-item';
+import { IconLinkItem } from '../../models/icon-link-item';
 import { SOCIAL_LINK_ITEMS } from '../../data/social-link-items';
 
 @Component({
@@ -13,7 +13,7 @@ export class SocialLinksComponent {
 
   @Input() theme = 'normal';
 
-  socialLinkItems: SocialLinkItem[];
+  socialLinkItems: IconLinkItem[];
 
   constructor() {
     this.socialLinkItems = SOCIAL_LINK_ITEMS;

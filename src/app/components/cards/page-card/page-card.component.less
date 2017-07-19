@@ -11,6 +11,37 @@
   .page-card {
     .card-full;
     .card-padding;
-    .text-body;
+
+    .page-card__description {
+      .text-body;
+    }
+  }
+
+  .page-card__icons {
+    margin-top: @padding;
+    text-align: center;
+
+    .page-card__icon-link {
+      @iconSize: 100px;
+      .display-inline-block;
+      .size(@iconSize, @iconSize);
+      margin: @padding;
+      padding: @padding;
+      .btn;
+      
+      &:hover .page-card__icon {
+        opacity: 1;
+      }
+
+      .page-card__icon {
+        .size(100%, 100%);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        background-origin: center;
+        opacity: 0.6;
+        .transition-short(opacity);
+      }
+    }
   }
 }
