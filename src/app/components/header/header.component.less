@@ -16,7 +16,7 @@
 @this-sticky-height: 2 * @this-sticky-pad-v + @this-inner-height;
 
 .active-item() {
-  @media (max-width: @mq-sm-min) {
+  @media (max-width: @mq-xs-max) {
     background-color: @grey-lightest;
   }
 
@@ -68,7 +68,7 @@
     .font-size(@this-inner-height, @this-inner-height);
     cursor: pointer;
 
-    @media (max-width: @mq-sm-min) {
+    @media (max-width: @mq-xs-max) {
      .display-block;
       float: right;
     }
@@ -77,7 +77,7 @@
   .navbar {
     .clearfix;
 
-    @media (max-width: @mq-sm-min) {
+    @media (max-width: @mq-xs-max) {
       .position(fixed, 0, -80%, 0);
       .transition(all);
       .bg-secondary;
@@ -98,7 +98,7 @@
     padding: @this-item-pad;
     margin-left: @padding;
 
-    @media (max-width: @mq-sm-min) {
+    @media (max-width: @mq-xs-max) {
       float: none;
       margin-left: 0;
       padding: @padding-double;
@@ -110,7 +110,7 @@
       font-weight: @textWeight-bold;
       .header-text;
 
-      @media (max-width: @mq-sm-min) {
+      @media (max-width: @mq-xs-max) {
         .header-text--on-white;
       }
 
@@ -124,7 +124,7 @@
       .display-inline-block;
       .border-primary;
 
-      @media (max-width: @mq-sm-min) {
+      @media (max-width: @mq-xs-max) {
         margin-top: @padding-double;
         padding: @padding;
       }
@@ -137,7 +137,7 @@
       text-align: right;
       cursor: pointer;
 
-      @media (max-width: @mq-sm-min) {
+      @media (max-width: @mq-xs-max) {
         .display-block;
       }
     }
