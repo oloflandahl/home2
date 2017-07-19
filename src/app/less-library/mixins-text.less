@@ -90,14 +90,14 @@
   }
 }
 
-.text-bubble(@arrowDown: true) {
+.text-bubble(@arrowDown: true, @bgColor: @red-light) {
   @arrowSize: 8px;
   @arrowOffset: 5px;
 
   position: relative;
   margin-bottom: @arrowSize;
   padding: @padding-quarter @padding-half;
-  background: @red-light;
+  background: @bgColor;
 
   .display-inline-block;
   .text-on-dark;
@@ -106,7 +106,7 @@
     content: '';
     border-style: solid;
     border-color: transparent;
-    border-left-color: @red-light;
+    border-left-color: @bgColor;
     .display-block;
     .size(0, 0);
 

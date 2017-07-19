@@ -44,11 +44,9 @@
 
     .interests-card__interest-description {
       width: 100%;
-      padding: @padding;
-      .border-secondary;
       .text-body;
-
-      .text-bubble(false);
+      .text-bubble(false, @grey);
+      padding: @padding-half @padding;
 
       &:before {
         .transition-short(left);
