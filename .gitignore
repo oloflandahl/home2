@@ -5,6 +5,3 @@ typings
 .DS_Store
 .tscache
 *.log
-
-// TODO Remove this before first deploy
-dist
