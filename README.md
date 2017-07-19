@@ -1,1 +1,1 @@
-# home2
+My homepage with information about me and my CV.
