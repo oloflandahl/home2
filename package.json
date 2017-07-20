@@ -6,8 +6,8 @@
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build",
-    "prepublish": "ng build",
-    "publish": "git add . && git commit -a -m \"Publish\" && git push && git subtree push --prefix dist origin gh-pages",
+    "publish": "ng build",
+    "postpublish": "git add . && git commit -a -m \"Publish\" && git push && git subtree push --prefix dist origin gh-pages",
     "dist": "lite-server",
     "lint": "ng lint"
   },
