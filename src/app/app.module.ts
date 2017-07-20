@@ -7,6 +7,7 @@ import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { ScrollService } from './services/scroll.service';
 import { ScrollSectionService } from './services/scroll-section.service';
 
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ScrollSectionDirective } from './directives/scroll-section.directive';
 
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { PageCardComponent } from './components/cards/page-card/page-card.compon
     { provide: Window, useValue: window }
   ],
   declarations: [
+    ClickOutsideDirective,
     ScrollSectionDirective,
     AppComponent,
     HeaderComponent,

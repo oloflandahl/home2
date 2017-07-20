@@ -1,5 +1,5 @@
-<div class="app-header" [class.app-header--init]="isInit" [class.app-header--sticky]="isSticky" [class.app-header--hide-sticky]="stickyIsHidden">
-  <div class="app-header__title">oloflandahl.com</div>
+<div class="app-header" [class.app-header--init]="isInit" [class.app-header--sticky]="isSticky" [class.app-header--hide-sticky]="stickyIsHidden" (appClickOutside)="closeMenu()">
+  <div class="app-header__title hidden-sm">oloflandahl.com</div>
   <nav class="app-header__navbar">
     <div class="app-header__navbar-icon" (click)="openMenu()">
       <i class="fa fa-bars"></i>
