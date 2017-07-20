@@ -21,6 +21,10 @@
 
 .card-padding() {
   padding: @card-padding;
+
+  @media (max-width: @mq-xxs-max) {
+    padding: @card-padding-half;
+  }
 }
 
 .card-action() {
