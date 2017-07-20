@@ -18,13 +18,15 @@ export class InterestsCardComponent {
 
   constructor() {
     this.interestItems = INTEREST_ITEMS;
-
-    this.activeIndex = 0;
-    this.activeItem = this.interestItems[this.activeIndex];
   }
 
-  select(item: InterestItem, index: number) {
-    this.activeItem = item;
-    this.activeIndex = index;
+  toggle(item: InterestItem, index: number) {
+    if (this.activeItem === item) {
+      this.activeItem = null;
+      this.activeIndex = null;
+    } else {
+      this.activeItem = item;
+      this.activeIndex = index;
+    }
   }
 }

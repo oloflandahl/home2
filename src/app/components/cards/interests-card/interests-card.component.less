@@ -51,10 +51,20 @@
     }
 
     .interests-card__interest-description {
+      position: relative;
       width: 100%;
       .text-body;
-      .text-bubble(false, @grey);
-      padding: @padding-half @padding;
+      .text-bubble(false);
+      padding: @padding-half @padding-double @padding-half @padding;
+
+      .interests-card__interest-description-close {
+        .position(absolute, @padding-quarter, @padding-half);
+
+        &:hover {
+          .text-light-grey;
+          cursor: pointer;
+        }
+      }
 
       &:before {
         .transition-short(left);
