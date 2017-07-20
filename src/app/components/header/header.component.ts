@@ -1,5 +1,4 @@
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
 import { TranslateService } from 'ng2-translate';
 
 import { ScrollService } from '../../services/scroll.service';
