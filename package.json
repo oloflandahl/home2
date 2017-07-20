@@ -7,7 +7,7 @@
     "start": "ng serve --open",
     "build": "ng build",
     "publish": "ng build",
-    "postpublish": "git add dist/* && git commit -a -m \"Publish\" && git push && git subtree push --prefix dist origin gh-pages",
+    "postpublish": "git add dist/* && git commit -m \"Publish\" && git push && git subtree push --prefix dist origin gh-pages",
     "dist": "lite-server",
     "lint": "ng lint"
   },
