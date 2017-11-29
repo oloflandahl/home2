@@ -20,7 +20,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_lazy_route_resource lazy re
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-root\">\r\n  <app-back-img></app-back-img>\r\n  <app-header></app-header>\r\n  <div class=\"container cards-container\">\r\n    <app-person-card></app-person-card>\r\n    <app-resume-summary></app-resume-summary>\r\n    <app-skills-card></app-skills-card>\r\n    <app-timeline></app-timeline>\r\n    <app-interests-card></app-interests-card>\r\n    <app-page-card></app-page-card>\r\n  </div>\r\n  <app-footer></app-footer>"
+module.exports = "<div class=\"app-root\">\n  <app-back-img></app-back-img>\n  <app-header></app-header>\n  <div class=\"container cards-container\">\n    <app-person-card></app-person-card>\n    <app-resume-summary></app-resume-summary>\n    <app-skills-card></app-skills-card>\n    <app-timeline></app-timeline>\n    <app-interests-card></app-interests-card>\n    <app-page-card></app-page-card>\n  </div>\n  <app-footer></app-footer>"
 
 /***/ }),
 
@@ -106,18 +106,19 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_page_scroll__ = __webpack_require__("../../../../ng2-page-scroll/ng2-page-scroll.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_scroll_service__ = __webpack_require__("../../../../../src/app/services/scroll.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_scroll_section_service__ = __webpack_require__("../../../../../src/app/services/scroll-section.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__directives_scroll_section_directive__ = __webpack_require__("../../../../../src/app/directives/scroll-section.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_header_header_component__ = __webpack_require__("../../../../../src/app/components/header/header.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_back_img_back_img_component__ = __webpack_require__("../../../../../src/app/components/back-img/back-img.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_footer_footer_component__ = __webpack_require__("../../../../../src/app/components/footer/footer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_social_links_social_links_component__ = __webpack_require__("../../../../../src/app/components/social-links/social-links.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_cards_person_card_person_card_component__ = __webpack_require__("../../../../../src/app/components/cards/person-card/person-card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_resume_summary_resume_summary_component__ = __webpack_require__("../../../../../src/app/components/resume-summary/resume-summary.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_cards_skills_card_skills_card_component__ = __webpack_require__("../../../../../src/app/components/cards/skills-card/skills-card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_cards_timeline_timeline_component__ = __webpack_require__("../../../../../src/app/components/cards/timeline/timeline.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_cards_interests_card_interests_card_component__ = __webpack_require__("../../../../../src/app/components/cards/interests-card/interests-card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_cards_page_card_page_card_component__ = __webpack_require__("../../../../../src/app/components/cards/page-card/page-card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__directives_click_outside_directive__ = __webpack_require__("../../../../../src/app/directives/click-outside.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__directives_scroll_section_directive__ = __webpack_require__("../../../../../src/app/directives/scroll-section.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_header_header_component__ = __webpack_require__("../../../../../src/app/components/header/header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_back_img_back_img_component__ = __webpack_require__("../../../../../src/app/components/back-img/back-img.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_footer_footer_component__ = __webpack_require__("../../../../../src/app/components/footer/footer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_social_links_social_links_component__ = __webpack_require__("../../../../../src/app/components/social-links/social-links.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_cards_person_card_person_card_component__ = __webpack_require__("../../../../../src/app/components/cards/person-card/person-card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_resume_summary_resume_summary_component__ = __webpack_require__("../../../../../src/app/components/resume-summary/resume-summary.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_cards_skills_card_skills_card_component__ = __webpack_require__("../../../../../src/app/components/cards/skills-card/skills-card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_cards_timeline_timeline_component__ = __webpack_require__("../../../../../src/app/components/cards/timeline/timeline.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_cards_interests_card_interests_card_component__ = __webpack_require__("../../../../../src/app/components/cards/interests-card/interests-card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_cards_page_card_page_card_component__ = __webpack_require__("../../../../../src/app/components/cards/page-card/page-card.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -282,7 +283,7 @@ module.exports = __webpack_require__.p + "bg4.bca46e33d75544e7b956.jpg";
 /***/ "../../../../../src/app/components/cards/interests-card/interests-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"interests-card-container\" appScrollSection=\"interests\">\r\n  <div class=\"interests-card__title\">{{ 'Interests_Title' | translate }}</div>\r\n  <div class=\"interests-card\">\r\n    <div class=\"interests-card__interests\">\r\n      <div class=\"interests-card__interest\" [class.interests-card__interest--active]=\"activeItem === item\" *ngFor=\"let item of interestItems; let index = index\" (click)=\"toggle(item, index)\">\r\n        <div class=\"interests-card__interest-icon\">\r\n          <i class=\"{{item.iconPrefix}} {{item.iconPrefix}}-{{item.iconName}}\"></i>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"interests-card__interest-description interests-card__interest-description--{{activeIndex}}\" *ngIf=\"activeItem\">\r\n      {{ activeItem.description | translate }}\r\n      <span class=\"interests-card__interest-description-close\" (click)=\"toggle(null, null)\"><i class=\"fa fa-close\"></i></span>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"interests-card-container\" appScrollSection=\"interests\">\n  <div class=\"interests-card__title\">{{ 'Interests_Title' | translate }}</div>\n  <div class=\"interests-card\">\n    <div class=\"interests-card__interests\">\n      <div class=\"interests-card__interest\" [class.interests-card__interest--active]=\"activeItem === item\" *ngFor=\"let item of interestItems; let index = index\" (click)=\"toggle(item, index)\">\n        <div class=\"interests-card__interest-icon\">\n          <i class=\"{{item.iconPrefix}} {{item.iconPrefix}}-{{item.iconName}}\"></i>\n        </div>\n      </div>\n    </div>\n    <div class=\"interests-card__interest-description interests-card__interest-description--{{activeIndex}}\" *ngIf=\"activeItem\">\n      {{ activeItem.description | translate }}\n      <span class=\"interests-card__interest-description-close\" (click)=\"toggle(null, null)\"><i class=\"fa fa-close\"></i></span>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -354,7 +355,7 @@ var InterestsCardComponent = (function () {
 /***/ "../../../../../src/app/components/cards/page-card/page-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"page-card-container\" appScrollSection=\"page\">\r\n  <div class=\"page-card__title\">{{ 'AboutPage_Title' | translate }}</div>\r\n  <div class=\"page-card\">\r\n    <div class=\"page-card__description\">{{ 'AboutPage_Description' | translate }}</div>\r\n  </div>\r\n  <div class=\"page-card__icons\">\r\n    <a class=\"page-card__icon-link\" *ngFor=\"let item of brandItems;\" target=\"_blank\" [href]=\"item.url\" [title]=\"item.title\">\r\n      <div class=\"page-card__icon\" [style.background-image]=\"'url(/assets/logos/'+item.iconName+'.svg)'\"></div>\r\n    </a>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"page-card-container\" appScrollSection=\"page\">\n  <div class=\"page-card__title\">{{ 'AboutPage_Title' | translate }}</div>\n  <div class=\"page-card\">\n    <div class=\"page-card__description\">{{ 'AboutPage_Description' | translate }}</div>\n  </div>\n  <div class=\"page-card__icons\">\n    <a class=\"page-card__icon-link\" *ngFor=\"let item of brandItems;\" target=\"_blank\" [href]=\"item.url\" [title]=\"item.title\">\n      <div class=\"page-card__icon\" [style.background-image]=\"'url(/assets/logos/'+item.iconName+'.svg)'\"></div>\n    </a>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -423,7 +424,7 @@ module.exports = __webpack_require__.p + "me.c20c7eea99cb0834027c.jpg";
 /***/ "../../../../../src/app/components/cards/person-card/person-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"person-card-container\" appScrollSection=\"about\">\r\n  <div class=\"person-card\">\r\n    <div class=\"row person-card__content\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"person-card__photo hidden-xs\"></div>\r\n        <div class=\"person-card__photo person-card__photo--large visible-xs-block\"></div>\r\n      </div>\r\n      <div class=\"col-sm-8\">\r\n          <div class=\"person-card__info-header\">\r\n            <div class=\"person-card__greeting\">{{ 'PersonInfo_Hello' | translate }}!</div>\r\n            <div class=\"person-card__name\">\r\n              <span class=\"light\">{{ 'PersonInfo_IAm' | translate }}</span>\r\n              <strong class=\"stronger\">Olof Landahl</strong></div>\r\n            <div class=\"person-card__title\">{{ 'PersonInfo_Developer' | translate }}</div>\r\n          </div>\r\n          <ul class=\"person-card__info-items\">\r\n            <li class=\"row person-card__info-item\" *ngFor=\"let item of infoItems;\">\r\n              <div class=\"col-sm-4 person-card__info-item-left\">{{ item.key | translate }}</div>\r\n              <div class=\"col-sm-8 person-card__info-item-right\">{{item.value}}</div>\r\n            </li>\r\n          </ul>\r\n      </div>\r\n    </div>\r\n    <div class=\"person-card__footer\">\r\n      <app-social-links [theme]=\"'color'\"></app-social-links>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"person-card-container\" appScrollSection=\"about\">\n  <div class=\"person-card\">\n    <div class=\"row person-card__content\">\n      <div class=\"col-sm-4\">\n        <div class=\"person-card__photo hidden-xs\"></div>\n        <div class=\"person-card__photo person-card__photo--large visible-xs-block\"></div>\n      </div>\n      <div class=\"col-sm-8\">\n          <div class=\"person-card__info-header\">\n            <div class=\"person-card__greeting\">{{ 'PersonInfo_Hello' | translate }}!</div>\n            <div class=\"person-card__name\">\n              <span class=\"light\">{{ 'PersonInfo_IAm' | translate }}</span>\n              <strong class=\"stronger\">Olof Landahl</strong></div>\n            <div class=\"person-card__title\">{{ 'PersonInfo_Developer' | translate }}</div>\n          </div>\n          <ul class=\"person-card__info-items\">\n            <li class=\"row person-card__info-item\" *ngFor=\"let item of infoItems;\">\n              <div class=\"col-sm-4 person-card__info-item-left\">{{ item.key | translate }}</div>\n              <div class=\"col-sm-8 person-card__info-item-right\">{{item.value}}</div>\n            </li>\n          </ul>\n      </div>\n    </div>\n    <div class=\"person-card__footer\">\n      <app-social-links [theme]=\"'color'\"></app-social-links>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -485,7 +486,7 @@ var PersonCardComponent = (function () {
 /***/ "../../../../../src/app/components/cards/skills-card/skills-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"skills-card-container\" appScrollSection=\"skills\">\r\n\t<div class=\"skills-card__title\">{{ 'Skills_Title' | translate }}</div>\r\n  \r\n\t<div class=\"skills-card\">\r\n\t  <div class=\"row skills-card__skills\">\r\n\t    <div class=\"col-md-6 skill\" *ngFor=\"let item of skillItems\">\r\n\t      <div class=\"skill__title\">{{item.key}}</div>\r\n\t      <div class=\"skill__bar-container\">\r\n\t        <div class=\"skill__bar skill__bar--full\"></div>\r\n\t        <div class=\"skill__bar skill__bar--fill\" [style.width]=\"item.value+'%'\"></div>\r\n\t      </div>\r\n\t    </div>\r\n\t  </div>\r\n\t</div>\r\n</div>"
+module.exports = "<div class=\"skills-card-container\" appScrollSection=\"skills\">\n\t<div class=\"skills-card__title\">{{ 'Skills_Title' | translate }}</div>\n  \n\t<div class=\"skills-card\">\n\t  <div class=\"row skills-card__skills\">\n\t    <div class=\"col-md-6 skill\" *ngFor=\"let item of skillItems\">\n\t      <div class=\"skill__title\">{{item.key}}</div>\n\t      <div class=\"skill__bar-container\">\n\t        <div class=\"skill__bar skill__bar--full\"></div>\n\t        <div class=\"skill__bar skill__bar--fill\" [style.width]=\"item.value+'%'\"></div>\n\t      </div>\n\t    </div>\n\t  </div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -610,7 +611,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7
 /***/ "../../../../../src/app/components/cards/timeline/timeline.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"timeline\" appScrollSection=\"experience\">\r\n  <div class=\"timeline__title\">{{ 'Experience_Title' | translate }}</div>\r\n  <div class=\"timeline-cards-container\">\r\n    <div class=\"timeline-card-container\" *ngFor=\"let item of timelineItems; let odd = odd; let even = even;\" [ngClass]=\"{ 'timeline-card-container--left': even, 'timeline-card-container--right': odd }\">\r\n      <span class=\"timeline__dot\"></span>\r\n      <a [href]=\"item.url\" target=\"_blank\">\r\n        <div class=\"timeline-card\">\r\n          <span class=\"timeline-card__arrow\"></span>\r\n          <div class=\"timeline-card__years\">\r\n            <span>{{item.startYear}}</span>\r\n            <span [hidden]=\"!item.endYear || item.startYear === item.endYear\">- {{item.endYear}}</span>\r\n          </div>\r\n          <div class=\"timeline-card__logo timeline-card__logo--{{item.logo}}\" ></div>\r\n          <div class=\"timeline-card__city\">{{item.city}}</div>\r\n          <div class=\"timeline-card__title\">{{item.title}}</div>\r\n          <div class=\"timeline-card__subtitle\">{{item.subTitleTranslationKey | translate}}</div>\r\n          <div class=\"timeline-card__description\">{{item.descriptionTranslationKey | translate}}</div>\r\n          <div class=\"timeline-card__technologies\">\r\n            <span class=\"timeline-card__technology\" *ngFor=\"let t of item.technologies;\" [ngClass]=\"{ 'timeline-card__technology--selected': selectedTech === t }\" (click)=\"toggleTechnology(t)\">{{t}}</span>\r\n          </div>\r\n        </div>\r\n      </a>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"timeline\" appScrollSection=\"experience\">\n  <div class=\"timeline__title\">{{ 'Experience_Title' | translate }}</div>\n  <div class=\"timeline-cards-container\">\n    <div class=\"timeline-card-container\" *ngFor=\"let item of timelineItems; let odd = odd; let even = even;\" [ngClass]=\"{ 'timeline-card-container--left': even, 'timeline-card-container--right': odd }\">\n      <span class=\"timeline__dot\"></span>\n      <a [href]=\"item.url\" target=\"_blank\">\n        <div class=\"timeline-card\">\n          <span class=\"timeline-card__arrow\"></span>\n          <div class=\"timeline-card__years\">\n            <span>{{item.startYear}}</span>\n            <span [hidden]=\"!item.endYear || item.startYear === item.endYear\">- {{item.endYear}}</span>\n          </div>\n          <div class=\"timeline-card__logo timeline-card__logo--{{item.logo}}\" ></div>\n          <div class=\"timeline-card__city\">{{item.city}}</div>\n          <div class=\"timeline-card__title\">{{item.title}}</div>\n          <div class=\"timeline-card__subtitle\">{{item.subTitleTranslationKey | translate}}</div>\n          <div class=\"timeline-card__description\">{{item.descriptionTranslationKey | translate}}</div>\n          <div class=\"timeline-card__technologies\">\n            <span class=\"timeline-card__technology\" *ngFor=\"let t of item.technologies;\" [ngClass]=\"{ 'timeline-card__technology--selected': selectedTech === t }\" (click)=\"toggleTechnology(t)\">{{t}}</span>\n          </div>\n        </div>\n      </a>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -681,7 +682,7 @@ var TimelineComponent = (function () {
 /***/ "../../../../../src/app/components/footer/footer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"footer\">\r\n  <app-social-links></app-social-links>\r\n</div>"
+module.exports = "<div class=\"footer\">\n  <app-social-links></app-social-links>\n</div>"
 
 /***/ }),
 
@@ -740,7 +741,7 @@ var FooterComponent = (function () {
 /***/ "../../../../../src/app/components/header/header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-header\" [class.app-header--init]=\"isInit\" [class.app-header--sticky]=\"isSticky\" [class.app-header--hide-sticky]=\"stickyIsHidden\" (appClickOutside)=\"closeMenu()\">\r\n  <div class=\"app-header__title hidden-sm\">oloflandahl.com</div>\r\n  <nav class=\"app-header__navbar\">\r\n    <div class=\"app-header__navbar-icon\" (click)=\"openMenu()\">\r\n      <i class=\"fa fa-bars\"></i>\r\n    </div>\r\n    <ul class=\"navbar\" [class.navbar--open]=\"isMenuOpen\">\r\n      <li class=\"navbar__item navbar__item--close-icon\" (click)=\"closeMenu()\"><i class=\"fa fa-close\"></i></li>\r\n      <li class=\"navbar__item\" [class.navbar__item--active]=\"item.isActive\" *ngFor=\"let item of items;\" pageScroll [href]=\"'#'+item.id\" (click)=\"select(item)\">\r\n        <span>{{ item.translationKey | translate }}</span>\r\n      </li>\r\n      <li class=\"navbar__item navbar__item--box\" (click)=\"switchLanguage()\">\r\n        <span title=\"{{ 'SwitchLanguage_Tooltip' | translate }}\">{{ currentLang }}</span>\r\n      </li>\r\n    </ul>\r\n  </nav>\r\n</div>\r\n<div class=\"app-header-sticky-placeholder\" [class.app-header-sticky-placeholder--visible]=\"isSticky && !stickyIsHidden\"></div>"
+module.exports = "<div class=\"app-header\" [class.app-header--init]=\"isInit\" [class.app-header--sticky]=\"isSticky\" [class.app-header--hide-sticky]=\"stickyIsHidden\" (appClickOutside)=\"closeMenu()\">\n  <div class=\"app-header__title hidden-sm\">oloflandahl.com</div>\n  <nav class=\"app-header__navbar\">\n    <div class=\"app-header__navbar-icon\" (click)=\"openMenu()\">\n      <i class=\"fa fa-bars\"></i>\n    </div>\n    <ul class=\"navbar\" [class.navbar--open]=\"isMenuOpen\">\n      <li class=\"navbar__item navbar__item--close-icon\" (click)=\"closeMenu()\"><i class=\"fa fa-close\"></i></li>\n      <li class=\"navbar__item\" [class.navbar__item--active]=\"item.isActive\" *ngFor=\"let item of items;\" pageScroll [href]=\"'#'+item.id\" (click)=\"select(item)\">\n        <span>{{ item.translationKey | translate }}</span>\n      </li>\n      <li class=\"navbar__item navbar__item--box\" (click)=\"switchLanguage()\">\n        <span title=\"{{ 'SwitchLanguage_Tooltip' | translate }}\">{{ currentLang }}</span>\n      </li>\n    </ul>\n  </nav>\n</div>\n<div class=\"app-header-sticky-placeholder\" [class.app-header-sticky-placeholder--visible]=\"isSticky && !stickyIsHidden\"></div>"
 
 /***/ }),
 
@@ -864,7 +865,7 @@ var HeaderComponent = (function () {
 /***/ "../../../../../src/app/components/resume-summary/resume-summary.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"resume-summary\">\r\n  <a class=\"resume-summary__link\" href=\"./assets/{{'ResumeSummary_Filename' | translate}}\" target=\"_blank\">{{'ResumeSummary_ButtonLabel' | translate}}</a>\r\n  <div class=\"resume-summary__text\">{{'ResumeSummary_Text' | translate}}</div>\r\n</div>"
+module.exports = "<div class=\"resume-summary\">\n  <a class=\"resume-summary__link\" href=\"./assets/{{'ResumeSummary_Filename' | translate}}\" target=\"_blank\">{{'ResumeSummary_ButtonLabel' | translate}}</a>\n  <div class=\"resume-summary__text\">{{'ResumeSummary_Text' | translate}}</div>\n</div>"
 
 /***/ }),
 
@@ -919,7 +920,7 @@ var ResumeSummaryComponent = (function () {
 /***/ "../../../../../src/app/components/social-links/social-links.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"social-links social-links--{{theme}}\">\r\n  <li *ngFor=\"let item of socialLinkItems;\" class=\"social-links__link\">\r\n    <a href=\"{{item.url}}\" [target]=\"item.openOnPage ? '_self' : '_blank'\" title=\"{{item.title}}\">\r\n      <i class=\"fa fa-{{item.iconName}}\"></i>\r\n    </a>\r\n  </li>\r\n</ul>"
+module.exports = "<ul class=\"social-links social-links--{{theme}}\">\n  <li *ngFor=\"let item of socialLinkItems;\" class=\"social-links__link\">\n    <a href=\"{{item.url}}\" [target]=\"item.openOnPage ? '_self' : '_blank'\" title=\"{{item.title}}\">\n      <i class=\"fa fa-{{item.iconName}}\"></i>\n    </a>\n  </li>\n</ul>"
 
 /***/ }),
 
@@ -1190,8 +1191,8 @@ var TIMELINE_ITEMS = [
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClickOutsideDirective; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1205,7 +1206,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ClickOutsideDirective = (function () {
     function ClickOutsideDirective(element) {
         this.element = element;
-        this.appClickOutside = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* EventEmitter */]();
+        this.appClickOutside = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
     }
     ClickOutsideDirective.prototype.onClick = function (event, targetElement) {
         if (!targetElement) {
@@ -1217,26 +1218,25 @@ var ClickOutsideDirective = (function () {
         }
     };
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_2" /* Output */])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
         __metadata("design:type", Object)
     ], ClickOutsideDirective.prototype, "appClickOutside", void 0);
     __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["e" /* HostListener */])('document:click', ['$event', '$event.target']),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["y" /* HostListener */])('document:click', ['$event', '$event.target']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:paramtypes", [MouseEvent, HTMLElement]),
         __metadata("design:returntype", void 0)
     ], ClickOutsideDirective.prototype, "onClick", null);
     ClickOutsideDirective = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["g" /* Directive */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* Directive */])({
             selector: '[appClickOutside]'
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* ElementRef */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]])
     ], ClickOutsideDirective);
     return ClickOutsideDirective;
-    var _a;
 }());
 
-//# sourceMappingURL=click-outside.directive.js.map
+
 
 /***/ }),
 
