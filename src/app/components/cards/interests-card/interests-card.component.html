@@ -2,14 +2,15 @@
   <div class="interests-card__title">{{ 'Interests_Title' | translate }}</div>
   <div class="interests-card">
     <div class="interests-card__interests">
-      <div class="interests-card__interest" [class.interests-card__interest--active]="activeItem === item" *ngFor="let item of interestItems; let index = index" (click)="select(item, index)">
+      <div class="interests-card__interest" [class.interests-card__interest--active]="activeItem === item" *ngFor="let item of interestItems; let index = index" (click)="toggle(item, index)">
         <div class="interests-card__interest-icon">
           <i class="{{item.iconPrefix}} {{item.iconPrefix}}-{{item.iconName}}"></i>
         </div>
       </div>
     </div>
-    <div class="interests-card__interest-description interests-card__interest-description--{{activeIndex}}">
+    <div class="interests-card__interest-description interests-card__interest-description--{{activeIndex}}" *ngIf="activeItem">
       {{ activeItem.description | translate }}
+      <span class="interests-card__interest-description-close" (click)="toggle(null, null)"><i class="fa fa-close"></i></span>
     </div>
   </div>
 </div>

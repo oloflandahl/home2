@@ -25,7 +25,7 @@
         cursor: pointer;
         .text-grey;
 
-        @media (max-width: @mq-xs-max) {
+        @media (max-width: @mq-xxs-max) {
           padding: @padding-three-quarter @padding-quarter;
         }
 
@@ -41,20 +41,30 @@
         }
 
         .interests-card__interest-icon {
-          .font-size(@textSize-large-icon);
+          .font-size(@textSize-xl-icon);
 
-          @media (max-width: @mq-xs-max) {
-            .font-size(@textSize-icon);
+          @media (max-width: @mq-xxs-max) {
+            .font-size(@textSize-lg-icon);
           }
         }
       }
     }
 
     .interests-card__interest-description {
+      position: relative;
       width: 100%;
       .text-body;
-      .text-bubble(false, @grey);
-      padding: @padding-half @padding;
+      .text-bubble(false);
+      padding: @padding-half @padding-double @padding-half @padding;
+
+      .interests-card__interest-description-close {
+        .position(absolute, @padding-quarter, @padding-half);
+
+        &:hover {
+          .text-light-grey;
+          cursor: pointer;
+        }
+      }
 
       &:before {
         .transition-short(left);
