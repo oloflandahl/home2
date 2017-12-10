@@ -297,14 +297,14 @@ module.exports = __webpack_require__.p + "bg3_small.13a783e9abe13498753a.jpg";
 /***/ "../../../../../src/app/components/back-img/img/bg4.jpg":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bg4.c47fc67f6135968190e4.jpg";
+module.exports = __webpack_require__.p + "bg4.73a0d9d5f0dcca47cb13.jpg";
 
 /***/ }),
 
 /***/ "../../../../../src/app/components/back-img/img/bg4_small.jpg":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bg4_small.d06b19c0c2d84f8878d0.jpg";
+module.exports = __webpack_require__.p + "bg4_small.71c095059b2dac0467e0.jpg";
 
 /***/ }),
 
