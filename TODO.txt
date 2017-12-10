@@ -1,4 +1,0 @@
-Jag är -> Jag heter ?
-Angulr 5 -> Angular
-Bootstrap som skill
-ES6 på Securitas

@@ -10,7 +10,7 @@
         <span>{{ item.translationKey | translate }}</span>
       </li>
       <li class="navbar__item navbar__item--box" (click)="switchLanguage()">
-        <span title="{{ 'SwitchLanguage_Tooltip' | translate }}">{{ currentLang }}</span>
+        <span title="{{ 'SwitchLanguage_Tooltip' | translate }}"><img src="assets/logos/{{currentLang}}.png" /></span>
       </li>
     </ul>
   </nav>

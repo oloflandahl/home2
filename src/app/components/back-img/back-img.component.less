@@ -29,7 +29,11 @@
   .bg-helper(@bgNo) {
     &.app-back-img--@{bgNo}:after {
       @bgFilename: "./img/bg@{bgNo}.jpg";
+      @bgSmallFilename: "./img/bg@{bgNo}_small.jpg";
       background-image: url(@bgFilename);
+      @media screen and (max-width: 800px) {
+        background-image: url(@bgSmallFilename);
+      }
     }
   }
 }
