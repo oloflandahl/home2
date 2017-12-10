@@ -201,7 +201,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "/* Size */\n/* Colors */\n/* Text */\n/* Spacing */\n/* Z position */\n/* Transition */\n.app-back-img {\n  position: absolute;\n  left: 0;\n  top: 0;\n  right: 0;\n  height: 500px;\n  z-index: -1;\n  background-color: #000;\n}\n.app-back-img:after {\n  content: '';\n  display: block;\n  height: 100%;\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  opacity: 0.5;\n}\n.app-back-img.app-back-img--1:after {\n  background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg1.jpg") + ");\n}\n.app-back-img.app-back-img--2:after {\n  background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg2.jpg") + ");\n}\n.app-back-img.app-back-img--3:after {\n  background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg3.jpg") + ");\n}\n.app-back-img.app-back-img--4:after {\n  background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg4.jpg") + ");\n}\n", ""]);
+exports.push([module.i, "/* Size */\n/* Colors */\n/* Text */\n/* Spacing */\n/* Z position */\n/* Transition */\n.app-back-img {\n  position: absolute;\n  left: 0;\n  top: 0;\n  right: 0;\n  height: 500px;\n  z-index: -1;\n  background-color: #000;\n}\n.app-back-img:after {\n  content: '';\n  display: block;\n  height: 100%;\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  opacity: 0.5;\n}\n.app-back-img.app-back-img--1:after {\n  background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg1.jpg") + ");\n}\n@media screen and (max-width: 800px) {\n  .app-back-img.app-back-img--1:after {\n    background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg1_small.jpg") + ");\n  }\n}\n.app-back-img.app-back-img--2:after {\n  background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg2.jpg") + ");\n}\n@media screen and (max-width: 800px) {\n  .app-back-img.app-back-img--2:after {\n    background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg2_small.jpg") + ");\n  }\n}\n.app-back-img.app-back-img--3:after {\n  background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg3.jpg") + ");\n}\n@media screen and (max-width: 800px) {\n  .app-back-img.app-back-img--3:after {\n    background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg3_small.jpg") + ");\n  }\n}\n.app-back-img.app-back-img--4:after {\n  background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg4.jpg") + ");\n}\n@media screen and (max-width: 800px) {\n  .app-back-img.app-back-img--4:after {\n    background-image: url(" + __webpack_require__("../../../../../src/app/components/back-img/img/bg4_small.jpg") + ");\n  }\n}\n", ""]);
 
 // exports
 
@@ -255,28 +255,56 @@ function getRandomInt(min, max) {
 /***/ "../../../../../src/app/components/back-img/img/bg1.jpg":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bg1.b3961ba5d204623437fb.jpg";
+module.exports = __webpack_require__.p + "bg1.5671853e20b9d1e55418.jpg";
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/back-img/img/bg1_small.jpg":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "bg1_small.d52c634263a4c944f48e.jpg";
 
 /***/ }),
 
 /***/ "../../../../../src/app/components/back-img/img/bg2.jpg":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bg2.39c21236e5c511854dbb.jpg";
+module.exports = __webpack_require__.p + "bg2.17421bc5d64c52eb579b.jpg";
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/back-img/img/bg2_small.jpg":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "bg2_small.54aa9d9ccee8581e4e3d.jpg";
 
 /***/ }),
 
 /***/ "../../../../../src/app/components/back-img/img/bg3.jpg":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bg3.2d6629d89d5efd04007a.jpg";
+module.exports = __webpack_require__.p + "bg3.e223b5b5da03a28fe737.jpg";
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/back-img/img/bg3_small.jpg":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "bg3_small.13a783e9abe13498753a.jpg";
 
 /***/ }),
 
 /***/ "../../../../../src/app/components/back-img/img/bg4.jpg":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bg4.0e086704408a100f55cc.jpg";
+module.exports = __webpack_require__.p + "bg4.c47fc67f6135968190e4.jpg";
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/back-img/img/bg4_small.jpg":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "bg4_small.d06b19c0c2d84f8878d0.jpg";
 
 /***/ }),
 
