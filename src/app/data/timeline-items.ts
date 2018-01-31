@@ -10,7 +10,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Securitas',
     url: 'http://www.securitas.se/',
-    technologies: ['ASP.NET', 'MVC', 'KnockoutJS', 'JQuery', 'EcmaScript6', 'Jasmine', 'NUnit', 'SQL', 'Git']
+    technologies: ['ASP.NET', 'MVC', 'ReactJS', 'KnockoutJS', 'JQuery', 'EcmaScript2015', 'Jasmine', 'NUnit', 'SQL', 'Git']
   },
   {
     startYear: 2015,
