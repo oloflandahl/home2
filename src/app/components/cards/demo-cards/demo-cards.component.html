@@ -1,0 +1,11 @@
+<div class="demos-container" appScrollSection="demos">
+  <div class="demos__title">{{ 'Demos_Title' | translate }}</div>
+  <div class="demo-card-container" *ngFor="let item of demoItems;">
+    <a [href]="item.url" target="_blank">
+      <div class="demo-card">
+        <div class="demo-card-image" [ngStyle]="{'background-image': 'url(./assets/images/'+item.image+'.png)'}"></div>
+        <div class="demo-card-description">{{ item.descriptionTranslationKey | translate }}</div>
+      </div>
+    </a>
+  </div>
+</div>

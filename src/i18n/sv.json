@@ -2,6 +2,7 @@
    "About_Title": "Om Mig",
    "Skills_Title": "Färdigheter",
    "Experience_Title": "Erfarenheter",
+   "Demos_Title": "Demos",
    "Interests_Title": "Intressen",
    "AboutPage_Title": "Om sidan",
    "Lang_English": "Engelska",
@@ -34,6 +35,8 @@
    "Experience_HiQ": "Utformade ett arbetsprov för rekrytering av frontend-utvecklare och utvärderade de lösningar som kom in från sökande.",
    "Experience_Tunstall": "Moderniserade och förbättrade en webb-applikation för ruttplanering inom hemtjänsten.",
    "Experience_Securitas": "Utvecklade interna webb-applikationer för fakturering, affärskalkyler, lönekorrigering, m.m.",
+
+   "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
 
    "Interest_Nature": "Natur",
    "Interest_Food": "Mat",

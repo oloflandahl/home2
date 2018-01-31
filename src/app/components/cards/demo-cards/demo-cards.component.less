@@ -1,0 +1,54 @@
+@import '../../../less-library/variables';
+@import '../../../less-library/mixins';
+
+.demos-container {
+  .card-container;
+
+  .demos__title {
+    .card-title;
+  }
+
+  .demo-card-container {
+    margin-bottom: @padding-double;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .demo-card {
+      .card-full;
+      .card-action;
+
+      .demo-card-image {
+        position: relative;
+        width: 100%;
+        padding-top: 30%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-size: 100%;
+        .transition-long(background-size);
+
+        // &:after {
+        //   content: '';
+        //   .position(absolute, 0, 0, 0, 0);
+        //   background: #000;
+        //   opacity: 0.2;
+        //   .transition-long(opacity);
+        // }
+      }
+
+      .demo-card-description {
+        .card-padding;
+      }
+
+      &:hover .demo-card-image {
+        background-size: 110%;
+
+        // &:after {
+        //   opacity: 0;
+        // }
+      }
+    }
+  }
+  
+}

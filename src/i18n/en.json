@@ -2,6 +2,7 @@
    "About_Title": "About Me",
    "Skills_Title": "Skills",
    "Experience_Title": "Experience",
+   "Demos_Title": "Demos",
    "Interests_Title": "Interests",
    "AboutPage_Title": "About page",
    "Lang_English": "English",
@@ -34,6 +35,8 @@
    "Experience_HiQ": "Created a code test for recruitment of frontend developers and reviewed the solutions from candidates.",
    "Experience_Tunstall": "Modernised and improved a web application for route planning in home care.",
    "Experience_Securitas": "Developed internal web applications for invoicing, quote calculation, payroll correction, and more.",
+   
+   "Demo_Memory": "A memory game developed in ReactJS, Redux and CSS Grid",
 
    "Interest_Nature": "Nature",
    "Interest_Food": "Food",
