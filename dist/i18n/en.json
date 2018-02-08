@@ -2,6 +2,7 @@
    "About_Title": "About Me",
    "Skills_Title": "Skills",
    "Experience_Title": "Experience",
+   "Demos_Title": "Demos",
    "Interests_Title": "Interests",
    "AboutPage_Title": "About page",
    "Lang_English": "English",
@@ -19,7 +20,7 @@
 
    "ResumeSummary_Filename": "oloflandahl_cv_eng.pdf",
    "ResumeSummary_ButtonLabel": "Download Resume",
-   "ResumeSummary_Text": "I'm a Full Stack developer with strong frontend skills and wide knowledge in .NET. As a person I'm calm and easy going.",
+   "ResumeSummary_Text": "I'm a positive, calm and meticulous person that constantly look for challenges, both personal and professional. As a full stack developer I'm versatile and my strongest skills are in web front end development.",
 
    "Role_WebDeveloper": "Web Developer",
    "Role_SoftwareDeveloper": "Software Developer",
@@ -34,6 +35,9 @@
    "Experience_HiQ": "Created a code test for recruitment of frontend developers and reviewed the solutions from candidates.",
    "Experience_Tunstall": "Modernised and improved a web application for route planning in home care.",
    "Experience_Securitas": "Developed internal web applications for invoicing, quote calculation, payroll correction, and more.",
+   
+   "Demo_Memory": "A memory game developed in ReactJS, Redux and CSS Grid",
+   "Demo_Photos": "Lazy loading responsive images using IntersectionObserver",
 
    "Interest_Nature": "Nature",
    "Interest_Food": "Food",
