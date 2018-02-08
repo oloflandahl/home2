@@ -2,6 +2,7 @@
    "About_Title": "Om Mig",
    "Skills_Title": "Färdigheter",
    "Experience_Title": "Erfarenheter",
+   "Demos_Title": "Demos",
    "Interests_Title": "Intressen",
    "AboutPage_Title": "Om sidan",
    "Lang_English": "Engelska",
@@ -19,7 +20,7 @@
 
    "ResumeSummary_Filename": "oloflandahl_cv_swe.pdf",
    "ResumeSummary_ButtonLabel": "Hämta CV",
-   "ResumeSummary_Text": "Jag är fullstack-utecklare med fokus på frontend och bred kunskap inom .NET. Som person är jag lugn och lätt att ha att göra med.",
+   "ResumeSummary_Text": "Jag är en positiv, lugn och noggrann person som alltid söker utmaningar, både personliga och professionella. Som full-stack-utvecklare är jag mångsidig och mina starkaste färdigheter finns i front-end webbutveckling.",
 
    "Role_WebDeveloper": "Webbutvecklare",
    "Role_SoftwareDeveloper": "Mjukvaruutvecklare",
@@ -34,6 +35,9 @@
    "Experience_HiQ": "Utformade ett arbetsprov för rekrytering av frontend-utvecklare och utvärderade de lösningar som kom in från sökande.",
    "Experience_Tunstall": "Moderniserade och förbättrade en webb-applikation för ruttplanering inom hemtjänsten.",
    "Experience_Securitas": "Utvecklade interna webb-applikationer för fakturering, affärskalkyler, lönekorrigering, m.m.",
+
+   "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
+   "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",
 
    "Interest_Nature": "Natur",
    "Interest_Food": "Mat",
