@@ -37,6 +37,7 @@
    "Experience_Securitas": "Utvecklade interna webb-applikationer för fakturering, affärskalkyler, lönekorrigering, m.m.",
 
    "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
+   "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",
 
    "Interest_Nature": "Natur",
    "Interest_Food": "Mat",

@@ -37,6 +37,7 @@
    "Experience_Securitas": "Developed internal web applications for invoicing, quote calculation, payroll correction, and more.",
    
    "Demo_Memory": "A memory game developed in ReactJS, Redux and CSS Grid",
+   "Demo_Photos": "Lazy loading responsive images using IntersectionObserver",
 
    "Interest_Nature": "Nature",
    "Interest_Food": "Food",

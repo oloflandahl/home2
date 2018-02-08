@@ -7,8 +7,8 @@ export const DEMO_ITEMS: DemoItem[] = [
       image: 'memory'
     },
     {
-      url: 'https://oloflandahl.github.io/memory/', 
-      descriptionTranslationKey: 'Demo_Memory',
-      image: 'memory'
-    },
+      url: 'https://oloflandahl.github.io/intersection-observer-demo/', 
+      descriptionTranslationKey: 'Demo_Photos',
+      image: 'photos'
+    }
 ];

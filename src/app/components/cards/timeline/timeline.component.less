@@ -6,15 +6,13 @@
 @timelinePosX: ~"calc( 50% - " @timelineOffsetX ~")";
 
 @cardMinHeight: 200px;
-@cardSpacing-v: @padding;
-@cardSpacing-h: @padding-one-and-half;
 
 @arrowWidth: 10px;
 @arrowHeight: 20px;
 @arrowOffset: @padding-one-and-half;
 
 @dotSize: 2 * @timelineWidth + 1;
-@dotOffsetY: @arrowOffset + @arrowHeight + @cardSpacing-v;
+@dotOffsetY: @arrowOffset + @arrowHeight + @card-container-half-spacing-v;
 @outerDotSize: 4 * @timelineWidth + 1;
 @outerDotRelOffset: (@dotSize - @outerDotSize) / 2;
 
@@ -28,7 +26,7 @@
 
   .timeline__title {
     .card-title;
-    margin-bottom: @padding-double - @cardSpacing-v;
+    margin-bottom: @padding-double - @card-container-half-spacing-v;
   }
 
   .timeline-cards-container {
@@ -37,7 +35,7 @@
     // Timeline
     &:before {
       content: '';
-      .position(absolute, @timelinePosY, @timelinePosX, @cardSpacing-v);
+      .position(absolute, @timelinePosY, @timelinePosX, @card-container-half-spacing-v);
       z-index: @z-back;
       width: @timelineWidth;
       .bg-bar;
@@ -45,17 +43,15 @@
     }
 
     .timeline-card-container {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-      padding: @cardSpacing-v 0;
+      .card-container-half;
 
       .timeline-card {
         position: relative;
         min-height: @cardMinHeight;
-        .card-half;
+        .card;
         .card-action;
         .card-padding;
+        .border-top-bar;
         padding-top: @padding;
 
         .timeline-card__years {
@@ -165,8 +161,6 @@
 
       @media (min-width: @mq-md-min) {
 
-        width: 50%;
-
         // Arrow
         .timeline-card__arrow {
           position: absolute;
@@ -205,7 +199,6 @@
         }
 
         &.timeline-card-container--left {
-          padding-right: @cardSpacing-h;
           .from-left-animation;
 
           // Dot (left)
@@ -224,7 +217,6 @@
         }
 
         &.timeline-card-container--right {
-          padding-left: @cardSpacing-h;
           .from-right-animation;
 
           // Dot (right)

@@ -5,18 +5,25 @@
   margin-top: @card-margin;
 }
 
+.card-container-half() {
+  .display-inline-block;
+  position: relative;
+  width: 100%;
+  padding: @card-container-half-spacing-v 0;
+
+  @media (min-width: @mq-md-min) {
+    width: 50%;
+    padding-right: @padding-one-and-half;
+    &:nth-child(even) {
+      padding-left: @padding-one-and-half;
+      padding-right: 0;
+    }
+  }
+}
+
 .card() {
   .borderShadow;
   background: @bgColor-card;
-}
-
-.card-full() {
-  .card;
-}
-
-.card-half() {
-  .card;
-  .border-top-bar;
 }
 
 .card-padding() {
