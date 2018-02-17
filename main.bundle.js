@@ -1194,7 +1194,7 @@ var SKILL_ITEMS = [
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SOCIAL_LINK_ITEMS; });
 var SOCIAL_LINK_ITEMS = [
-    { url: 'https://www.linkedin.com/in/olof-landahl-91782a37', iconName: 'linkedin', title: 'LinkedIn' },
+    { url: 'https://www.linkedin.com/in/oloflandahl', iconName: 'linkedin', title: 'LinkedIn' },
     { url: 'https://github.com/oloflandahl', iconName: 'github', title: 'Github' },
     { url: 'https://plus.google.com/u/0/111518842534028383812', iconName: 'google-plus', title: 'Google+' },
     { url: 'https://securitashiq.slack.com/team/oloflandahl', iconName: 'slack', title: 'Slack' },
