@@ -35,6 +35,7 @@
    "Experience_HiQ": "Utformade ett arbetsprov för rekrytering av frontend-utvecklare och utvärderade de lösningar som kom in från sökande.",
    "Experience_Tunstall": "Moderniserade och förbättrade en webb-applikation för ruttplanering inom hemtjänsten.",
    "Experience_Securitas": "Utvecklade interna webb-applikationer för fakturering, affärskalkyler, lönekorrigering, m.m.",
+   "Experience_PBolaget": "Skapade en webbportal for företagskunder där man administrerar digitala parkeringstillstånd. Applikationen är avgörande för digitaliseringen av parkeringar i Göteborg",
 
    "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
    "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",

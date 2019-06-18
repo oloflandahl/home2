@@ -2,8 +2,19 @@ import { TimelineItem } from '../models/timeline-item';
 
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
+    startYear: 2018,
+    endYear: 2019,
+    logo: 'pbolaget',
+    city: 'Göteborg',
+    title: 'HiQ - Parkering Göteborg',
+    subTitleTranslationKey: 'Role_WebDeveloper',
+    descriptionTranslationKey: 'Experience_PBolaget',
+    url: 'https://foretag.parkeringgoteborg.se/',
+    technologies: ['Angular 7+', 'TypeScript', 'Jasmine', 'Git']
+  },
+  {
     startYear: 2016,
-    endYear: 2017,
+    endYear: 2018,
     logo: 'securitas',
     city: 'Malmö',
     title: 'HiQ - Securitas',
