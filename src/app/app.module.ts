@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
 import { TranslateModule } from 'ng2-translate';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
@@ -26,7 +25,6 @@ import { PageCardComponent } from './components/cards/page-card/page-card.compon
 @NgModule({
   imports: [
     BrowserModule,
-    HttpModule,
     TranslateModule.forRoot(),
     Ng2PageScrollModule.forRoot()
   ],
