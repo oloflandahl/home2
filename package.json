@@ -41,6 +41,7 @@
     "@angular/language-service": "^4.0.0",
     "@types/jasmine": "2.5.45",
     "@types/node": "~6.0.60",
+    "codelyzer": "^4.5.0",
     "concurrently": "^3.4.0",
     "lite-server": "^2.3.0",
     "ts-node": "~3.0.4",
