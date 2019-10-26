@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { TranslateModule } from 'ng2-translate';
-import { Ng2PageScrollModule } from 'ng2-page-scroll';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxPageScrollModule } from 'ngx-page-scroll';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { ScrollService } from './services/scroll.service';
 import { ScrollSectionService } from './services/scroll-section.service';
@@ -22,11 +24,22 @@ import { DemosComponent } from './components/cards/demo-cards/demo-cards.compone
 import { InterestsCardComponent } from './components/cards/interests-card/interests-card.component';
 import { PageCardComponent } from './components/cards/page-card/page-card.component';
 
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');}
+
 @NgModule({
   imports: [
     BrowserModule,
-    TranslateModule.forRoot(),
-    Ng2PageScrollModule.forRoot()
+    HttpClientModule,
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
+    NgxPageScrollModule
   ],
   providers: [
     ScrollService,

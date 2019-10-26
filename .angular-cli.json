@@ -10,7 +10,7 @@
       "assets": [
         "assets",
         "assets/images",
-        "i18n",
+        "assets/i18n",
         "favicon.ico",
         "CNAME",
         ".nojekyll"

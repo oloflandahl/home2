@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { TranslateService } from 'ng2-translate';
-import { PageScrollConfig } from 'ng2-page-scroll';
+import { TranslateService } from '@ngx-translate/core';
+import { PageScrollConfig } from 'ngx-page-scroll';
 
 @Component({
     selector: 'app-root',
