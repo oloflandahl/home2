@@ -1,0 +1,60 @@
+{
+   "About_Title": "Om Mig",
+   "Skills_Title": "Färdigheter",
+   "Experience_Title": "Erfarenheter",
+   "Demos_Title": "Demos",
+   "Interests_Title": "Intressen",
+   "AboutPage_Title": "Om sidan",
+   "Lang_English": "Engelska",
+   "Lang_Swedish": "Svenska",
+   "SwitchLanguage_Tooltip": "Switch to English",
+
+   "PersonInfo_Hello": "Hej",
+   "PersonInfo_IAm": "Jag heter",
+   "PersonInfo_Developer": "Webb & mjukvaruutvecklare",
+   "PersonInfo_Age": "Ålder",
+   "PersonInfo_City": "Stad",
+   "PersonInfo_Employment": "Anställning",
+   "PersonInfo_Years_Experience": "År i branchen",
+   "PersonInfo_Email": "Epost",
+
+   "ResumeSummary_Filename": "oloflandahl_cv_swe.pdf",
+   "ResumeSummary_ButtonLabel": "Hämta CV",
+   "ResumeSummary_Text": "Jag är en positiv, lugn och noggrann person som alltid söker utmaningar, både personliga och professionella. Som full-stack-utvecklare är jag mångsidig och mina starkaste färdigheter finns i front-end webbutveckling.",
+
+   "Role_WebDeveloper": "Webbutvecklare",
+   "Role_SoftwareDeveloper": "Mjukvaruutvecklare",
+   "Role_CodeTestVerifier": "Granskare av arbetsprov",
+   "Degree_Medieteknik": "Civilingenjör i Medieteknik",
+
+   "Experience_Linkoping": "En utbildning som liknar datateknik men med fokus på visualisering och bildbehandling.",
+   "Experience_Carmenta": "Jag jobbade framför allt med GIS-applikationer men var även ansvarig för kvalitetssäkring av geografisk data.",
+   "Experience_Tibco": "Jobbade i Visualiserings-teamet med både Windows- och webb-klient. Jag implementerade mest 'front end', framför allt visualiseringar och användargränssnitt men även 'back end', data access, klient-serverintegration, etc.",
+   "Experience_Vodafone": "Byggde upp ett nytt internt responsivt ramverk för att fräscha upp vodafone.com.au (VCA), skapa återanvändbara web-komponenter och göra designen mer konsekvent över alla tre Vodafone-sajterna. Jag gjorde även andra jobb på VCA och myvodafone.com.au. Arbetade i agila team och var på flera utbildningssessioner i agila metoder.",
+   "Experience_Telia": "Var en del av ett agilt team som jobbade med olika delar av telia.se, främst Mina Sidor. Jag såg bl.a. till att införa enhetstestning av JavaScript i flera av utvecklingsteamen på Telia.",
+   "Experience_HiQ": "Utformade ett arbetsprov för rekrytering av frontend-utvecklare och utvärderade de lösningar som kom in från sökande.",
+   "Experience_Tunstall": "Moderniserade och förbättrade en webb-applikation för ruttplanering inom hemtjänsten.",
+   "Experience_Securitas": "Utvecklade interna webb-applikationer för fakturering, affärskalkyler, lönekorrigering, m.m.",
+   "Experience_PBolaget": "Skapade en webbportal for företagskunder där man administrerar digitala parkeringstillstånd. Applikationen är avgörande för digitaliseringen av parkeringar i Göteborg",
+
+   "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
+   "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",
+
+   "Interest_Nature": "Natur",
+   "Interest_Food": "Mat",
+   "Interest_Beer": "Öl",
+   "Interest_Football": "Fotboll",
+   "Interest_Surfing": "Surfa",
+   "Interest_Photo": "Foto",
+   "Interest_Music": "Musik",
+
+   "Interest_Food_Description": "Jag tycker om att laga och äta mat. Att prova på nya oväntade smakkombinationer är något jag fick upp ögonen för när jag bodde i Sydney. Jag äter inte på restaurang jätteofta men när jag väl gör det vill jag ha något extra, något jag inte smakat förut. Men i slutändan är det ändå de enkla rätterna som vinner. Det finns inget som slår grillad makrill, färskpotatis och en god sås.",
+   "Interest_Beer_Description": "När jag studerade i Norrköping var det inte bara kvantiteten av öl som gällde. Ett gäng entusiastiska studenter drev studentpuben Vattentornet där man bl.a. kunde dricka belgiska och brittiska öl till inköpspris. Sedan dess har mitt ölintresse växt och jag är väldigt glad åt den starka hantverksöl-trenden som har tagit över.",
+   "Interest_Football_Description": "Det fanns ingen tvekan när jag började hålla på IFK Göteborg. Det hjälpte ju till att man växte upp i Göteborg under framgångsrika 80- och 90-talet. Jag har haft årskort till Blåvitt sedan mitten av 00-talet och kan jag inte vara på plats försöker jag se matcherna på TV. Jag har även åkt på några EM-mästerskap och kollat på Sveriges matcher.",
+   "Interest_Surfing_Description": "Även om jag hade provat på att surfa tidigare var det i Sydney det tog fart. Jag har aldrig blivit speciallt duktig men det är fantastiskt kul att ge sig ut i vattnet och känslan när man tar en våg är obeskrivlig. Jag surfar även här i Sverige men det blir inte jätteofta eftersom vågorna inte är de bästa.",
+   "Interest_Photo_Description": "På senaste åren har mitt fotointresse svalnat men jag tycker fortfarande det är kul att ta fram systemkameran och fånga intressanta saker och händelser på bild.",
+   "Interest_Music_Description": "Jag växte upp med mycket musik och instrument omkring mig. Mitt musikintresse exploderade på gymnasiet och det var även då jag började spela gitarr. Hårdrocken har alltid legat mig närmast om hjärtat och Metallicas musik har betytt extra mycket.",
+   "Interest_Nature_Description": "På senare år har jag börjat uppskatta naturen mer och mer. Jag och min sambo är ibland ute och tältar och vandrar. Några av mina största upplevelser har varit under våra resor till Nya Zeeland och Island där naturen är så storslagen och vacker att man inte tror det är sant.",
+
+   "AboutPage_Description": "Tanken med denna sidan är att presentera mig och mitt CV men kanske framför allt att prova på olika teknologier inom frontend-utveckling. Jag jobbade med AngularJS i ett par år, gillade ramverket, och ville prova på uppföljaren när den släpptes 2016. När så småningom Angular 4 släpptes kände jag att ramverket var moget för att bygga något på riktigt. Denna sidan är byggd med Angular, Typescript, Less och Webpack."
+}

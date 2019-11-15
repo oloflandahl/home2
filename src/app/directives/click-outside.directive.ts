@@ -1,5 +1,5 @@
 import { Directive, HostListener, Output, EventEmitter, ElementRef } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from "@angular/common";
 
 @Directive({
   selector: '[appClickOutside]'
