@@ -20,7 +20,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-root\">\r\n  <app-back-img></app-back-img>\r\n  <app-header></app-header>\r\n  <div class=\"container cards-container\">\r\n    <app-person-card></app-person-card>\r\n    <app-resume-summary></app-resume-summary>\r\n    <app-skills-card></app-skills-card>\r\n    <app-timeline></app-timeline>\r\n    <app-demos></app-demos>\r\n    <app-interests-card></app-interests-card>\r\n    <app-page-card></app-page-card>\r\n  </div>\r\n  <app-footer></app-footer>"
+module.exports = "<div class=\"app-root\">\n  <app-back-img></app-back-img>\n  <app-header></app-header>\n  <div class=\"container cards-container\">\n    <app-person-card></app-person-card>\n    <app-resume-summary></app-resume-summary>\n    <app-skills-card></app-skills-card>\n    <app-timeline></app-timeline>\n    <app-demos></app-demos>\n    <app-interests-card></app-interests-card>\n    <app-page-card></app-page-card>\n  </div>\n  <app-footer></app-footer>"
 
 /***/ }),
 
@@ -37,8 +37,8 @@ module.exports = "/* Size */\n/* Colors */\n/* Text */\n/* Spacing */\n/* Z posi
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_translate__ = __webpack_require__("./node_modules/ng2-translate/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_page_scroll__ = __webpack_require__("./node_modules/ng2-page-scroll/ng2-page-scroll.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__ = __webpack_require__("./node_modules/@ngx-translate/core/@ngx-translate/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ngx_page_scroll__ = __webpack_require__("./node_modules/ngx-page-scroll/ngx-page-scroll.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -65,8 +65,8 @@ var AppComponent = (function () {
         translate.use(browserLang.match(/en|sv/) ? browserLang : defaultLang);
     };
     AppComponent.prototype.initPageScroll = function () {
-        __WEBPACK_IMPORTED_MODULE_2_ng2_page_scroll__["b" /* PageScrollConfig */].defaultScrollOffset = 100;
-        __WEBPACK_IMPORTED_MODULE_2_ng2_page_scroll__["b" /* PageScrollConfig */].defaultDuration = 500;
+        __WEBPACK_IMPORTED_MODULE_2_ngx_page_scroll__["b" /* PageScrollConfig */].defaultScrollOffset = 100;
+        __WEBPACK_IMPORTED_MODULE_2_ngx_page_scroll__["b" /* PageScrollConfig */].defaultDuration = 500;
     };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -74,7 +74,7 @@ var AppComponent = (function () {
             template: __webpack_require__("./src/app/app.component.html"),
             styles: [__webpack_require__("./src/app/app.component.less")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ng2_translate__["b" /* TranslateService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__["c" /* TranslateService */]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -87,27 +87,30 @@ var AppComponent = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export HttpLoaderFactory */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_translate__ = __webpack_require__("./node_modules/ng2-translate/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_page_scroll__ = __webpack_require__("./node_modules/ng2-page-scroll/ng2-page-scroll.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_scroll_service__ = __webpack_require__("./src/app/services/scroll.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_scroll_section_service__ = __webpack_require__("./src/app/services/scroll-section.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__directives_click_outside_directive__ = __webpack_require__("./src/app/directives/click-outside.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__directives_scroll_section_directive__ = __webpack_require__("./src/app/directives/scroll-section.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__("./src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_header_header_component__ = __webpack_require__("./src/app/components/header/header.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_back_img_back_img_component__ = __webpack_require__("./src/app/components/back-img/back-img.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_footer_footer_component__ = __webpack_require__("./src/app/components/footer/footer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_social_links_social_links_component__ = __webpack_require__("./src/app/components/social-links/social-links.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_cards_person_card_person_card_component__ = __webpack_require__("./src/app/components/cards/person-card/person-card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_resume_summary_resume_summary_component__ = __webpack_require__("./src/app/components/resume-summary/resume-summary.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_cards_skills_card_skills_card_component__ = __webpack_require__("./src/app/components/cards/skills-card/skills-card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_cards_timeline_timeline_component__ = __webpack_require__("./src/app/components/cards/timeline/timeline.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_cards_demo_cards_demo_cards_component__ = __webpack_require__("./src/app/components/cards/demo-cards/demo-cards.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_cards_interests_card_interests_card_component__ = __webpack_require__("./src/app/components/cards/interests-card/interests-card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_cards_page_card_page_card_component__ = __webpack_require__("./src/app/components/cards/page-card/page-card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__("./node_modules/@ngx-translate/core/@ngx-translate/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_http_loader__ = __webpack_require__("./node_modules/@ngx-translate/http-loader/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ngx_page_scroll__ = __webpack_require__("./node_modules/ngx-page-scroll/ngx-page-scroll.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_scroll_service__ = __webpack_require__("./src/app/services/scroll.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_scroll_section_service__ = __webpack_require__("./src/app/services/scroll-section.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__directives_click_outside_directive__ = __webpack_require__("./src/app/directives/click-outside.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__directives_scroll_section_directive__ = __webpack_require__("./src/app/directives/scroll-section.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_component__ = __webpack_require__("./src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_header_header_component__ = __webpack_require__("./src/app/components/header/header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_back_img_back_img_component__ = __webpack_require__("./src/app/components/back-img/back-img.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_footer_footer_component__ = __webpack_require__("./src/app/components/footer/footer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_social_links_social_links_component__ = __webpack_require__("./src/app/components/social-links/social-links.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_cards_person_card_person_card_component__ = __webpack_require__("./src/app/components/cards/person-card/person-card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_resume_summary_resume_summary_component__ = __webpack_require__("./src/app/components/resume-summary/resume-summary.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_cards_skills_card_skills_card_component__ = __webpack_require__("./src/app/components/cards/skills-card/skills-card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_cards_timeline_timeline_component__ = __webpack_require__("./src/app/components/cards/timeline/timeline.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_cards_demo_cards_demo_cards_component__ = __webpack_require__("./src/app/components/cards/demo-cards/demo-cards.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_cards_interests_card_interests_card_component__ = __webpack_require__("./src/app/components/cards/interests-card/interests-card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_cards_page_card_page_card_component__ = __webpack_require__("./src/app/components/cards/page-card/page-card.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -134,6 +137,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+// AoT requires an exported function for factories
+function HttpLoaderFactory(http) {
+    return new __WEBPACK_IMPORTED_MODULE_3__ngx_translate_http_loader__["a" /* TranslateHttpLoader */](http, './assets/i18n/', '.json');
+}
 var AppModule = (function () {
     function AppModule() {
     }
@@ -141,31 +150,38 @@ var AppModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_2_ng2_translate__["a" /* TranslateModule */].forRoot(),
-                __WEBPACK_IMPORTED_MODULE_3_ng2_page_scroll__["a" /* Ng2PageScrollModule */].forRoot()
+                __WEBPACK_IMPORTED_MODULE_5__angular_common_http__["b" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["b" /* TranslateModule */].forRoot({
+                    loader: {
+                        provide: __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["a" /* TranslateLoader */],
+                        useFactory: HttpLoaderFactory,
+                        deps: [__WEBPACK_IMPORTED_MODULE_5__angular_common_http__["a" /* HttpClient */]]
+                    }
+                }),
+                __WEBPACK_IMPORTED_MODULE_4_ngx_page_scroll__["a" /* NgxPageScrollModule */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_4__services_scroll_service__["a" /* ScrollService */],
-                __WEBPACK_IMPORTED_MODULE_5__services_scroll_section_service__["a" /* ScrollSectionService */],
+                __WEBPACK_IMPORTED_MODULE_6__services_scroll_service__["a" /* ScrollService */],
+                __WEBPACK_IMPORTED_MODULE_7__services_scroll_section_service__["a" /* ScrollSectionService */],
                 { provide: Window, useValue: window }
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_6__directives_click_outside_directive__["a" /* ClickOutsideDirective */],
-                __WEBPACK_IMPORTED_MODULE_7__directives_scroll_section_directive__["a" /* ScrollSectionDirective */],
-                __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_header_header_component__["a" /* HeaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components_back_img_back_img_component__["a" /* BackImgComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__components_footer_footer_component__["a" /* FooterComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__components_social_links_social_links_component__["a" /* SocialLinksComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__components_cards_person_card_person_card_component__["a" /* PersonCardComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__components_resume_summary_resume_summary_component__["a" /* ResumeSummaryComponent */],
-                __WEBPACK_IMPORTED_MODULE_15__components_cards_skills_card_skills_card_component__["a" /* SkillsCardComponent */],
-                __WEBPACK_IMPORTED_MODULE_16__components_cards_timeline_timeline_component__["a" /* TimelineComponent */],
-                __WEBPACK_IMPORTED_MODULE_17__components_cards_demo_cards_demo_cards_component__["a" /* DemosComponent */],
-                __WEBPACK_IMPORTED_MODULE_18__components_cards_interests_card_interests_card_component__["a" /* InterestsCardComponent */],
-                __WEBPACK_IMPORTED_MODULE_19__components_cards_page_card_page_card_component__["a" /* PageCardComponent */]
+                __WEBPACK_IMPORTED_MODULE_8__directives_click_outside_directive__["a" /* ClickOutsideDirective */],
+                __WEBPACK_IMPORTED_MODULE_9__directives_scroll_section_directive__["a" /* ScrollSectionDirective */],
+                __WEBPACK_IMPORTED_MODULE_10__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_11__components_header_header_component__["a" /* HeaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_12__components_back_img_back_img_component__["a" /* BackImgComponent */],
+                __WEBPACK_IMPORTED_MODULE_13__components_footer_footer_component__["a" /* FooterComponent */],
+                __WEBPACK_IMPORTED_MODULE_14__components_social_links_social_links_component__["a" /* SocialLinksComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__components_cards_person_card_person_card_component__["a" /* PersonCardComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__components_resume_summary_resume_summary_component__["a" /* ResumeSummaryComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__components_cards_skills_card_skills_card_component__["a" /* SkillsCardComponent */],
+                __WEBPACK_IMPORTED_MODULE_18__components_cards_timeline_timeline_component__["a" /* TimelineComponent */],
+                __WEBPACK_IMPORTED_MODULE_19__components_cards_demo_cards_demo_cards_component__["a" /* DemosComponent */],
+                __WEBPACK_IMPORTED_MODULE_20__components_cards_interests_card_interests_card_component__["a" /* InterestsCardComponent */],
+                __WEBPACK_IMPORTED_MODULE_21__components_cards_page_card_page_card_component__["a" /* PageCardComponent */]
             ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */]]
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_10__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
     return AppModule;
@@ -233,7 +249,7 @@ function getRandomInt(min, max) {
 /***/ "./src/app/components/cards/demo-cards/demo-cards.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"demos-container\" appScrollSection=\"demos\">\r\n  <div class=\"demos__title\">{{ 'Demos_Title' | translate }}</div>\r\n  <div class=\"demo-cards-container\">\r\n    <div class=\"demo-card-container\" *ngFor=\"let item of demoItems;\">\r\n      <a [href]=\"item.url\" target=\"_blank\">\r\n        <div class=\"demo-card\">\r\n          <div class=\"demo-card-image\" [ngStyle]=\"{'background-image': 'url(./assets/images/'+item.image+'.png)'}\"></div>\r\n          <div class=\"demo-card-description\">{{ item.descriptionTranslationKey | translate }}</div>\r\n        </div>\r\n      </a>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"demos-container\" appScrollSection=\"demos\">\n  <div class=\"demos__title\">{{ 'Demos_Title' | translate }}</div>\n  <div class=\"demo-cards-container\">\n    <div class=\"demo-card-container\" *ngFor=\"let item of demoItems;\">\n      <a [href]=\"item.url\" target=\"_blank\">\n        <div class=\"demo-card\">\n          <div class=\"demo-card-image\" [ngStyle]=\"{'background-image': 'url(./assets/images/'+item.image+'.png)'}\"></div>\n          <div class=\"demo-card-description\">{{ item.descriptionTranslationKey | translate }}</div>\n        </div>\n      </a>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -284,7 +300,7 @@ var DemosComponent = (function () {
 /***/ "./src/app/components/cards/interests-card/interests-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"interests-card-container\" appScrollSection=\"interests\">\r\n  <div class=\"interests-card__title\">{{ 'Interests_Title' | translate }}</div>\r\n  <div class=\"interests-card\">\r\n    <div class=\"interests-card__interests\">\r\n      <div class=\"interests-card__interest\" [class.interests-card__interest--active]=\"activeItem === item\" *ngFor=\"let item of interestItems; let index = index\" (click)=\"toggle(item, index)\">\r\n        <div class=\"interests-card__interest-icon\">\r\n          <i class=\"{{item.iconPrefix}} {{item.iconPrefix}}-{{item.iconName}}\"></i>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"interests-card__interest-description interests-card__interest-description--{{activeIndex}}\" *ngIf=\"activeItem\">\r\n      {{ activeItem.description | translate }}\r\n      <span class=\"interests-card__interest-description-close\" (click)=\"toggle(null, null)\"><i class=\"fa fa-close\"></i></span>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"interests-card-container\" appScrollSection=\"interests\">\n  <div class=\"interests-card__title\">{{ 'Interests_Title' | translate }}</div>\n  <div class=\"interests-card\">\n    <div class=\"interests-card__interests\">\n      <div class=\"interests-card__interest\" [class.interests-card__interest--active]=\"activeItem === item\" *ngFor=\"let item of interestItems; let index = index\" (click)=\"toggle(item, index)\">\n        <div class=\"interests-card__interest-icon\">\n          <i class=\"{{item.iconPrefix}} {{item.iconPrefix}}-{{item.iconName}}\"></i>\n        </div>\n      </div>\n    </div>\n    <div class=\"interests-card__interest-description interests-card__interest-description--{{activeIndex}}\" *ngIf=\"activeItem\">\n      {{ activeItem.description | translate }}\n      <span class=\"interests-card__interest-description-close\" (click)=\"toggle(null, null)\"><i class=\"fa fa-close\"></i></span>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -345,7 +361,7 @@ var InterestsCardComponent = (function () {
 /***/ "./src/app/components/cards/page-card/page-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"page-card-container\" appScrollSection=\"page\">\r\n  <div class=\"page-card__title\">{{ 'AboutPage_Title' | translate }}</div>\r\n  <div class=\"page-card\">\r\n    <div class=\"page-card__description\">{{ 'AboutPage_Description' | translate }}</div>\r\n  </div>\r\n  <div class=\"page-card__icons\">\r\n    <a class=\"page-card__icon-link\" *ngFor=\"let item of brandItems;\" target=\"_blank\" [href]=\"item.url\" [title]=\"item.title\">\r\n      <div class=\"page-card__icon\" [style.background-image]=\"'url(/assets/logos/'+item.iconName+'.svg)'\"></div>\r\n    </a>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"page-card-container\" appScrollSection=\"page\">\n  <div class=\"page-card__title\">{{ 'AboutPage_Title' | translate }}</div>\n  <div class=\"page-card\">\n    <div class=\"page-card__description\">{{ 'AboutPage_Description' | translate }}</div>\n  </div>\n  <div class=\"page-card__icons\">\n    <a class=\"page-card__icon-link\" *ngFor=\"let item of brandItems;\" target=\"_blank\" [href]=\"item.url\" [title]=\"item.title\">\n      <div class=\"page-card__icon\" [style.background-image]=\"'url(/assets/logos/'+item.iconName+'.svg)'\"></div>\n    </a>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -396,7 +412,7 @@ var PageCardComponent = (function () {
 /***/ "./src/app/components/cards/person-card/person-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"person-card-container\" appScrollSection=\"about\">\r\n  <div class=\"person-card\">\r\n    <div class=\"row person-card__content\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"person-card__photo hidden-xs\"></div>\r\n        <div class=\"person-card__photo person-card__photo--large visible-xs-block\"></div>\r\n      </div>\r\n      <div class=\"col-sm-8\">\r\n          <div class=\"person-card__info-header\">\r\n            <div class=\"person-card__greeting\">{{ 'PersonInfo_Hello' | translate }}!</div>\r\n            <div class=\"person-card__name\">\r\n              <span class=\"light\">{{ 'PersonInfo_IAm' | translate }}</span>\r\n              <strong class=\"stronger\">Olof Landahl</strong></div>\r\n            <div class=\"person-card__title\">{{ 'PersonInfo_Developer' | translate }}</div>\r\n          </div>\r\n          <ul class=\"person-card__info-items\">\r\n            <li class=\"row person-card__info-item\" *ngFor=\"let item of infoItems;\">\r\n              <div class=\"col-sm-4 person-card__info-item-left\">{{ item.key | translate }}</div>\r\n              <div class=\"col-sm-8 person-card__info-item-right\">{{item.value}}</div>\r\n            </li>\r\n          </ul>\r\n      </div>\r\n    </div>\r\n    <div class=\"person-card__footer\">\r\n      <app-social-links [theme]=\"'color'\"></app-social-links>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"person-card-container\" appScrollSection=\"about\">\n  <div class=\"person-card\">\n    <div class=\"row person-card__content\">\n      <div class=\"col-sm-4\">\n        <div class=\"person-card__photo hidden-xs\"></div>\n        <div class=\"person-card__photo person-card__photo--large visible-xs-block\"></div>\n      </div>\n      <div class=\"col-sm-8\">\n          <div class=\"person-card__info-header\">\n            <div class=\"person-card__greeting\">{{ 'PersonInfo_Hello' | translate }}!</div>\n            <div class=\"person-card__name\">\n              <span class=\"light\">{{ 'PersonInfo_IAm' | translate }}</span>\n              <strong class=\"stronger\">Olof Landahl</strong></div>\n            <div class=\"person-card__title\">{{ 'PersonInfo_Developer' | translate }}</div>\n          </div>\n          <ul class=\"person-card__info-items\">\n            <li class=\"row person-card__info-item\" *ngFor=\"let item of infoItems;\">\n              <div class=\"col-sm-4 person-card__info-item-left\">{{ item.key | translate }}</div>\n              <div class=\"col-sm-8 person-card__info-item-right\">{{item.value}}</div>\n            </li>\n          </ul>\n      </div>\n    </div>\n    <div class=\"person-card__footer\">\n      <app-social-links [theme]=\"'color'\"></app-social-links>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -447,7 +463,7 @@ var PersonCardComponent = (function () {
 /***/ "./src/app/components/cards/skills-card/skills-card.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"skills-card-container\" appScrollSection=\"skills\">\r\n\t<div class=\"skills-card__title\">{{ 'Skills_Title' | translate }}</div>\r\n  \r\n\t<div class=\"skills-card\">\r\n\t  <div class=\"row skills-card__skills\">\r\n\t    <div class=\"col-md-6 skill\" *ngFor=\"let item of skillItems\">\r\n\t      <div class=\"skill__title\">{{item.key}}</div>\r\n\t      <div class=\"skill__bar-container\">\r\n\t        <div class=\"skill__bar skill__bar--full\"></div>\r\n\t        <div class=\"skill__bar skill__bar--fill\" [style.width]=\"item.value+'%'\"></div>\r\n\t      </div>\r\n\t    </div>\r\n\t  </div>\r\n\t</div>\r\n</div>"
+module.exports = "<div class=\"skills-card-container\" appScrollSection=\"skills\">\n\t<div class=\"skills-card__title\">{{ 'Skills_Title' | translate }}</div>\n  \n\t<div class=\"skills-card\">\n\t  <div class=\"row skills-card__skills\">\n\t    <div class=\"col-md-6 skill\" *ngFor=\"let item of skillItems\">\n\t      <div class=\"skill__title\">{{item.key}}</div>\n\t      <div class=\"skill__bar-container\">\n\t        <div class=\"skill__bar skill__bar--full\"></div>\n\t        <div class=\"skill__bar skill__bar--fill\" [style.width]=\"item.value+'%'\"></div>\n\t      </div>\n\t    </div>\n\t  </div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -498,7 +514,7 @@ var SkillsCardComponent = (function () {
 /***/ "./src/app/components/cards/timeline/timeline.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"timeline\" appScrollSection=\"experience\">\r\n  <div class=\"timeline__title\">{{ 'Experience_Title' | translate }}</div>\r\n  <div class=\"timeline-cards-container\">\r\n    <div class=\"timeline-card-container\" *ngFor=\"let item of timelineItems; let odd = odd; let even = even;\" [ngClass]=\"{ 'timeline-card-container--left': even, 'timeline-card-container--right': odd }\">\r\n      <span class=\"timeline__dot\"></span>\r\n      <a [href]=\"item.url\" target=\"_blank\">\r\n        <div class=\"timeline-card\">\r\n          <span class=\"timeline-card__arrow\"></span>\r\n          <div class=\"timeline-card__years\">\r\n            <span>{{item.startYear}}</span>\r\n            <span [hidden]=\"!item.endYear || item.startYear === item.endYear\">- {{item.endYear}}</span>\r\n          </div>\r\n          <div class=\"timeline-card__logo timeline-card__logo--{{item.logo}}\" ></div>\r\n          <div class=\"timeline-card__city\">{{item.city}}</div>\r\n          <div class=\"timeline-card__title\">{{item.title}}</div>\r\n          <div class=\"timeline-card__subtitle\">{{item.subTitleTranslationKey | translate}}</div>\r\n          <div class=\"timeline-card__description\">{{item.descriptionTranslationKey | translate}}</div>\r\n          <div class=\"timeline-card__technologies\">\r\n            <span class=\"timeline-card__technology\" *ngFor=\"let t of item.technologies;\" [ngClass]=\"{ 'timeline-card__technology--selected': selectedTech === t }\" (click)=\"toggleTechnology(t)\">{{t}}</span>\r\n          </div>\r\n        </div>\r\n      </a>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"timeline\" appScrollSection=\"experience\">\n  <div class=\"timeline__title\">{{ 'Experience_Title' | translate }}</div>\n  <div class=\"timeline-cards-container\">\n    <div class=\"timeline-card-container\" *ngFor=\"let item of timelineItems; let odd = odd; let even = even;\" [ngClass]=\"{ 'timeline-card-container--left': even, 'timeline-card-container--right': odd }\">\n      <span class=\"timeline__dot\"></span>\n      <a [href]=\"item.url\" target=\"_blank\">\n        <div class=\"timeline-card\">\n          <span class=\"timeline-card__arrow\"></span>\n          <div class=\"timeline-card__years\">\n            <span>{{item.startYear}}</span>\n            <span [hidden]=\"!item.endYear || item.startYear === item.endYear\">- {{item.endYear}}</span>\n          </div>\n          <div class=\"timeline-card__logo timeline-card__logo--{{item.logo}}\" ></div>\n          <div class=\"timeline-card__city\">{{item.city}}</div>\n          <div class=\"timeline-card__title\">{{item.title}}</div>\n          <div class=\"timeline-card__subtitle\">{{item.subTitleTranslationKey | translate}}</div>\n          <div class=\"timeline-card__description\">{{item.descriptionTranslationKey | translate}}</div>\n          <div class=\"timeline-card__technologies\">\n            <span class=\"timeline-card__technology\" *ngFor=\"let t of item.technologies;\" [ngClass]=\"{ 'timeline-card__technology--selected': selectedTech === t }\" (click)=\"toggleTechnology(t)\">{{t}}</span>\n          </div>\n        </div>\n      </a>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -558,7 +574,7 @@ var TimelineComponent = (function () {
 /***/ "./src/app/components/footer/footer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"footer\">\r\n  <app-social-links></app-social-links>\r\n</div>"
+module.exports = "<div class=\"footer\">\n  <app-social-links></app-social-links>\n</div>"
 
 /***/ }),
 
@@ -606,7 +622,7 @@ var FooterComponent = (function () {
 /***/ "./src/app/components/header/header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-header\" [class.app-header--init]=\"isInit\" [class.app-header--sticky]=\"isSticky\" [class.app-header--hide-sticky]=\"stickyIsHidden\" (appClickOutside)=\"closeMenu()\">\r\n  <div class=\"app-header__title hidden-sm\">oloflandahl.com</div>\r\n  <nav class=\"app-header__navbar\">\r\n    <div class=\"app-header__navbar-icon\" (click)=\"openMenu()\">\r\n      <i class=\"fa fa-bars\"></i>\r\n    </div>\r\n    <ul class=\"navbar\" [class.navbar--open]=\"isMenuOpen\">\r\n      <li class=\"navbar__item navbar__item--close-icon\" (click)=\"closeMenu()\"><i class=\"fa fa-close\"></i></li>\r\n      <li class=\"navbar__item\" [class.navbar__item--active]=\"item.isActive\" *ngFor=\"let item of items;\" pageScroll [href]=\"'#'+item.id\" (click)=\"select(item)\">\r\n        <span>{{ item.translationKey | translate }}</span>\r\n      </li>\r\n      <li class=\"navbar__item navbar__item--box\" (click)=\"switchLanguage()\">\r\n        <span title=\"{{ 'SwitchLanguage_Tooltip' | translate }}\"><img src=\"assets/logos/{{currentLang}}.png\" /></span>\r\n      </li>\r\n    </ul>\r\n  </nav>\r\n</div>\r\n<div class=\"app-header-sticky-placeholder\" [class.app-header-sticky-placeholder--visible]=\"isSticky && !stickyIsHidden\"></div>"
+module.exports = "<div class=\"app-header\" [class.app-header--init]=\"isInit\" [class.app-header--sticky]=\"isSticky\" [class.app-header--hide-sticky]=\"stickyIsHidden\" (appClickOutside)=\"closeMenu()\">\n  <div class=\"app-header__title hidden-sm\">oloflandahl.com</div>\n  <nav class=\"app-header__navbar\">\n    <div class=\"app-header__navbar-icon\" (click)=\"openMenu()\">\n      <i class=\"fa fa-bars\"></i>\n    </div>\n    <ul class=\"navbar\" [class.navbar--open]=\"isMenuOpen\">\n      <li class=\"navbar__item navbar__item--close-icon\" (click)=\"closeMenu()\"><i class=\"fa fa-close\"></i></li>\n      <li class=\"navbar__item\" [class.navbar__item--active]=\"item.isActive\" *ngFor=\"let item of items;\" pageScroll [href]=\"'#'+item.id\" (click)=\"select(item)\">\n        <span>{{ item.translationKey | translate }}</span>\n      </li>\n      <li class=\"navbar__item navbar__item--box\" (click)=\"switchLanguage()\">\n        <span title=\"{{ 'SwitchLanguage_Tooltip' | translate }}\"><img src=\"assets/logos/{{currentLang}}.png\" /></span>\n      </li>\n    </ul>\n  </nav>\n</div>\n<div class=\"app-header-sticky-placeholder\" [class.app-header-sticky-placeholder--visible]=\"isSticky && !stickyIsHidden\"></div>"
 
 /***/ }),
 
@@ -623,7 +639,7 @@ module.exports = "/* Size */\n/* Colors */\n/* Text */\n/* Spacing */\n/* Z posi
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HeaderComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_translate__ = __webpack_require__("./node_modules/ng2-translate/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__ = __webpack_require__("./node_modules/@ngx-translate/core/@ngx-translate/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_scroll_service__ = __webpack_require__("./src/app/services/scroll.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_scroll_section_service__ = __webpack_require__("./src/app/services/scroll-section.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_menu_items__ = __webpack_require__("./src/app/data/menu-items.ts");
@@ -705,7 +721,7 @@ var HeaderComponent = (function () {
         }),
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */])(Window)),
         __metadata("design:paramtypes", [Window,
-            __WEBPACK_IMPORTED_MODULE_1_ng2_translate__["b" /* TranslateService */],
+            __WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__["c" /* TranslateService */],
             __WEBPACK_IMPORTED_MODULE_2__services_scroll_service__["a" /* ScrollService */],
             __WEBPACK_IMPORTED_MODULE_3__services_scroll_section_service__["a" /* ScrollSectionService */]])
     ], HeaderComponent);
@@ -719,7 +735,7 @@ var HeaderComponent = (function () {
 /***/ "./src/app/components/resume-summary/resume-summary.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"resume-summary\">\r\n  <a class=\"resume-summary__link\" href=\"./assets/{{'ResumeSummary_Filename' | translate}}\" target=\"_blank\">{{'ResumeSummary_ButtonLabel' | translate}}</a>\r\n  <div class=\"resume-summary__text\">{{'ResumeSummary_Text' | translate}}</div>\r\n</div>"
+module.exports = "<div class=\"resume-summary\">\n  <a class=\"resume-summary__link\" href=\"./assets/{{'ResumeSummary_Filename' | translate}}\" target=\"_blank\">{{'ResumeSummary_ButtonLabel' | translate}}</a>\n  <div class=\"resume-summary__text\">{{'ResumeSummary_Text' | translate}}</div>\n</div>"
 
 /***/ }),
 
@@ -763,7 +779,7 @@ var ResumeSummaryComponent = (function () {
 /***/ "./src/app/components/social-links/social-links.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"social-links social-links--{{theme}}\">\r\n  <li *ngFor=\"let item of socialLinkItems;\" class=\"social-links__link\">\r\n    <a href=\"{{item.url}}\" [target]=\"item.openOnPage ? '_self' : '_blank'\" title=\"{{item.title}}\">\r\n      <i class=\"fa fa-{{item.iconName}}\"></i>\r\n    </a>\r\n  </li>\r\n</ul>"
+module.exports = "<ul class=\"social-links social-links--{{theme}}\">\n  <li *ngFor=\"let item of socialLinkItems;\" class=\"social-links__link\">\n    <a href=\"{{item.url}}\" [target]=\"item.openOnPage ? '_self' : '_blank'\" title=\"{{item.title}}\">\n      <i class=\"fa fa-{{item.iconName}}\"></i>\n    </a>\n  </li>\n</ul>"
 
 /***/ }),
 
@@ -915,12 +931,9 @@ var SKILL_ITEMS = [
     { key: 'JavaScript', value: 90 },
     { key: 'TypeScript', value: 80 },
     { key: 'HTML/CSS', value: 90 },
-    { key: 'AngularJS', value: 90 },
+    { key: 'React', value: 80 },
+    { key: 'Vue', value: 50 },
     { key: 'Angular', value: 90 },
-    { key: 'KnockoutJS', value: 95 },
-    { key: 'ReactJS', value: 50 },
-    { key: 'Bootstrap', value: 90 },
-    { key: 'JQuery', value: 95 },
     { key: '.NET', value: 75 },
     { key: 'SQL', value: 50 },
 ];
@@ -952,6 +965,17 @@ var SOCIAL_LINK_ITEMS = [
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TIMELINE_ITEMS; });
 var TIMELINE_ITEMS = [
     {
+        startYear: 2020,
+        endYear: 2020,
+        logo: 'fis',
+        city: 'Göteborg',
+        title: 'HiQ - Freight Investor Services',
+        subTitleTranslationKey: 'Role_WebDeveloper',
+        descriptionTranslationKey: 'Experience_FIS',
+        url: 'https://freightinvestorservices.com/',
+        technologies: ['React', 'TypeScript', 'PWA', 'Web Push', 'SignalR', 'Highcharts', 'Jest']
+    },
+    {
         startYear: 2018,
         endYear: 2019,
         logo: 'pbolaget',
@@ -960,7 +984,7 @@ var TIMELINE_ITEMS = [
         subTitleTranslationKey: 'Role_WebDeveloper',
         descriptionTranslationKey: 'Experience_PBolaget',
         url: 'https://foretag.parkeringgoteborg.se/',
-        technologies: ['Angular 7+', 'TypeScript', 'Jasmine', 'Git']
+        technologies: ['Angular 8', 'TypeScript', 'Jasmine', 'Git']
     },
     {
         startYear: 2016,
@@ -971,7 +995,7 @@ var TIMELINE_ITEMS = [
         subTitleTranslationKey: 'Role_WebDeveloper',
         descriptionTranslationKey: 'Experience_Securitas',
         url: 'http://www.securitas.se/',
-        technologies: ['ASP.NET', 'MVC', 'ReactJS', 'KnockoutJS', 'JQuery', 'EcmaScript2015', 'Jasmine', 'NUnit', 'SQL', 'Git']
+        technologies: ['ASP.NET', 'MVC', 'React', 'KnockoutJS', 'JQuery', 'EcmaScript2015', 'Jasmine', 'NUnit', 'SQL', 'Git']
     },
     {
         startYear: 2015,
