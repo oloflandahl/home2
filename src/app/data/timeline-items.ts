@@ -2,6 +2,17 @@ import { TimelineItem } from '../models/timeline-item';
 
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
+    startYear: 2020,
+    endYear: 2020,
+    logo: 'fis',
+    city: 'Göteborg',
+    title: 'HiQ - Freight Investor Services',
+    subTitleTranslationKey: 'Role_WebDeveloper',
+    descriptionTranslationKey: 'Experience_FIS',
+    url: 'https://freightinvestorservices.com/',
+    technologies: ['React', 'TypeScript', 'PWA', 'Web Push', 'SignalR', 'Highcharts', 'Jest']
+  },
+  {
     startYear: 2018,
     endYear: 2019,
     logo: 'pbolaget',
@@ -10,7 +21,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_PBolaget',
     url: 'https://foretag.parkeringgoteborg.se/',
-    technologies: ['Angular 7+', 'TypeScript', 'Jasmine', 'Git']
+    technologies: ['Angular 8', 'TypeScript', 'Jasmine', 'Git']
   },
   {
     startYear: 2016,
@@ -21,7 +32,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_Securitas',
     url: 'http://www.securitas.se/',
-    technologies: ['ASP.NET', 'MVC', 'ReactJS', 'KnockoutJS', 'JQuery', 'EcmaScript2015', 'Jasmine', 'NUnit', 'SQL', 'Git']
+    technologies: ['ASP.NET', 'MVC', 'React', 'KnockoutJS', 'JQuery', 'EcmaScript2015', 'Jasmine', 'NUnit', 'SQL', 'Git']
   },
   {
     startYear: 2015,
