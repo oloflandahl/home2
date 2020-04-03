@@ -23,6 +23,7 @@ import { TimelineComponent } from './components/cards/timeline/timeline.componen
 import { DemosComponent } from './components/cards/demo-cards/demo-cards.component';
 import { InterestsCardComponent } from './components/cards/interests-card/interests-card.component';
 import { PageCardComponent } from './components/cards/page-card/page-card.component';
+import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,7 +40,8 @@ export function HttpLoaderFactory(http: HttpClient) {
             deps: [HttpClient]
         }
     }),
-    NgxPageScrollModule
+    NgxPageScrollModule,
+    NgxPageScrollCoreModule.forRoot({ duration: 500, scrollOffset: 100 }),
   ],
   providers: [
     ScrollService,
