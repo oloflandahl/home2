@@ -6681,6 +6681,2797 @@ var VERSION = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["_7" /* Version */
 
 /***/ }),
 
+/***/ "./node_modules/@angular/common/esm5/http.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export HttpBackend */
+/* unused harmony export HttpHandler */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HttpClient; });
+/* unused harmony export HttpHeaders */
+/* unused harmony export HTTP_INTERCEPTORS */
+/* unused harmony export JsonpClientBackend */
+/* unused harmony export JsonpInterceptor */
+/* unused harmony export HttpClientJsonpModule */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HttpClientModule; });
+/* unused harmony export HttpClientXsrfModule */
+/* unused harmony export ɵinterceptingHandler */
+/* unused harmony export HttpParams */
+/* unused harmony export HttpUrlEncodingCodec */
+/* unused harmony export HttpRequest */
+/* unused harmony export HttpErrorResponse */
+/* unused harmony export HttpEventType */
+/* unused harmony export HttpHeaderResponse */
+/* unused harmony export HttpResponse */
+/* unused harmony export HttpResponseBase */
+/* unused harmony export HttpXhrBackend */
+/* unused harmony export XhrFactory */
+/* unused harmony export HttpXsrfTokenExtractor */
+/* unused harmony export ɵa */
+/* unused harmony export ɵb */
+/* unused harmony export ɵc */
+/* unused harmony export ɵd */
+/* unused harmony export ɵe */
+/* unused harmony export ɵh */
+/* unused harmony export ɵi */
+/* unused harmony export ɵf */
+/* unused harmony export ɵg */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_concatMap__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/concatMap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/filter.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_tslib__ = __webpack_require__("./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+/**
+ * @license Angular v5.2.11
+ * (c) 2010-2018 Google, Inc. https://angular.io/
+ * License: MIT
+ */
+
+
+
+
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * Transforms an `HttpRequest` into a stream of `HttpEvent`s, one of which will likely be a
+ * `HttpResponse`.
+ *
+ * `HttpHandler` is injectable. When injected, the handler instance dispatches requests to the
+ * first interceptor in the chain, which dispatches to the second, etc, eventually reaching the
+ * `HttpBackend`.
+ *
+ * In an `HttpInterceptor`, the `HttpHandler` parameter is the next interceptor in the chain.
+ *
+ * \@stable
+ * @abstract
+ */
+var HttpHandler = /** @class */ (function () {
+    function HttpHandler() {
+    }
+    return HttpHandler;
+}());
+/**
+ * A final `HttpHandler` which will dispatch the request via browser HTTP APIs to a backend.
+ *
+ * Interceptors sit between the `HttpClient` interface and the `HttpBackend`.
+ *
+ * When injected, `HttpBackend` dispatches requests directly to the backend, without going
+ * through the interceptor chain.
+ *
+ * \@stable
+ * @abstract
+ */
+var HttpBackend = /** @class */ (function () {
+    function HttpBackend() {
+    }
+    return HttpBackend;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * @record
+ */
+/**
+ * Immutable set of Http headers, with lazy parsing.
+ * \@stable
+ */
+var HttpHeaders = /** @class */ (function () {
+    function HttpHeaders(headers) {
+        var _this = this;
+        /**
+         * Internal map of lowercased header names to the normalized
+         * form of the name (the form seen first).
+         */
+        this.normalizedNames = new Map();
+        /**
+         * Queued updates to be materialized the next initialization.
+         */
+        this.lazyUpdate = null;
+        if (!headers) {
+            this.headers = new Map();
+        }
+        else if (typeof headers === 'string') {
+            this.lazyInit = function () {
+                _this.headers = new Map();
+                headers.split('\n').forEach(function (line) {
+                    var /** @type {?} */ index = line.indexOf(':');
+                    if (index > 0) {
+                        var /** @type {?} */ name_1 = line.slice(0, index);
+                        var /** @type {?} */ key = name_1.toLowerCase();
+                        var /** @type {?} */ value = line.slice(index + 1).trim();
+                        _this.maybeSetNormalizedName(name_1, key);
+                        if (_this.headers.has(key)) {
+                            /** @type {?} */ ((_this.headers.get(key))).push(value);
+                        }
+                        else {
+                            _this.headers.set(key, [value]);
+                        }
+                    }
+                });
+            };
+        }
+        else {
+            this.lazyInit = function () {
+                _this.headers = new Map();
+                Object.keys(headers).forEach(function (name) {
+                    var /** @type {?} */ values = headers[name];
+                    var /** @type {?} */ key = name.toLowerCase();
+                    if (typeof values === 'string') {
+                        values = [values];
+                    }
+                    if (values.length > 0) {
+                        _this.headers.set(key, values);
+                        _this.maybeSetNormalizedName(name, key);
+                    }
+                });
+            };
+        }
+    }
+    /**
+     * Checks for existence of header by given name.
+     */
+    /**
+     * Checks for existence of header by given name.
+     * @param {?} name
+     * @return {?}
+     */
+    HttpHeaders.prototype.has = /**
+     * Checks for existence of header by given name.
+     * @param {?} name
+     * @return {?}
+     */
+    function (name) {
+        this.init();
+        return this.headers.has(name.toLowerCase());
+    };
+    /**
+     * Returns first header that matches given name.
+     */
+    /**
+     * Returns first header that matches given name.
+     * @param {?} name
+     * @return {?}
+     */
+    HttpHeaders.prototype.get = /**
+     * Returns first header that matches given name.
+     * @param {?} name
+     * @return {?}
+     */
+    function (name) {
+        this.init();
+        var /** @type {?} */ values = this.headers.get(name.toLowerCase());
+        return values && values.length > 0 ? values[0] : null;
+    };
+    /**
+     * Returns the names of the headers
+     */
+    /**
+     * Returns the names of the headers
+     * @return {?}
+     */
+    HttpHeaders.prototype.keys = /**
+     * Returns the names of the headers
+     * @return {?}
+     */
+    function () {
+        this.init();
+        return Array.from(this.normalizedNames.values());
+    };
+    /**
+     * Returns list of header values for a given name.
+     */
+    /**
+     * Returns list of header values for a given name.
+     * @param {?} name
+     * @return {?}
+     */
+    HttpHeaders.prototype.getAll = /**
+     * Returns list of header values for a given name.
+     * @param {?} name
+     * @return {?}
+     */
+    function (name) {
+        this.init();
+        return this.headers.get(name.toLowerCase()) || null;
+    };
+    /**
+     * @param {?} name
+     * @param {?} value
+     * @return {?}
+     */
+    HttpHeaders.prototype.append = /**
+     * @param {?} name
+     * @param {?} value
+     * @return {?}
+     */
+    function (name, value) {
+        return this.clone({ name: name, value: value, op: 'a' });
+    };
+    /**
+     * @param {?} name
+     * @param {?} value
+     * @return {?}
+     */
+    HttpHeaders.prototype.set = /**
+     * @param {?} name
+     * @param {?} value
+     * @return {?}
+     */
+    function (name, value) {
+        return this.clone({ name: name, value: value, op: 's' });
+    };
+    /**
+     * @param {?} name
+     * @param {?=} value
+     * @return {?}
+     */
+    HttpHeaders.prototype.delete = /**
+     * @param {?} name
+     * @param {?=} value
+     * @return {?}
+     */
+    function (name, value) {
+        return this.clone({ name: name, value: value, op: 'd' });
+    };
+    /**
+     * @param {?} name
+     * @param {?} lcName
+     * @return {?}
+     */
+    HttpHeaders.prototype.maybeSetNormalizedName = /**
+     * @param {?} name
+     * @param {?} lcName
+     * @return {?}
+     */
+    function (name, lcName) {
+        if (!this.normalizedNames.has(lcName)) {
+            this.normalizedNames.set(lcName, name);
+        }
+    };
+    /**
+     * @return {?}
+     */
+    HttpHeaders.prototype.init = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (!!this.lazyInit) {
+            if (this.lazyInit instanceof HttpHeaders) {
+                this.copyFrom(this.lazyInit);
+            }
+            else {
+                this.lazyInit();
+            }
+            this.lazyInit = null;
+            if (!!this.lazyUpdate) {
+                this.lazyUpdate.forEach(function (update) { return _this.applyUpdate(update); });
+                this.lazyUpdate = null;
+            }
+        }
+    };
+    /**
+     * @param {?} other
+     * @return {?}
+     */
+    HttpHeaders.prototype.copyFrom = /**
+     * @param {?} other
+     * @return {?}
+     */
+    function (other) {
+        var _this = this;
+        other.init();
+        Array.from(other.headers.keys()).forEach(function (key) {
+            _this.headers.set(key, /** @type {?} */ ((other.headers.get(key))));
+            _this.normalizedNames.set(key, /** @type {?} */ ((other.normalizedNames.get(key))));
+        });
+    };
+    /**
+     * @param {?} update
+     * @return {?}
+     */
+    HttpHeaders.prototype.clone = /**
+     * @param {?} update
+     * @return {?}
+     */
+    function (update) {
+        var /** @type {?} */ clone = new HttpHeaders();
+        clone.lazyInit =
+            (!!this.lazyInit && this.lazyInit instanceof HttpHeaders) ? this.lazyInit : this;
+        clone.lazyUpdate = (this.lazyUpdate || []).concat([update]);
+        return clone;
+    };
+    /**
+     * @param {?} update
+     * @return {?}
+     */
+    HttpHeaders.prototype.applyUpdate = /**
+     * @param {?} update
+     * @return {?}
+     */
+    function (update) {
+        var /** @type {?} */ key = update.name.toLowerCase();
+        switch (update.op) {
+            case 'a':
+            case 's':
+                var /** @type {?} */ value = /** @type {?} */ ((update.value));
+                if (typeof value === 'string') {
+                    value = [value];
+                }
+                if (value.length === 0) {
+                    return;
+                }
+                this.maybeSetNormalizedName(update.name, key);
+                var /** @type {?} */ base = (update.op === 'a' ? this.headers.get(key) : undefined) || [];
+                base.push.apply(base, value);
+                this.headers.set(key, base);
+                break;
+            case 'd':
+                var /** @type {?} */ toDelete_1 = /** @type {?} */ (update.value);
+                if (!toDelete_1) {
+                    this.headers.delete(key);
+                    this.normalizedNames.delete(key);
+                }
+                else {
+                    var /** @type {?} */ existing = this.headers.get(key);
+                    if (!existing) {
+                        return;
+                    }
+                    existing = existing.filter(function (value) { return toDelete_1.indexOf(value) === -1; });
+                    if (existing.length === 0) {
+                        this.headers.delete(key);
+                        this.normalizedNames.delete(key);
+                    }
+                    else {
+                        this.headers.set(key, existing);
+                    }
+                }
+                break;
+        }
+    };
+    /**
+     * @internal
+     */
+    /**
+     * \@internal
+     * @param {?} fn
+     * @return {?}
+     */
+    HttpHeaders.prototype.forEach = /**
+     * \@internal
+     * @param {?} fn
+     * @return {?}
+     */
+    function (fn) {
+        var _this = this;
+        this.init();
+        Array.from(this.normalizedNames.keys())
+            .forEach(function (key) { return fn(/** @type {?} */ ((_this.normalizedNames.get(key))), /** @type {?} */ ((_this.headers.get(key)))); });
+    };
+    return HttpHeaders;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * A codec for encoding and decoding parameters in URLs.
+ *
+ * Used by `HttpParams`.
+ *
+ * \@stable
+ *
+ * @record
+ */
+
+/**
+ * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
+ * serialize and parse URL parameter keys and values.
+ *
+ * \@stable
+ */
+var HttpUrlEncodingCodec = /** @class */ (function () {
+    function HttpUrlEncodingCodec() {
+    }
+    /**
+     * @param {?} k
+     * @return {?}
+     */
+    HttpUrlEncodingCodec.prototype.encodeKey = /**
+     * @param {?} k
+     * @return {?}
+     */
+    function (k) { return standardEncoding(k); };
+    /**
+     * @param {?} v
+     * @return {?}
+     */
+    HttpUrlEncodingCodec.prototype.encodeValue = /**
+     * @param {?} v
+     * @return {?}
+     */
+    function (v) { return standardEncoding(v); };
+    /**
+     * @param {?} k
+     * @return {?}
+     */
+    HttpUrlEncodingCodec.prototype.decodeKey = /**
+     * @param {?} k
+     * @return {?}
+     */
+    function (k) { return decodeURIComponent(k); };
+    /**
+     * @param {?} v
+     * @return {?}
+     */
+    HttpUrlEncodingCodec.prototype.decodeValue = /**
+     * @param {?} v
+     * @return {?}
+     */
+    function (v) { return decodeURIComponent(v); };
+    return HttpUrlEncodingCodec;
+}());
+/**
+ * @param {?} rawParams
+ * @param {?} codec
+ * @return {?}
+ */
+function paramParser(rawParams, codec) {
+    var /** @type {?} */ map$$1 = new Map();
+    if (rawParams.length > 0) {
+        var /** @type {?} */ params = rawParams.split('&');
+        params.forEach(function (param) {
+            var /** @type {?} */ eqIdx = param.indexOf('=');
+            var _a = eqIdx == -1 ?
+                [codec.decodeKey(param), ''] :
+                [codec.decodeKey(param.slice(0, eqIdx)), codec.decodeValue(param.slice(eqIdx + 1))], key = _a[0], val = _a[1];
+            var /** @type {?} */ list = map$$1.get(key) || [];
+            list.push(val);
+            map$$1.set(key, list);
+        });
+    }
+    return map$$1;
+}
+/**
+ * @param {?} v
+ * @return {?}
+ */
+function standardEncoding(v) {
+    return encodeURIComponent(v)
+        .replace(/%40/gi, '@')
+        .replace(/%3A/gi, ':')
+        .replace(/%24/gi, '$')
+        .replace(/%2C/gi, ',')
+        .replace(/%3B/gi, ';')
+        .replace(/%2B/gi, '+')
+        .replace(/%3D/gi, '=')
+        .replace(/%3F/gi, '?')
+        .replace(/%2F/gi, '/');
+}
+/**
+ * An HTTP request/response body that represents serialized parameters,
+ * per the MIME type `application/x-www-form-urlencoded`.
+ *
+ * This class is immutable - all mutation operations return a new instance.
+ *
+ * \@stable
+ */
+var HttpParams = /** @class */ (function () {
+    function HttpParams(options) {
+        if (options === void 0) { options = /** @type {?} */ ({}); }
+        var _this = this;
+        this.updates = null;
+        this.cloneFrom = null;
+        this.encoder = options.encoder || new HttpUrlEncodingCodec();
+        if (!!options.fromString) {
+            if (!!options.fromObject) {
+                throw new Error("Cannot specify both fromString and fromObject.");
+            }
+            this.map = paramParser(options.fromString, this.encoder);
+        }
+        else if (!!options.fromObject) {
+            this.map = new Map();
+            Object.keys(options.fromObject).forEach(function (key) {
+                var /** @type {?} */ value = (/** @type {?} */ (options.fromObject))[key]; /** @type {?} */
+                ((_this.map)).set(key, Array.isArray(value) ? value : [value]);
+            });
+        }
+        else {
+            this.map = null;
+        }
+    }
+    /**
+     * Check whether the body has one or more values for the given parameter name.
+     */
+    /**
+     * Check whether the body has one or more values for the given parameter name.
+     * @param {?} param
+     * @return {?}
+     */
+    HttpParams.prototype.has = /**
+     * Check whether the body has one or more values for the given parameter name.
+     * @param {?} param
+     * @return {?}
+     */
+    function (param) {
+        this.init();
+        return /** @type {?} */ ((this.map)).has(param);
+    };
+    /**
+     * Get the first value for the given parameter name, or `null` if it's not present.
+     */
+    /**
+     * Get the first value for the given parameter name, or `null` if it's not present.
+     * @param {?} param
+     * @return {?}
+     */
+    HttpParams.prototype.get = /**
+     * Get the first value for the given parameter name, or `null` if it's not present.
+     * @param {?} param
+     * @return {?}
+     */
+    function (param) {
+        this.init();
+        var /** @type {?} */ res = /** @type {?} */ ((this.map)).get(param);
+        return !!res ? res[0] : null;
+    };
+    /**
+     * Get all values for the given parameter name, or `null` if it's not present.
+     */
+    /**
+     * Get all values for the given parameter name, or `null` if it's not present.
+     * @param {?} param
+     * @return {?}
+     */
+    HttpParams.prototype.getAll = /**
+     * Get all values for the given parameter name, or `null` if it's not present.
+     * @param {?} param
+     * @return {?}
+     */
+    function (param) {
+        this.init();
+        return /** @type {?} */ ((this.map)).get(param) || null;
+    };
+    /**
+     * Get all the parameter names for this body.
+     */
+    /**
+     * Get all the parameter names for this body.
+     * @return {?}
+     */
+    HttpParams.prototype.keys = /**
+     * Get all the parameter names for this body.
+     * @return {?}
+     */
+    function () {
+        this.init();
+        return Array.from(/** @type {?} */ ((this.map)).keys());
+    };
+    /**
+     * Construct a new body with an appended value for the given parameter name.
+     */
+    /**
+     * Construct a new body with an appended value for the given parameter name.
+     * @param {?} param
+     * @param {?} value
+     * @return {?}
+     */
+    HttpParams.prototype.append = /**
+     * Construct a new body with an appended value for the given parameter name.
+     * @param {?} param
+     * @param {?} value
+     * @return {?}
+     */
+    function (param, value) { return this.clone({ param: param, value: value, op: 'a' }); };
+    /**
+     * Construct a new body with a new value for the given parameter name.
+     */
+    /**
+     * Construct a new body with a new value for the given parameter name.
+     * @param {?} param
+     * @param {?} value
+     * @return {?}
+     */
+    HttpParams.prototype.set = /**
+     * Construct a new body with a new value for the given parameter name.
+     * @param {?} param
+     * @param {?} value
+     * @return {?}
+     */
+    function (param, value) { return this.clone({ param: param, value: value, op: 's' }); };
+    /**
+     * Construct a new body with either the given value for the given parameter
+     * removed, if a value is given, or all values for the given parameter removed
+     * if not.
+     */
+    /**
+     * Construct a new body with either the given value for the given parameter
+     * removed, if a value is given, or all values for the given parameter removed
+     * if not.
+     * @param {?} param
+     * @param {?=} value
+     * @return {?}
+     */
+    HttpParams.prototype.delete = /**
+     * Construct a new body with either the given value for the given parameter
+     * removed, if a value is given, or all values for the given parameter removed
+     * if not.
+     * @param {?} param
+     * @param {?=} value
+     * @return {?}
+     */
+    function (param, value) { return this.clone({ param: param, value: value, op: 'd' }); };
+    /**
+     * Serialize the body to an encoded string, where key-value pairs (separated by `=`) are
+     * separated by `&`s.
+     */
+    /**
+     * Serialize the body to an encoded string, where key-value pairs (separated by `=`) are
+     * separated by `&`s.
+     * @return {?}
+     */
+    HttpParams.prototype.toString = /**
+     * Serialize the body to an encoded string, where key-value pairs (separated by `=`) are
+     * separated by `&`s.
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.init();
+        return this.keys()
+            .map(function (key) {
+            var /** @type {?} */ eKey = _this.encoder.encodeKey(key);
+            return /** @type {?} */ ((/** @type {?} */ ((_this.map)).get(key))).map(function (value) { return eKey + '=' + _this.encoder.encodeValue(value); }).join('&');
+        })
+            .join('&');
+    };
+    /**
+     * @param {?} update
+     * @return {?}
+     */
+    HttpParams.prototype.clone = /**
+     * @param {?} update
+     * @return {?}
+     */
+    function (update) {
+        var /** @type {?} */ clone = new HttpParams({ encoder: this.encoder });
+        clone.cloneFrom = this.cloneFrom || this;
+        clone.updates = (this.updates || []).concat([update]);
+        return clone;
+    };
+    /**
+     * @return {?}
+     */
+    HttpParams.prototype.init = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (this.map === null) {
+            this.map = new Map();
+        }
+        if (this.cloneFrom !== null) {
+            this.cloneFrom.init();
+            this.cloneFrom.keys().forEach(function (key) { return ((_this.map)).set(key, /** @type {?} */ ((/** @type {?} */ ((/** @type {?} */ ((_this.cloneFrom)).map)).get(key)))); }); /** @type {?} */
+            ((this.updates)).forEach(function (update) {
+                switch (update.op) {
+                    case 'a':
+                    case 's':
+                        var /** @type {?} */ base = (update.op === 'a' ? /** @type {?} */ ((_this.map)).get(update.param) : undefined) || [];
+                        base.push(/** @type {?} */ ((update.value))); /** @type {?} */
+                        ((_this.map)).set(update.param, base);
+                        break;
+                    case 'd':
+                        if (update.value !== undefined) {
+                            var /** @type {?} */ base_1 = /** @type {?} */ ((_this.map)).get(update.param) || [];
+                            var /** @type {?} */ idx = base_1.indexOf(update.value);
+                            if (idx !== -1) {
+                                base_1.splice(idx, 1);
+                            }
+                            if (base_1.length > 0) {
+                                /** @type {?} */ ((_this.map)).set(update.param, base_1);
+                            }
+                            else {
+                                /** @type {?} */ ((_this.map)).delete(update.param);
+                            }
+                        }
+                        else {
+                            /** @type {?} */ ((_this.map)).delete(update.param);
+                            break;
+                        }
+                }
+            });
+            this.cloneFrom = null;
+        }
+    };
+    return HttpParams;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * Determine whether the given HTTP method may include a body.
+ * @param {?} method
+ * @return {?}
+ */
+function mightHaveBody(method) {
+    switch (method) {
+        case 'DELETE':
+        case 'GET':
+        case 'HEAD':
+        case 'OPTIONS':
+        case 'JSONP':
+            return false;
+        default:
+            return true;
+    }
+}
+/**
+ * Safely assert whether the given value is an ArrayBuffer.
+ *
+ * In some execution environments ArrayBuffer is not defined.
+ * @param {?} value
+ * @return {?}
+ */
+function isArrayBuffer(value) {
+    return typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer;
+}
+/**
+ * Safely assert whether the given value is a Blob.
+ *
+ * In some execution environments Blob is not defined.
+ * @param {?} value
+ * @return {?}
+ */
+function isBlob(value) {
+    return typeof Blob !== 'undefined' && value instanceof Blob;
+}
+/**
+ * Safely assert whether the given value is a FormData instance.
+ *
+ * In some execution environments FormData is not defined.
+ * @param {?} value
+ * @return {?}
+ */
+function isFormData(value) {
+    return typeof FormData !== 'undefined' && value instanceof FormData;
+}
+/**
+ * An outgoing HTTP request with an optional typed body.
+ *
+ * `HttpRequest` represents an outgoing request, including URL, method,
+ * headers, body, and other request configuration options. Instances should be
+ * assumed to be immutable. To modify a `HttpRequest`, the `clone`
+ * method should be used.
+ *
+ * \@stable
+ * @template T
+ */
+var HttpRequest = /** @class */ (function () {
+    function HttpRequest(method, url, third, fourth) {
+        this.url = url;
+        /**
+         * The request body, or `null` if one isn't set.
+         *
+         * Bodies are not enforced to be immutable, as they can include a reference to any
+         * user-defined data type. However, interceptors should take care to preserve
+         * idempotence by treating them as such.
+         */
+        this.body = null;
+        /**
+         * Whether this request should be made in a way that exposes progress events.
+         *
+         * Progress events are expensive (change detection runs on each event) and so
+         * they should only be requested if the consumer intends to monitor them.
+         */
+        this.reportProgress = false;
+        /**
+         * Whether this request should be sent with outgoing credentials (cookies).
+         */
+        this.withCredentials = false;
+        /**
+         * The expected response type of the server.
+         *
+         * This is used to parse the response appropriately before returning it to
+         * the requestee.
+         */
+        this.responseType = 'json';
+        this.method = method.toUpperCase();
+        // Next, need to figure out which argument holds the HttpRequestInit
+        // options, if any.
+        var /** @type {?} */ options;
+        // Check whether a body argument is expected. The only valid way to omit
+        // the body argument is to use a known no-body method like GET.
+        if (mightHaveBody(this.method) || !!fourth) {
+            // Body is the third argument, options are the fourth.
+            this.body = (third !== undefined) ? /** @type {?} */ (third) : null;
+            options = fourth;
+        }
+        else {
+            // No body required, options are the third argument. The body stays null.
+            options = /** @type {?} */ (third);
+        }
+        // If options have been passed, interpret them.
+        if (options) {
+            // Normalize reportProgress and withCredentials.
+            this.reportProgress = !!options.reportProgress;
+            this.withCredentials = !!options.withCredentials;
+            // Override default response type of 'json' if one is provided.
+            if (!!options.responseType) {
+                this.responseType = options.responseType;
+            }
+            // Override headers if they're provided.
+            if (!!options.headers) {
+                this.headers = options.headers;
+            }
+            if (!!options.params) {
+                this.params = options.params;
+            }
+        }
+        // If no headers have been passed in, construct a new HttpHeaders instance.
+        if (!this.headers) {
+            this.headers = new HttpHeaders();
+        }
+        // If no parameters have been passed in, construct a new HttpUrlEncodedParams instance.
+        if (!this.params) {
+            this.params = new HttpParams();
+            this.urlWithParams = url;
+        }
+        else {
+            // Encode the parameters to a string in preparation for inclusion in the URL.
+            var /** @type {?} */ params = this.params.toString();
+            if (params.length === 0) {
+                // No parameters, the visible URL is just the URL given at creation time.
+                this.urlWithParams = url;
+            }
+            else {
+                // Does the URL already have query parameters? Look for '?'.
+                var /** @type {?} */ qIdx = url.indexOf('?');
+                // There are 3 cases to handle:
+                // 1) No existing parameters -> append '?' followed by params.
+                // 2) '?' exists and is followed by existing query string ->
+                //    append '&' followed by params.
+                // 3) '?' exists at the end of the url -> append params directly.
+                // This basically amounts to determining the character, if any, with
+                // which to join the URL and parameters.
+                var /** @type {?} */ sep = qIdx === -1 ? '?' : (qIdx < url.length - 1 ? '&' : '');
+                this.urlWithParams = url + sep + params;
+            }
+        }
+    }
+    /**
+     * Transform the free-form body into a serialized format suitable for
+     * transmission to the server.
+     */
+    /**
+     * Transform the free-form body into a serialized format suitable for
+     * transmission to the server.
+     * @return {?}
+     */
+    HttpRequest.prototype.serializeBody = /**
+     * Transform the free-form body into a serialized format suitable for
+     * transmission to the server.
+     * @return {?}
+     */
+    function () {
+        // If no body is present, no need to serialize it.
+        if (this.body === null) {
+            return null;
+        }
+        // Check whether the body is already in a serialized form. If so,
+        // it can just be returned directly.
+        if (isArrayBuffer(this.body) || isBlob(this.body) || isFormData(this.body) ||
+            typeof this.body === 'string') {
+            return this.body;
+        }
+        // Check whether the body is an instance of HttpUrlEncodedParams.
+        if (this.body instanceof HttpParams) {
+            return this.body.toString();
+        }
+        // Check whether the body is an object or array, and serialize with JSON if so.
+        if (typeof this.body === 'object' || typeof this.body === 'boolean' ||
+            Array.isArray(this.body)) {
+            return JSON.stringify(this.body);
+        }
+        // Fall back on toString() for everything else.
+        return (/** @type {?} */ (this.body)).toString();
+    };
+    /**
+     * Examine the body and attempt to infer an appropriate MIME type
+     * for it.
+     *
+     * If no such type can be inferred, this method will return `null`.
+     */
+    /**
+     * Examine the body and attempt to infer an appropriate MIME type
+     * for it.
+     *
+     * If no such type can be inferred, this method will return `null`.
+     * @return {?}
+     */
+    HttpRequest.prototype.detectContentTypeHeader = /**
+     * Examine the body and attempt to infer an appropriate MIME type
+     * for it.
+     *
+     * If no such type can be inferred, this method will return `null`.
+     * @return {?}
+     */
+    function () {
+        // An empty body has no content type.
+        if (this.body === null) {
+            return null;
+        }
+        // FormData bodies rely on the browser's content type assignment.
+        if (isFormData(this.body)) {
+            return null;
+        }
+        // Blobs usually have their own content type. If it doesn't, then
+        // no type can be inferred.
+        if (isBlob(this.body)) {
+            return this.body.type || null;
+        }
+        // Array buffers have unknown contents and thus no type can be inferred.
+        if (isArrayBuffer(this.body)) {
+            return null;
+        }
+        // Technically, strings could be a form of JSON data, but it's safe enough
+        // to assume they're plain strings.
+        if (typeof this.body === 'string') {
+            return 'text/plain';
+        }
+        // `HttpUrlEncodedParams` has its own content-type.
+        if (this.body instanceof HttpParams) {
+            return 'application/x-www-form-urlencoded;charset=UTF-8';
+        }
+        // Arrays, objects, and numbers will be encoded as JSON.
+        if (typeof this.body === 'object' || typeof this.body === 'number' ||
+            Array.isArray(this.body)) {
+            return 'application/json';
+        }
+        // No type could be inferred.
+        return null;
+    };
+    /**
+     * @param {?=} update
+     * @return {?}
+     */
+    HttpRequest.prototype.clone = /**
+     * @param {?=} update
+     * @return {?}
+     */
+    function (update) {
+        if (update === void 0) { update = {}; }
+        // For method, url, and responseType, take the current value unless
+        // it is overridden in the update hash.
+        var /** @type {?} */ method = update.method || this.method;
+        var /** @type {?} */ url = update.url || this.url;
+        var /** @type {?} */ responseType = update.responseType || this.responseType;
+        // The body is somewhat special - a `null` value in update.body means
+        // whatever current body is present is being overridden with an empty
+        // body, whereas an `undefined` value in update.body implies no
+        // override.
+        var /** @type {?} */ body = (update.body !== undefined) ? update.body : this.body;
+        // Carefully handle the boolean options to differentiate between
+        // `false` and `undefined` in the update args.
+        var /** @type {?} */ withCredentials = (update.withCredentials !== undefined) ? update.withCredentials : this.withCredentials;
+        var /** @type {?} */ reportProgress = (update.reportProgress !== undefined) ? update.reportProgress : this.reportProgress;
+        // Headers and params may be appended to if `setHeaders` or
+        // `setParams` are used.
+        var /** @type {?} */ headers = update.headers || this.headers;
+        var /** @type {?} */ params = update.params || this.params;
+        // Check whether the caller has asked to add headers.
+        if (update.setHeaders !== undefined) {
+            // Set every requested header.
+            headers =
+                Object.keys(update.setHeaders)
+                    .reduce(function (headers, name) { return headers.set(name, /** @type {?} */ ((update.setHeaders))[name]); }, headers);
+        }
+        // Check whether the caller has asked to set params.
+        if (update.setParams) {
+            // Set every requested param.
+            params = Object.keys(update.setParams)
+                .reduce(function (params, param) { return params.set(param, /** @type {?} */ ((update.setParams))[param]); }, params);
+        }
+        // Finally, construct the new HttpRequest using the pieces from above.
+        return new HttpRequest(method, url, body, {
+            params: params, headers: headers, reportProgress: reportProgress, responseType: responseType, withCredentials: withCredentials,
+        });
+    };
+    return HttpRequest;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/** @enum {number} */
+var HttpEventType = {
+    /**
+       * The request was sent out over the wire.
+       */
+    Sent: 0,
+    /**
+       * An upload progress event was received.
+       */
+    UploadProgress: 1,
+    /**
+       * The response status code and headers were received.
+       */
+    ResponseHeader: 2,
+    /**
+       * A download progress event was received.
+       */
+    DownloadProgress: 3,
+    /**
+       * The full response including the body was received.
+       */
+    Response: 4,
+    /**
+       * A custom event from an interceptor or a backend.
+       */
+    User: 5,
+};
+HttpEventType[HttpEventType.Sent] = "Sent";
+HttpEventType[HttpEventType.UploadProgress] = "UploadProgress";
+HttpEventType[HttpEventType.ResponseHeader] = "ResponseHeader";
+HttpEventType[HttpEventType.DownloadProgress] = "DownloadProgress";
+HttpEventType[HttpEventType.Response] = "Response";
+HttpEventType[HttpEventType.User] = "User";
+/**
+ * Base interface for progress events.
+ *
+ * \@stable
+ * @record
+ */
+
+/**
+ * A download progress event.
+ *
+ * \@stable
+ * @record
+ */
+
+/**
+ * An upload progress event.
+ *
+ * \@stable
+ * @record
+ */
+
+/**
+ * An event indicating that the request was sent to the server. Useful
+ * when a request may be retried multiple times, to distinguish between
+ * retries on the final event stream.
+ *
+ * \@stable
+ * @record
+ */
+
+/**
+ * A user-defined event.
+ *
+ * Grouping all custom events under this type ensures they will be handled
+ * and forwarded by all implementations of interceptors.
+ *
+ * \@stable
+ * @record
+ * @template T
+ */
+
+/**
+ * An error that represents a failed attempt to JSON.parse text coming back
+ * from the server.
+ *
+ * It bundles the Error object with the actual response body that failed to parse.
+ *
+ * \@stable
+ * @record
+ */
+
+/**
+ * Base class for both `HttpResponse` and `HttpHeaderResponse`.
+ *
+ * \@stable
+ * @abstract
+ */
+var HttpResponseBase = /** @class */ (function () {
+    /**
+     * Super-constructor for all responses.
+     *
+     * The single parameter accepted is an initialization hash. Any properties
+     * of the response passed there will override the default values.
+     */
+    function HttpResponseBase(init, defaultStatus, defaultStatusText) {
+        if (defaultStatus === void 0) { defaultStatus = 200; }
+        if (defaultStatusText === void 0) { defaultStatusText = 'OK'; }
+        // If the hash has values passed, use them to initialize the response.
+        // Otherwise use the default values.
+        this.headers = init.headers || new HttpHeaders();
+        this.status = init.status !== undefined ? init.status : defaultStatus;
+        this.statusText = init.statusText || defaultStatusText;
+        this.url = init.url || null;
+        // Cache the ok value to avoid defining a getter.
+        this.ok = this.status >= 200 && this.status < 300;
+    }
+    return HttpResponseBase;
+}());
+/**
+ * A partial HTTP response which only includes the status and header data,
+ * but no response body.
+ *
+ * `HttpHeaderResponse` is a `HttpEvent` available on the response
+ * event stream, only when progress events are requested.
+ *
+ * \@stable
+ */
+var HttpHeaderResponse = /** @class */ (function (_super) {
+    Object(__WEBPACK_IMPORTED_MODULE_5_tslib__["b" /* __extends */])(HttpHeaderResponse, _super);
+    /**
+     * Create a new `HttpHeaderResponse` with the given parameters.
+     */
+    function HttpHeaderResponse(init) {
+        if (init === void 0) { init = {}; }
+        var _this = _super.call(this, init) || this;
+        _this.type = HttpEventType.ResponseHeader;
+        return _this;
+    }
+    /**
+     * Copy this `HttpHeaderResponse`, overriding its contents with the
+     * given parameter hash.
+     */
+    /**
+     * Copy this `HttpHeaderResponse`, overriding its contents with the
+     * given parameter hash.
+     * @param {?=} update
+     * @return {?}
+     */
+    HttpHeaderResponse.prototype.clone = /**
+     * Copy this `HttpHeaderResponse`, overriding its contents with the
+     * given parameter hash.
+     * @param {?=} update
+     * @return {?}
+     */
+    function (update) {
+        if (update === void 0) { update = {}; }
+        // Perform a straightforward initialization of the new HttpHeaderResponse,
+        // overriding the current parameters with new ones if given.
+        return new HttpHeaderResponse({
+            headers: update.headers || this.headers,
+            status: update.status !== undefined ? update.status : this.status,
+            statusText: update.statusText || this.statusText,
+            url: update.url || this.url || undefined,
+        });
+    };
+    return HttpHeaderResponse;
+}(HttpResponseBase));
+/**
+ * A full HTTP response, including a typed response body (which may be `null`
+ * if one was not returned).
+ *
+ * `HttpResponse` is a `HttpEvent` available on the response event
+ * stream.
+ *
+ * \@stable
+ * @template T
+ */
+var HttpResponse = /** @class */ (function (_super) {
+    Object(__WEBPACK_IMPORTED_MODULE_5_tslib__["b" /* __extends */])(HttpResponse, _super);
+    /**
+     * Construct a new `HttpResponse`.
+     */
+    function HttpResponse(init) {
+        if (init === void 0) { init = {}; }
+        var _this = _super.call(this, init) || this;
+        _this.type = HttpEventType.Response;
+        _this.body = init.body !== undefined ? init.body : null;
+        return _this;
+    }
+    /**
+     * @param {?=} update
+     * @return {?}
+     */
+    HttpResponse.prototype.clone = /**
+     * @param {?=} update
+     * @return {?}
+     */
+    function (update) {
+        if (update === void 0) { update = {}; }
+        return new HttpResponse({
+            body: (update.body !== undefined) ? update.body : this.body,
+            headers: update.headers || this.headers,
+            status: (update.status !== undefined) ? update.status : this.status,
+            statusText: update.statusText || this.statusText,
+            url: update.url || this.url || undefined,
+        });
+    };
+    return HttpResponse;
+}(HttpResponseBase));
+/**
+ * A response that represents an error or failure, either from a
+ * non-successful HTTP status, an error while executing the request,
+ * or some other failure which occurred during the parsing of the response.
+ *
+ * Any error returned on the `Observable` response stream will be
+ * wrapped in an `HttpErrorResponse` to provide additional context about
+ * the state of the HTTP layer when the error occurred. The error property
+ * will contain either a wrapped Error object or the error response returned
+ * from the server.
+ *
+ * \@stable
+ */
+var HttpErrorResponse = /** @class */ (function (_super) {
+    Object(__WEBPACK_IMPORTED_MODULE_5_tslib__["b" /* __extends */])(HttpErrorResponse, _super);
+    function HttpErrorResponse(init) {
+        var _this = 
+        // Initialize with a default status of 0 / Unknown Error.
+        _super.call(this, init, 0, 'Unknown Error') || this;
+        _this.name = 'HttpErrorResponse';
+        /**
+         * Errors are never okay, even when the status code is in the 2xx success range.
+         */
+        _this.ok = false;
+        // If the response was successful, then this was a parse error. Otherwise, it was
+        // a protocol-level failure of some sort. Either the request failed in transit
+        // or the server returned an unsuccessful status code.
+        if (_this.status >= 200 && _this.status < 300) {
+            _this.message = "Http failure during parsing for " + (init.url || '(unknown url)');
+        }
+        else {
+            _this.message =
+                "Http failure response for " + (init.url || '(unknown url)') + ": " + init.status + " " + init.statusText;
+        }
+        _this.error = init.error || null;
+        return _this;
+    }
+    return HttpErrorResponse;
+}(HttpResponseBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * Construct an instance of `HttpRequestOptions<T>` from a source `HttpMethodOptions` and
+ * the given `body`. Basically, this clones the object and adds the body.
+ * @template T
+ * @param {?} options
+ * @param {?} body
+ * @return {?}
+ */
+function addBody(options, body) {
+    return {
+        body: body,
+        headers: options.headers,
+        observe: options.observe,
+        params: options.params,
+        reportProgress: options.reportProgress,
+        responseType: options.responseType,
+        withCredentials: options.withCredentials,
+    };
+}
+/**
+ * Perform HTTP requests.
+ *
+ * `HttpClient` is available as an injectable class, with methods to perform HTTP requests.
+ * Each request method has multiple signatures, and the return type varies according to which
+ * signature is called (mainly the values of `observe` and `responseType`).
+ *
+ * \@stable
+ */
+var HttpClient = /** @class */ (function () {
+    function HttpClient(handler) {
+        this.handler = handler;
+    }
+    /**
+     * Constructs an `Observable` for a particular HTTP request that, when subscribed,
+     * fires the request through the chain of registered interceptors and on to the
+     * server.
+     *
+     * This method can be called in one of two ways. Either an `HttpRequest`
+     * instance can be passed directly as the only parameter, or a method can be
+     * passed as the first parameter, a string URL as the second, and an
+     * options hash as the third.
+     *
+     * If a `HttpRequest` object is passed directly, an `Observable` of the
+     * raw `HttpEvent` stream will be returned.
+     *
+     * If a request is instead built by providing a URL, the options object
+     * determines the return type of `request()`. In addition to configuring
+     * request parameters such as the outgoing headers and/or the body, the options
+     * hash specifies two key pieces of information about the request: the
+     * `responseType` and what to `observe`.
+     *
+     * The `responseType` value determines how a successful response body will be
+     * parsed. If `responseType` is the default `json`, a type interface for the
+     * resulting object may be passed as a type parameter to `request()`.
+     *
+     * The `observe` value determines the return type of `request()`, based on what
+     * the consumer is interested in observing. A value of `events` will return an
+     * `Observable<HttpEvent>` representing the raw `HttpEvent` stream,
+     * including progress events by default. A value of `response` will return an
+     * `Observable<HttpResponse<T>>` where the `T` parameter of `HttpResponse`
+     * depends on the `responseType` and any optionally provided type parameter.
+     * A value of `body` will return an `Observable<T>` with the same `T` body type.
+     */
+    /**
+     * Constructs an `Observable` for a particular HTTP request that, when subscribed,
+     * fires the request through the chain of registered interceptors and on to the
+     * server.
+     *
+     * This method can be called in one of two ways. Either an `HttpRequest`
+     * instance can be passed directly as the only parameter, or a method can be
+     * passed as the first parameter, a string URL as the second, and an
+     * options hash as the third.
+     *
+     * If a `HttpRequest` object is passed directly, an `Observable` of the
+     * raw `HttpEvent` stream will be returned.
+     *
+     * If a request is instead built by providing a URL, the options object
+     * determines the return type of `request()`. In addition to configuring
+     * request parameters such as the outgoing headers and/or the body, the options
+     * hash specifies two key pieces of information about the request: the
+     * `responseType` and what to `observe`.
+     *
+     * The `responseType` value determines how a successful response body will be
+     * parsed. If `responseType` is the default `json`, a type interface for the
+     * resulting object may be passed as a type parameter to `request()`.
+     *
+     * The `observe` value determines the return type of `request()`, based on what
+     * the consumer is interested in observing. A value of `events` will return an
+     * `Observable<HttpEvent>` representing the raw `HttpEvent` stream,
+     * including progress events by default. A value of `response` will return an
+     * `Observable<HttpResponse<T>>` where the `T` parameter of `HttpResponse`
+     * depends on the `responseType` and any optionally provided type parameter.
+     * A value of `body` will return an `Observable<T>` with the same `T` body type.
+     * @param {?} first
+     * @param {?=} url
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClient.prototype.request = /**
+     * Constructs an `Observable` for a particular HTTP request that, when subscribed,
+     * fires the request through the chain of registered interceptors and on to the
+     * server.
+     *
+     * This method can be called in one of two ways. Either an `HttpRequest`
+     * instance can be passed directly as the only parameter, or a method can be
+     * passed as the first parameter, a string URL as the second, and an
+     * options hash as the third.
+     *
+     * If a `HttpRequest` object is passed directly, an `Observable` of the
+     * raw `HttpEvent` stream will be returned.
+     *
+     * If a request is instead built by providing a URL, the options object
+     * determines the return type of `request()`. In addition to configuring
+     * request parameters such as the outgoing headers and/or the body, the options
+     * hash specifies two key pieces of information about the request: the
+     * `responseType` and what to `observe`.
+     *
+     * The `responseType` value determines how a successful response body will be
+     * parsed. If `responseType` is the default `json`, a type interface for the
+     * resulting object may be passed as a type parameter to `request()`.
+     *
+     * The `observe` value determines the return type of `request()`, based on what
+     * the consumer is interested in observing. A value of `events` will return an
+     * `Observable<HttpEvent>` representing the raw `HttpEvent` stream,
+     * including progress events by default. A value of `response` will return an
+     * `Observable<HttpResponse<T>>` where the `T` parameter of `HttpResponse`
+     * depends on the `responseType` and any optionally provided type parameter.
+     * A value of `body` will return an `Observable<T>` with the same `T` body type.
+     * @param {?} first
+     * @param {?=} url
+     * @param {?=} options
+     * @return {?}
+     */
+    function (first, url, options) {
+        var _this = this;
+        if (options === void 0) { options = {}; }
+        var /** @type {?} */ req;
+        // Firstly, check whether the primary argument is an instance of `HttpRequest`.
+        if (first instanceof HttpRequest) {
+            // It is. The other arguments must be undefined (per the signatures) and can be
+            // ignored.
+            req = /** @type {?} */ (first);
+        }
+        else {
+            // It's a string, so it represents a URL. Construct a request based on it,
+            // and incorporate the remaining arguments (assuming GET unless a method is
+            // provided.
+            // Figure out the headers.
+            var /** @type {?} */ headers = undefined;
+            if (options.headers instanceof HttpHeaders) {
+                headers = options.headers;
+            }
+            else {
+                headers = new HttpHeaders(options.headers);
+            }
+            // Sort out parameters.
+            var /** @type {?} */ params = undefined;
+            if (!!options.params) {
+                if (options.params instanceof HttpParams) {
+                    params = options.params;
+                }
+                else {
+                    params = new HttpParams({ fromObject: options.params });
+                }
+            }
+            // Construct the request.
+            req = new HttpRequest(first, /** @type {?} */ ((url)), (options.body !== undefined ? options.body : null), {
+                headers: headers,
+                params: params,
+                reportProgress: options.reportProgress,
+                // By default, JSON is assumed to be returned for all calls.
+                responseType: options.responseType || 'json',
+                withCredentials: options.withCredentials,
+            });
+        }
+        // Start with an Observable.of() the initial request, and run the handler (which
+        // includes all interceptors) inside a concatMap(). This way, the handler runs
+        // inside an Observable chain, which causes interceptors to be re-run on every
+        // subscription (this also makes retries re-run the handler, including interceptors).
+        var /** @type {?} */ events$ = __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_concatMap__["a" /* concatMap */].call(Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(req), function (req) { return _this.handler.handle(req); });
+        // If coming via the API signature which accepts a previously constructed HttpRequest,
+        // the only option is to get the event stream. Otherwise, return the event stream if
+        // that is what was requested.
+        if (first instanceof HttpRequest || options.observe === 'events') {
+            return events$;
+        }
+        // The requested stream contains either the full response or the body. In either
+        // case, the first step is to filter the event stream to extract a stream of
+        // responses(s).
+        var /** @type {?} */ res$ = __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter__["a" /* filter */].call(events$, function (event) { return event instanceof HttpResponse; });
+        // Decide which stream to return.
+        switch (options.observe || 'body') {
+            case 'body':
+                // The requested stream is the body. Map the response stream to the response
+                // body. This could be done more simply, but a misbehaving interceptor might
+                // transform the response body into a different format and ignore the requested
+                // responseType. Guard against this by validating that the response is of the
+                // requested type.
+                switch (req.responseType) {
+                    case 'arraybuffer':
+                        return __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__["a" /* map */].call(res$, function (res) {
+                            // Validate that the body is an ArrayBuffer.
+                            if (res.body !== null && !(res.body instanceof ArrayBuffer)) {
+                                throw new Error('Response is not an ArrayBuffer.');
+                            }
+                            return res.body;
+                        });
+                    case 'blob':
+                        return __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__["a" /* map */].call(res$, function (res) {
+                            // Validate that the body is a Blob.
+                            if (res.body !== null && !(res.body instanceof Blob)) {
+                                throw new Error('Response is not a Blob.');
+                            }
+                            return res.body;
+                        });
+                    case 'text':
+                        return __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__["a" /* map */].call(res$, function (res) {
+                            // Validate that the body is a string.
+                            if (res.body !== null && typeof res.body !== 'string') {
+                                throw new Error('Response is not a string.');
+                            }
+                            return res.body;
+                        });
+                    case 'json':
+                    default:
+                        // No validation needed for JSON responses, as they can be of any type.
+                        return __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__["a" /* map */].call(res$, function (res) { return res.body; });
+                }
+            case 'response':
+                // The response stream was requested directly, so return it.
+                return res$;
+            default:
+                // Guard against new future observe types being added.
+                throw new Error("Unreachable: unhandled observe type " + options.observe + "}");
+        }
+    };
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * DELETE request to be executed on the server. See the individual overloads for
+     * details of `delete()`'s return type based on the provided options.
+     */
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * DELETE request to be executed on the server. See the individual overloads for
+     * details of `delete()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClient.prototype.delete = /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * DELETE request to be executed on the server. See the individual overloads for
+     * details of `delete()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?=} options
+     * @return {?}
+     */
+    function (url, options) {
+        if (options === void 0) { options = {}; }
+        return this.request('DELETE', url, /** @type {?} */ (options));
+    };
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * GET request to be executed on the server. See the individual overloads for
+     * details of `get()`'s return type based on the provided options.
+     */
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * GET request to be executed on the server. See the individual overloads for
+     * details of `get()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClient.prototype.get = /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * GET request to be executed on the server. See the individual overloads for
+     * details of `get()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?=} options
+     * @return {?}
+     */
+    function (url, options) {
+        if (options === void 0) { options = {}; }
+        return this.request('GET', url, /** @type {?} */ (options));
+    };
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * HEAD request to be executed on the server. See the individual overloads for
+     * details of `head()`'s return type based on the provided options.
+     */
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * HEAD request to be executed on the server. See the individual overloads for
+     * details of `head()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClient.prototype.head = /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * HEAD request to be executed on the server. See the individual overloads for
+     * details of `head()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?=} options
+     * @return {?}
+     */
+    function (url, options) {
+        if (options === void 0) { options = {}; }
+        return this.request('HEAD', url, /** @type {?} */ (options));
+    };
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause a request
+     * with the special method `JSONP` to be dispatched via the interceptor pipeline.
+     *
+     * A suitable interceptor must be installed (e.g. via the `HttpClientJsonpModule`).
+     * If no such interceptor is reached, then the `JSONP` request will likely be
+     * rejected by the configured backend.
+     */
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause a request
+     * with the special method `JSONP` to be dispatched via the interceptor pipeline.
+     *
+     * A suitable interceptor must be installed (e.g. via the `HttpClientJsonpModule`).
+     * If no such interceptor is reached, then the `JSONP` request will likely be
+     * rejected by the configured backend.
+     * @template T
+     * @param {?} url
+     * @param {?} callbackParam
+     * @return {?}
+     */
+    HttpClient.prototype.jsonp = /**
+     * Constructs an `Observable` which, when subscribed, will cause a request
+     * with the special method `JSONP` to be dispatched via the interceptor pipeline.
+     *
+     * A suitable interceptor must be installed (e.g. via the `HttpClientJsonpModule`).
+     * If no such interceptor is reached, then the `JSONP` request will likely be
+     * rejected by the configured backend.
+     * @template T
+     * @param {?} url
+     * @param {?} callbackParam
+     * @return {?}
+     */
+    function (url, callbackParam) {
+        return this.request('JSONP', url, {
+            params: new HttpParams().append(callbackParam, 'JSONP_CALLBACK'),
+            observe: 'body',
+            responseType: 'json',
+        });
+    };
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * OPTIONS request to be executed on the server. See the individual overloads for
+     * details of `options()`'s return type based on the provided options.
+     */
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * OPTIONS request to be executed on the server. See the individual overloads for
+     * details of `options()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClient.prototype.options = /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * OPTIONS request to be executed on the server. See the individual overloads for
+     * details of `options()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?=} options
+     * @return {?}
+     */
+    function (url, options) {
+        if (options === void 0) { options = {}; }
+        return this.request('OPTIONS', url, /** @type {?} */ (options));
+    };
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * PATCH request to be executed on the server. See the individual overloads for
+     * details of `patch()`'s return type based on the provided options.
+     */
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * PATCH request to be executed on the server. See the individual overloads for
+     * details of `patch()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?} body
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClient.prototype.patch = /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * PATCH request to be executed on the server. See the individual overloads for
+     * details of `patch()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?} body
+     * @param {?=} options
+     * @return {?}
+     */
+    function (url, body, options) {
+        if (options === void 0) { options = {}; }
+        return this.request('PATCH', url, addBody(options, body));
+    };
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * POST request to be executed on the server. See the individual overloads for
+     * details of `post()`'s return type based on the provided options.
+     */
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * POST request to be executed on the server. See the individual overloads for
+     * details of `post()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?} body
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClient.prototype.post = /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * POST request to be executed on the server. See the individual overloads for
+     * details of `post()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?} body
+     * @param {?=} options
+     * @return {?}
+     */
+    function (url, body, options) {
+        if (options === void 0) { options = {}; }
+        return this.request('POST', url, addBody(options, body));
+    };
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * POST request to be executed on the server. See the individual overloads for
+     * details of `post()`'s return type based on the provided options.
+     */
+    /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * POST request to be executed on the server. See the individual overloads for
+     * details of `post()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?} body
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClient.prototype.put = /**
+     * Constructs an `Observable` which, when subscribed, will cause the configured
+     * POST request to be executed on the server. See the individual overloads for
+     * details of `post()`'s return type based on the provided options.
+     * @param {?} url
+     * @param {?} body
+     * @param {?=} options
+     * @return {?}
+     */
+    function (url, body, options) {
+        if (options === void 0) { options = {}; }
+        return this.request('PUT', url, addBody(options, body));
+    };
+    HttpClient.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    HttpClient.ctorParameters = function () { return [
+        { type: HttpHandler, },
+    ]; };
+    return HttpClient;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * Intercepts `HttpRequest` and handles them.
+ *
+ * Most interceptors will transform the outgoing request before passing it to the
+ * next interceptor in the chain, by calling `next.handle(transformedReq)`.
+ *
+ * In rare cases, interceptors may wish to completely handle a request themselves,
+ * and not delegate to the remainder of the chain. This behavior is allowed.
+ *
+ * \@stable
+ * @record
+ */
+
+/**
+ * `HttpHandler` which applies an `HttpInterceptor` to an `HttpRequest`.
+ *
+ * \@stable
+ */
+var HttpInterceptorHandler = /** @class */ (function () {
+    function HttpInterceptorHandler(next, interceptor) {
+        this.next = next;
+        this.interceptor = interceptor;
+    }
+    /**
+     * @param {?} req
+     * @return {?}
+     */
+    HttpInterceptorHandler.prototype.handle = /**
+     * @param {?} req
+     * @return {?}
+     */
+    function (req) {
+        return this.interceptor.intercept(req, this.next);
+    };
+    return HttpInterceptorHandler;
+}());
+/**
+ * A multi-provider token which represents the array of `HttpInterceptor`s that
+ * are registered.
+ *
+ * \@stable
+ */
+var HTTP_INTERCEPTORS = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* InjectionToken */]('HTTP_INTERCEPTORS');
+var NoopInterceptor = /** @class */ (function () {
+    function NoopInterceptor() {
+    }
+    /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    NoopInterceptor.prototype.intercept = /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    function (req, next) {
+        return next.handle(req);
+    };
+    NoopInterceptor.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    NoopInterceptor.ctorParameters = function () { return []; };
+    return NoopInterceptor;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+// Every request made through JSONP needs a callback name that's unique across the
+// whole page. Each request is assigned an id and the callback name is constructed
+// from that. The next id to be assigned is tracked in a global variable here that
+// is shared among all applications on the page.
+var nextRequestId = 0;
+// Error text given when a JSONP script is injected, but doesn't invoke the callback
+// passed in its URL.
+var JSONP_ERR_NO_CALLBACK = 'JSONP injected script did not invoke callback.';
+// Error text given when a request is passed to the JsonpClientBackend that doesn't
+// have a request method JSONP.
+var JSONP_ERR_WRONG_METHOD = 'JSONP requests must use JSONP request method.';
+var JSONP_ERR_WRONG_RESPONSE_TYPE = 'JSONP requests must use Json response type.';
+/**
+ * DI token/abstract type representing a map of JSONP callbacks.
+ *
+ * In the browser, this should always be the `window` object.
+ *
+ * \@stable
+ * @abstract
+ */
+var JsonpCallbackContext = /** @class */ (function () {
+    function JsonpCallbackContext() {
+    }
+    return JsonpCallbackContext;
+}());
+/**
+ * `HttpBackend` that only processes `HttpRequest` with the JSONP method,
+ * by performing JSONP style requests.
+ *
+ * \@stable
+ */
+var JsonpClientBackend = /** @class */ (function () {
+    function JsonpClientBackend(callbackMap, document) {
+        this.callbackMap = callbackMap;
+        this.document = document;
+    }
+    /**
+     * Get the name of the next callback method, by incrementing the global `nextRequestId`.
+     * @return {?}
+     */
+    JsonpClientBackend.prototype.nextCallback = /**
+     * Get the name of the next callback method, by incrementing the global `nextRequestId`.
+     * @return {?}
+     */
+    function () { return "ng_jsonp_callback_" + nextRequestId++; };
+    /**
+     * Process a JSONP request and return an event stream of the results.
+     */
+    /**
+     * Process a JSONP request and return an event stream of the results.
+     * @param {?} req
+     * @return {?}
+     */
+    JsonpClientBackend.prototype.handle = /**
+     * Process a JSONP request and return an event stream of the results.
+     * @param {?} req
+     * @return {?}
+     */
+    function (req) {
+        var _this = this;
+        // Firstly, check both the method and response type. If either doesn't match
+        // then the request was improperly routed here and cannot be handled.
+        if (req.method !== 'JSONP') {
+            throw new Error(JSONP_ERR_WRONG_METHOD);
+        }
+        else if (req.responseType !== 'json') {
+            throw new Error(JSONP_ERR_WRONG_RESPONSE_TYPE);
+        }
+        // Everything else happens inside the Observable boundary.
+        return new __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["a" /* Observable */](function (observer) {
+            // The first step to make a request is to generate the callback name, and replace the
+            // callback placeholder in the URL with the name. Care has to be taken here to ensure
+            // a trailing &, if matched, gets inserted back into the URL in the correct place.
+            var /** @type {?} */ callback = _this.nextCallback();
+            var /** @type {?} */ url = req.urlWithParams.replace(/=JSONP_CALLBACK(&|$)/, "=" + callback + "$1");
+            // Construct the <script> tag and point it at the URL.
+            var /** @type {?} */ node = _this.document.createElement('script');
+            node.src = url;
+            // A JSONP request requires waiting for multiple callbacks. These variables
+            // are closed over and track state across those callbacks.
+            // The response object, if one has been received, or null otherwise.
+            var /** @type {?} */ body = null;
+            // Whether the response callback has been called.
+            var /** @type {?} */ finished = false;
+            // Whether the request has been cancelled (and thus any other callbacks)
+            // should be ignored.
+            var /** @type {?} */ cancelled = false;
+            // Set the response callback in this.callbackMap (which will be the window
+            // object in the browser. The script being loaded via the <script> tag will
+            // eventually call this callback.
+            // Set the response callback in this.callbackMap (which will be the window
+            // object in the browser. The script being loaded via the <script> tag will
+            // eventually call this callback.
+            _this.callbackMap[callback] = function (data) {
+                // Data has been received from the JSONP script. Firstly, delete this callback.
+                delete _this.callbackMap[callback];
+                // Next, make sure the request wasn't cancelled in the meantime.
+                if (cancelled) {
+                    return;
+                }
+                // Set state to indicate data was received.
+                body = data;
+                finished = true;
+            };
+            // cleanup() is a utility closure that removes the <script> from the page and
+            // the response callback from the window. This logic is used in both the
+            // success, error, and cancellation paths, so it's extracted out for convenience.
+            var /** @type {?} */ cleanup = function () {
+                // Remove the <script> tag if it's still on the page.
+                if (node.parentNode) {
+                    node.parentNode.removeChild(node);
+                }
+                // Remove the response callback from the callbackMap (window object in the
+                // browser).
+                delete _this.callbackMap[callback];
+            };
+            // onLoad() is the success callback which runs after the response callback
+            // if the JSONP script loads successfully. The event itself is unimportant.
+            // If something went wrong, onLoad() may run without the response callback
+            // having been invoked.
+            var /** @type {?} */ onLoad = function (event) {
+                // Do nothing if the request has been cancelled.
+                if (cancelled) {
+                    return;
+                }
+                // Cleanup the page.
+                cleanup();
+                // Check whether the response callback has run.
+                if (!finished) {
+                    // It hasn't, something went wrong with the request. Return an error via
+                    // the Observable error path. All JSONP errors have status 0.
+                    observer.error(new HttpErrorResponse({
+                        url: url,
+                        status: 0,
+                        statusText: 'JSONP Error',
+                        error: new Error(JSONP_ERR_NO_CALLBACK),
+                    }));
+                    return;
+                }
+                // Success. body either contains the response body or null if none was
+                // returned.
+                observer.next(new HttpResponse({
+                    body: body,
+                    status: 200,
+                    statusText: 'OK', url: url,
+                }));
+                // Complete the stream, the response is over.
+                observer.complete();
+            };
+            // onError() is the error callback, which runs if the script returned generates
+            // a Javascript error. It emits the error via the Observable error channel as
+            // a HttpErrorResponse.
+            var /** @type {?} */ onError = function (error) {
+                // If the request was already cancelled, no need to emit anything.
+                if (cancelled) {
+                    return;
+                }
+                cleanup();
+                // Wrap the error in a HttpErrorResponse.
+                observer.error(new HttpErrorResponse({
+                    error: error,
+                    status: 0,
+                    statusText: 'JSONP Error', url: url,
+                }));
+            };
+            // Subscribe to both the success (load) and error events on the <script> tag,
+            // and add it to the page.
+            node.addEventListener('load', onLoad);
+            node.addEventListener('error', onError);
+            _this.document.body.appendChild(node);
+            // The request has now been successfully sent.
+            observer.next({ type: HttpEventType.Sent });
+            // Cancellation handler.
+            return function () {
+                // Track the cancellation so event listeners won't do anything even if already scheduled.
+                cancelled = true;
+                // Remove the event listeners so they won't run if the events later fire.
+                node.removeEventListener('load', onLoad);
+                node.removeEventListener('error', onError);
+                // And finally, clean up the page.
+                cleanup();
+            };
+        });
+    };
+    JsonpClientBackend.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    JsonpClientBackend.ctorParameters = function () { return [
+        { type: JsonpCallbackContext, },
+        { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */], args: [__WEBPACK_IMPORTED_MODULE_6__angular_common__["c" /* DOCUMENT */],] },] },
+    ]; };
+    return JsonpClientBackend;
+}());
+/**
+ * An `HttpInterceptor` which identifies requests with the method JSONP and
+ * shifts them to the `JsonpClientBackend`.
+ *
+ * \@stable
+ */
+var JsonpInterceptor = /** @class */ (function () {
+    function JsonpInterceptor(jsonp) {
+        this.jsonp = jsonp;
+    }
+    /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    JsonpInterceptor.prototype.intercept = /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    function (req, next) {
+        if (req.method === 'JSONP') {
+            return this.jsonp.handle(/** @type {?} */ (req));
+        }
+        // Fall through for normal HTTP requests.
+        return next.handle(req);
+    };
+    JsonpInterceptor.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    JsonpInterceptor.ctorParameters = function () { return [
+        { type: JsonpClientBackend, },
+    ]; };
+    return JsonpInterceptor;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+var XSSI_PREFIX = /^\)\]\}',?\n/;
+/**
+ * Determine an appropriate URL for the response, by checking either
+ * XMLHttpRequest.responseURL or the X-Request-URL header.
+ * @param {?} xhr
+ * @return {?}
+ */
+function getResponseUrl(xhr) {
+    if ('responseURL' in xhr && xhr.responseURL) {
+        return xhr.responseURL;
+    }
+    if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
+        return xhr.getResponseHeader('X-Request-URL');
+    }
+    return null;
+}
+/**
+ * A wrapper around the `XMLHttpRequest` constructor.
+ *
+ * \@stable
+ * @abstract
+ */
+var XhrFactory = /** @class */ (function () {
+    function XhrFactory() {
+    }
+    return XhrFactory;
+}());
+/**
+ * A factory for \@{link HttpXhrBackend} that uses the `XMLHttpRequest` browser API.
+ *
+ * \@stable
+ */
+var BrowserXhr = /** @class */ (function () {
+    function BrowserXhr() {
+    }
+    /**
+     * @return {?}
+     */
+    BrowserXhr.prototype.build = /**
+     * @return {?}
+     */
+    function () { return /** @type {?} */ ((new XMLHttpRequest())); };
+    BrowserXhr.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    BrowserXhr.ctorParameters = function () { return []; };
+    return BrowserXhr;
+}());
+/**
+ * An `HttpBackend` which uses the XMLHttpRequest API to send
+ * requests to a backend server.
+ *
+ * \@stable
+ */
+var HttpXhrBackend = /** @class */ (function () {
+    function HttpXhrBackend(xhrFactory) {
+        this.xhrFactory = xhrFactory;
+    }
+    /**
+     * Process a request and return a stream of response events.
+     */
+    /**
+     * Process a request and return a stream of response events.
+     * @param {?} req
+     * @return {?}
+     */
+    HttpXhrBackend.prototype.handle = /**
+     * Process a request and return a stream of response events.
+     * @param {?} req
+     * @return {?}
+     */
+    function (req) {
+        var _this = this;
+        // Quick check to give a better error message when a user attempts to use
+        // HttpClient.jsonp() without installing the JsonpClientModule
+        if (req.method === 'JSONP') {
+            throw new Error("Attempted to construct Jsonp request without JsonpClientModule installed.");
+        }
+        // Everything happens on Observable subscription.
+        return new __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__["a" /* Observable */](function (observer) {
+            // Start by setting up the XHR object with request method, URL, and withCredentials flag.
+            var /** @type {?} */ xhr = _this.xhrFactory.build();
+            xhr.open(req.method, req.urlWithParams);
+            if (!!req.withCredentials) {
+                xhr.withCredentials = true;
+            }
+            // Add all the requested headers.
+            req.headers.forEach(function (name, values) { return xhr.setRequestHeader(name, values.join(',')); });
+            // Add an Accept header if one isn't present already.
+            if (!req.headers.has('Accept')) {
+                xhr.setRequestHeader('Accept', 'application/json, text/plain, */*');
+            }
+            // Auto-detect the Content-Type header if one isn't present already.
+            if (!req.headers.has('Content-Type')) {
+                var /** @type {?} */ detectedType = req.detectContentTypeHeader();
+                // Sometimes Content-Type detection fails.
+                if (detectedType !== null) {
+                    xhr.setRequestHeader('Content-Type', detectedType);
+                }
+            }
+            // Set the responseType if one was requested.
+            if (req.responseType) {
+                var /** @type {?} */ responseType = req.responseType.toLowerCase();
+                // JSON responses need to be processed as text. This is because if the server
+                // returns an XSSI-prefixed JSON response, the browser will fail to parse it,
+                // xhr.response will be null, and xhr.responseText cannot be accessed to
+                // retrieve the prefixed JSON data in order to strip the prefix. Thus, all JSON
+                // is parsed by first requesting text and then applying JSON.parse.
+                xhr.responseType = /** @type {?} */ (((responseType !== 'json') ? responseType : 'text'));
+            }
+            // Serialize the request body if one is present. If not, this will be set to null.
+            var /** @type {?} */ reqBody = req.serializeBody();
+            // If progress events are enabled, response headers will be delivered
+            // in two events - the HttpHeaderResponse event and the full HttpResponse
+            // event. However, since response headers don't change in between these
+            // two events, it doesn't make sense to parse them twice. So headerResponse
+            // caches the data extracted from the response whenever it's first parsed,
+            // to ensure parsing isn't duplicated.
+            var /** @type {?} */ headerResponse = null;
+            // partialFromXhr extracts the HttpHeaderResponse from the current XMLHttpRequest
+            // state, and memoizes it into headerResponse.
+            var /** @type {?} */ partialFromXhr = function () {
+                if (headerResponse !== null) {
+                    return headerResponse;
+                }
+                // Read status and normalize an IE9 bug (http://bugs.jquery.com/ticket/1450).
+                var /** @type {?} */ status = xhr.status === 1223 ? 204 : xhr.status;
+                var /** @type {?} */ statusText = xhr.statusText || 'OK';
+                // Parse headers from XMLHttpRequest - this step is lazy.
+                var /** @type {?} */ headers = new HttpHeaders(xhr.getAllResponseHeaders());
+                // Read the response URL from the XMLHttpResponse instance and fall back on the
+                // request URL.
+                var /** @type {?} */ url = getResponseUrl(xhr) || req.url;
+                // Construct the HttpHeaderResponse and memoize it.
+                headerResponse = new HttpHeaderResponse({ headers: headers, status: status, statusText: statusText, url: url });
+                return headerResponse;
+            };
+            // Next, a few closures are defined for the various events which XMLHttpRequest can
+            // emit. This allows them to be unregistered as event listeners later.
+            // First up is the load event, which represents a response being fully available.
+            var /** @type {?} */ onLoad = function () {
+                // Read response state from the memoized partial data.
+                var _a = partialFromXhr(), headers = _a.headers, status = _a.status, statusText = _a.statusText, url = _a.url;
+                // The body will be read out if present.
+                var /** @type {?} */ body = null;
+                if (status !== 204) {
+                    // Use XMLHttpRequest.response if set, responseText otherwise.
+                    body = (typeof xhr.response === 'undefined') ? xhr.responseText : xhr.response;
+                }
+                // Normalize another potential bug (this one comes from CORS).
+                if (status === 0) {
+                    status = !!body ? 200 : 0;
+                }
+                // ok determines whether the response will be transmitted on the event or
+                // error channel. Unsuccessful status codes (not 2xx) will always be errors,
+                // but a successful status code can still result in an error if the user
+                // asked for JSON data and the body cannot be parsed as such.
+                var /** @type {?} */ ok = status >= 200 && status < 300;
+                // Check whether the body needs to be parsed as JSON (in many cases the browser
+                // will have done that already).
+                if (req.responseType === 'json' && typeof body === 'string') {
+                    // Save the original body, before attempting XSSI prefix stripping.
+                    var /** @type {?} */ originalBody = body;
+                    body = body.replace(XSSI_PREFIX, '');
+                    try {
+                        // Attempt the parse. If it fails, a parse error should be delivered to the user.
+                        body = body !== '' ? JSON.parse(body) : null;
+                    }
+                    catch (/** @type {?} */ error) {
+                        // Since the JSON.parse failed, it's reasonable to assume this might not have been a
+                        // JSON response. Restore the original body (including any XSSI prefix) to deliver
+                        // a better error response.
+                        body = originalBody;
+                        // If this was an error request to begin with, leave it as a string, it probably
+                        // just isn't JSON. Otherwise, deliver the parsing error to the user.
+                        if (ok) {
+                            // Even though the response status was 2xx, this is still an error.
+                            ok = false;
+                            // The parse error contains the text of the body that failed to parse.
+                            body = /** @type {?} */ ({ error: error, text: body });
+                        }
+                    }
+                }
+                if (ok) {
+                    // A successful response is delivered on the event stream.
+                    observer.next(new HttpResponse({
+                        body: body,
+                        headers: headers,
+                        status: status,
+                        statusText: statusText,
+                        url: url || undefined,
+                    }));
+                    // The full body has been received and delivered, no further events
+                    // are possible. This request is complete.
+                    observer.complete();
+                }
+                else {
+                    // An unsuccessful request is delivered on the error channel.
+                    observer.error(new HttpErrorResponse({
+                        // The error in this case is the response body (error from the server).
+                        error: body,
+                        headers: headers,
+                        status: status,
+                        statusText: statusText,
+                        url: url || undefined,
+                    }));
+                }
+            };
+            // The onError callback is called when something goes wrong at the network level.
+            // Connection timeout, DNS error, offline, etc. These are actual errors, and are
+            // transmitted on the error channel.
+            var /** @type {?} */ onError = function (error) {
+                var /** @type {?} */ res = new HttpErrorResponse({
+                    error: error,
+                    status: xhr.status || 0,
+                    statusText: xhr.statusText || 'Unknown Error',
+                });
+                observer.error(res);
+            };
+            // The sentHeaders flag tracks whether the HttpResponseHeaders event
+            // has been sent on the stream. This is necessary to track if progress
+            // is enabled since the event will be sent on only the first download
+            // progerss event.
+            var /** @type {?} */ sentHeaders = false;
+            // The download progress event handler, which is only registered if
+            // progress events are enabled.
+            var /** @type {?} */ onDownProgress = function (event) {
+                // Send the HttpResponseHeaders event if it hasn't been sent already.
+                if (!sentHeaders) {
+                    observer.next(partialFromXhr());
+                    sentHeaders = true;
+                }
+                // Start building the download progress event to deliver on the response
+                // event stream.
+                var /** @type {?} */ progressEvent = {
+                    type: HttpEventType.DownloadProgress,
+                    loaded: event.loaded,
+                };
+                // Set the total number of bytes in the event if it's available.
+                if (event.lengthComputable) {
+                    progressEvent.total = event.total;
+                }
+                // If the request was for text content and a partial response is
+                // available on XMLHttpRequest, include it in the progress event
+                // to allow for streaming reads.
+                if (req.responseType === 'text' && !!xhr.responseText) {
+                    progressEvent.partialText = xhr.responseText;
+                }
+                // Finally, fire the event.
+                observer.next(progressEvent);
+            };
+            // The upload progress event handler, which is only registered if
+            // progress events are enabled.
+            var /** @type {?} */ onUpProgress = function (event) {
+                // Upload progress events are simpler. Begin building the progress
+                // event.
+                var /** @type {?} */ progress = {
+                    type: HttpEventType.UploadProgress,
+                    loaded: event.loaded,
+                };
+                // If the total number of bytes being uploaded is available, include
+                // it.
+                if (event.lengthComputable) {
+                    progress.total = event.total;
+                }
+                // Send the event.
+                observer.next(progress);
+            };
+            // By default, register for load and error events.
+            xhr.addEventListener('load', onLoad);
+            xhr.addEventListener('error', onError);
+            // Progress events are only enabled if requested.
+            if (req.reportProgress) {
+                // Download progress is always enabled if requested.
+                xhr.addEventListener('progress', onDownProgress);
+                // Upload progress depends on whether there is a body to upload.
+                if (reqBody !== null && xhr.upload) {
+                    xhr.upload.addEventListener('progress', onUpProgress);
+                }
+            }
+            // Fire the request, and notify the event stream that it was fired.
+            xhr.send(reqBody);
+            observer.next({ type: HttpEventType.Sent });
+            // This is the return from the Observable function, which is the
+            // request cancellation handler.
+            return function () {
+                // On a cancellation, remove all registered event listeners.
+                xhr.removeEventListener('error', onError);
+                xhr.removeEventListener('load', onLoad);
+                if (req.reportProgress) {
+                    xhr.removeEventListener('progress', onDownProgress);
+                    if (reqBody !== null && xhr.upload) {
+                        xhr.upload.removeEventListener('progress', onUpProgress);
+                    }
+                }
+                // Finally, abort the in-flight request.
+                xhr.abort();
+            };
+        });
+    };
+    HttpXhrBackend.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    HttpXhrBackend.ctorParameters = function () { return [
+        { type: XhrFactory, },
+    ]; };
+    return HttpXhrBackend;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+var XSRF_COOKIE_NAME = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* InjectionToken */]('XSRF_COOKIE_NAME');
+var XSRF_HEADER_NAME = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* InjectionToken */]('XSRF_HEADER_NAME');
+/**
+ * Retrieves the current XSRF token to use with the next outgoing request.
+ *
+ * \@stable
+ * @abstract
+ */
+var HttpXsrfTokenExtractor = /** @class */ (function () {
+    function HttpXsrfTokenExtractor() {
+    }
+    return HttpXsrfTokenExtractor;
+}());
+/**
+ * `HttpXsrfTokenExtractor` which retrieves the token from a cookie.
+ */
+var HttpXsrfCookieExtractor = /** @class */ (function () {
+    function HttpXsrfCookieExtractor(doc, platform, cookieName) {
+        this.doc = doc;
+        this.platform = platform;
+        this.cookieName = cookieName;
+        this.lastCookieString = '';
+        this.lastToken = null;
+        /**
+         * \@internal for testing
+         */
+        this.parseCount = 0;
+    }
+    /**
+     * @return {?}
+     */
+    HttpXsrfCookieExtractor.prototype.getToken = /**
+     * @return {?}
+     */
+    function () {
+        if (this.platform === 'server') {
+            return null;
+        }
+        var /** @type {?} */ cookieString = this.doc.cookie || '';
+        if (cookieString !== this.lastCookieString) {
+            this.parseCount++;
+            this.lastToken = Object(__WEBPACK_IMPORTED_MODULE_6__angular_common__["k" /* ɵparseCookieValue */])(cookieString, this.cookieName);
+            this.lastCookieString = cookieString;
+        }
+        return this.lastToken;
+    };
+    HttpXsrfCookieExtractor.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    HttpXsrfCookieExtractor.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */], args: [__WEBPACK_IMPORTED_MODULE_6__angular_common__["c" /* DOCUMENT */],] },] },
+        { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */], args: [__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* PLATFORM_ID */],] },] },
+        { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */], args: [XSRF_COOKIE_NAME,] },] },
+    ]; };
+    return HttpXsrfCookieExtractor;
+}());
+/**
+ * `HttpInterceptor` which adds an XSRF token to eligible outgoing requests.
+ */
+var HttpXsrfInterceptor = /** @class */ (function () {
+    function HttpXsrfInterceptor(tokenService, headerName) {
+        this.tokenService = tokenService;
+        this.headerName = headerName;
+    }
+    /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    HttpXsrfInterceptor.prototype.intercept = /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    function (req, next) {
+        var /** @type {?} */ lcUrl = req.url.toLowerCase();
+        // Skip both non-mutating requests and absolute URLs.
+        // Non-mutating requests don't require a token, and absolute URLs require special handling
+        // anyway as the cookie set
+        // on our origin is not the same as the token expected by another origin.
+        if (req.method === 'GET' || req.method === 'HEAD' || lcUrl.startsWith('http://') ||
+            lcUrl.startsWith('https://')) {
+            return next.handle(req);
+        }
+        var /** @type {?} */ token = this.tokenService.getToken();
+        // Be careful not to overwrite an existing header of the same name.
+        if (token !== null && !req.headers.has(this.headerName)) {
+            req = req.clone({ headers: req.headers.set(this.headerName, token) });
+        }
+        return next.handle(req);
+    };
+    HttpXsrfInterceptor.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    HttpXsrfInterceptor.ctorParameters = function () { return [
+        { type: HttpXsrfTokenExtractor, },
+        { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */], args: [XSRF_HEADER_NAME,] },] },
+    ]; };
+    return HttpXsrfInterceptor;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * An `HttpHandler` that applies a bunch of `HttpInterceptor`s
+ * to a request before passing it to the given `HttpBackend`.
+ *
+ * The interceptors are loaded lazily from the injector, to allow
+ * interceptors to themselves inject classes depending indirectly
+ * on `HttpInterceptingHandler` itself.
+ */
+var HttpInterceptingHandler = /** @class */ (function () {
+    function HttpInterceptingHandler(backend, injector) {
+        this.backend = backend;
+        this.injector = injector;
+        this.chain = null;
+    }
+    /**
+     * @param {?} req
+     * @return {?}
+     */
+    HttpInterceptingHandler.prototype.handle = /**
+     * @param {?} req
+     * @return {?}
+     */
+    function (req) {
+        if (this.chain === null) {
+            var /** @type {?} */ interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
+            this.chain = interceptors.reduceRight(function (next, interceptor) { return new HttpInterceptorHandler(next, interceptor); }, this.backend);
+        }
+        return this.chain.handle(req);
+    };
+    HttpInterceptingHandler.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
+    ];
+    /** @nocollapse */
+    HttpInterceptingHandler.ctorParameters = function () { return [
+        { type: HttpBackend, },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injector */], },
+    ]; };
+    return HttpInterceptingHandler;
+}());
+/**
+ * Constructs an `HttpHandler` that applies a bunch of `HttpInterceptor`s
+ * to a request before passing it to the given `HttpBackend`.
+ *
+ * Meant to be used as a factory function within `HttpClientModule`.
+ *
+ * \@stable
+ * @param {?} backend
+ * @param {?=} interceptors
+ * @return {?}
+ */
+function interceptingHandler(backend, interceptors) {
+    if (interceptors === void 0) { interceptors = []; }
+    if (!interceptors) {
+        return backend;
+    }
+    return interceptors.reduceRight(function (next, interceptor) { return new HttpInterceptorHandler(next, interceptor); }, backend);
+}
+/**
+ * Factory function that determines where to store JSONP callbacks.
+ *
+ * Ordinarily JSONP callbacks are stored on the `window` object, but this may not exist
+ * in test environments. In that case, callbacks are stored on an anonymous object instead.
+ *
+ * \@stable
+ * @return {?}
+ */
+function jsonpCallbackContext() {
+    if (typeof window === 'object') {
+        return window;
+    }
+    return {};
+}
+/**
+ * `NgModule` which adds XSRF protection support to outgoing requests.
+ *
+ * Provided the server supports a cookie-based XSRF protection system, this
+ * module can be used directly to configure XSRF protection with the correct
+ * cookie and header names.
+ *
+ * If no such names are provided, the default is to use `X-XSRF-TOKEN` for
+ * the header name and `XSRF-TOKEN` for the cookie name.
+ *
+ * \@stable
+ */
+var HttpClientXsrfModule = /** @class */ (function () {
+    function HttpClientXsrfModule() {
+    }
+    /**
+     * Disable the default XSRF protection.
+     */
+    /**
+     * Disable the default XSRF protection.
+     * @return {?}
+     */
+    HttpClientXsrfModule.disable = /**
+     * Disable the default XSRF protection.
+     * @return {?}
+     */
+    function () {
+        return {
+            ngModule: HttpClientXsrfModule,
+            providers: [
+                { provide: HttpXsrfInterceptor, useClass: NoopInterceptor },
+            ],
+        };
+    };
+    /**
+     * Configure XSRF protection to use the given cookie name or header name,
+     * or the default names (as described above) if not provided.
+     */
+    /**
+     * Configure XSRF protection to use the given cookie name or header name,
+     * or the default names (as described above) if not provided.
+     * @param {?=} options
+     * @return {?}
+     */
+    HttpClientXsrfModule.withOptions = /**
+     * Configure XSRF protection to use the given cookie name or header name,
+     * or the default names (as described above) if not provided.
+     * @param {?=} options
+     * @return {?}
+     */
+    function (options) {
+        if (options === void 0) { options = {}; }
+        return {
+            ngModule: HttpClientXsrfModule,
+            providers: [
+                options.cookieName ? { provide: XSRF_COOKIE_NAME, useValue: options.cookieName } : [],
+                options.headerName ? { provide: XSRF_HEADER_NAME, useValue: options.headerName } : [],
+            ],
+        };
+    };
+    HttpClientXsrfModule.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */], args: [{
+                    providers: [
+                        HttpXsrfInterceptor,
+                        { provide: HTTP_INTERCEPTORS, useExisting: HttpXsrfInterceptor, multi: true },
+                        { provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor },
+                        { provide: XSRF_COOKIE_NAME, useValue: 'XSRF-TOKEN' },
+                        { provide: XSRF_HEADER_NAME, useValue: 'X-XSRF-TOKEN' },
+                    ],
+                },] },
+    ];
+    /** @nocollapse */
+    HttpClientXsrfModule.ctorParameters = function () { return []; };
+    return HttpClientXsrfModule;
+}());
+/**
+ * `NgModule` which provides the `HttpClient` and associated services.
+ *
+ * Interceptors can be added to the chain behind `HttpClient` by binding them
+ * to the multiprovider for `HTTP_INTERCEPTORS`.
+ *
+ * \@stable
+ */
+var HttpClientModule = /** @class */ (function () {
+    function HttpClientModule() {
+    }
+    HttpClientModule.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */], args: [{
+                    imports: [
+                        HttpClientXsrfModule.withOptions({
+                            cookieName: 'XSRF-TOKEN',
+                            headerName: 'X-XSRF-TOKEN',
+                        }),
+                    ],
+                    providers: [
+                        HttpClient,
+                        { provide: HttpHandler, useClass: HttpInterceptingHandler },
+                        HttpXhrBackend,
+                        { provide: HttpBackend, useExisting: HttpXhrBackend },
+                        BrowserXhr,
+                        { provide: XhrFactory, useExisting: BrowserXhr },
+                    ],
+                },] },
+    ];
+    /** @nocollapse */
+    HttpClientModule.ctorParameters = function () { return []; };
+    return HttpClientModule;
+}());
+/**
+ * `NgModule` which enables JSONP support in `HttpClient`.
+ *
+ * Without this module, Jsonp requests will reach the backend
+ * with method JSONP, where they'll be rejected.
+ *
+ * \@stable
+ */
+var HttpClientJsonpModule = /** @class */ (function () {
+    function HttpClientJsonpModule() {
+    }
+    HttpClientJsonpModule.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */], args: [{
+                    providers: [
+                        JsonpClientBackend,
+                        { provide: JsonpCallbackContext, useFactory: jsonpCallbackContext },
+                        { provide: HTTP_INTERCEPTORS, useClass: JsonpInterceptor, multi: true },
+                    ],
+                },] },
+    ];
+    /** @nocollapse */
+    HttpClientJsonpModule.ctorParameters = function () { return []; };
+    return HttpClientJsonpModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+//# sourceMappingURL=http.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@angular/compiler/esm5/compiler.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -61734,2814 +64525,6 @@ function transition$$1(stateChangeExpr, steps) {
 
 /***/ }),
 
-/***/ "./node_modules/@angular/http/esm5/http.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export BrowserXhr */
-/* unused harmony export JSONPBackend */
-/* unused harmony export JSONPConnection */
-/* unused harmony export CookieXSRFStrategy */
-/* unused harmony export XHRBackend */
-/* unused harmony export XHRConnection */
-/* unused harmony export BaseRequestOptions */
-/* unused harmony export RequestOptions */
-/* unused harmony export BaseResponseOptions */
-/* unused harmony export ResponseOptions */
-/* unused harmony export ReadyState */
-/* unused harmony export RequestMethod */
-/* unused harmony export ResponseContentType */
-/* unused harmony export ResponseType */
-/* unused harmony export Headers */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Http; });
-/* unused harmony export Jsonp */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HttpModule; });
-/* unused harmony export JsonpModule */
-/* unused harmony export Connection */
-/* unused harmony export ConnectionBackend */
-/* unused harmony export XSRFStrategy */
-/* unused harmony export Request */
-/* unused harmony export Response */
-/* unused harmony export QueryEncoder */
-/* unused harmony export URLSearchParams */
-/* unused harmony export VERSION */
-/* unused harmony export ɵe */
-/* unused harmony export ɵf */
-/* unused harmony export ɵa */
-/* unused harmony export ɵb */
-/* unused harmony export ɵc */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_tslib__ = __webpack_require__("./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
-/**
- * @license Angular v5.2.11
- * (c) 2010-2018 Google, Inc. https://angular.io/
- * License: MIT
- */
-
-
-
-
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * A backend for http that uses the `XMLHttpRequest` browser API.
- *
- * Take care not to evaluate this in non-browser contexts.
- *
- * @deprecated use \@angular/common/http instead
- */
-var BrowserXhr = /** @class */ (function () {
-    function BrowserXhr() {
-    }
-    /**
-     * @return {?}
-     */
-    BrowserXhr.prototype.build = /**
-     * @return {?}
-     */
-    function () { return /** @type {?} */ ((new XMLHttpRequest())); };
-    BrowserXhr.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    BrowserXhr.ctorParameters = function () { return []; };
-    return BrowserXhr;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/** @enum {number} */
-var RequestMethod = {
-    Get: 0,
-    Post: 1,
-    Put: 2,
-    Delete: 3,
-    Options: 4,
-    Head: 5,
-    Patch: 6,
-};
-RequestMethod[RequestMethod.Get] = "Get";
-RequestMethod[RequestMethod.Post] = "Post";
-RequestMethod[RequestMethod.Put] = "Put";
-RequestMethod[RequestMethod.Delete] = "Delete";
-RequestMethod[RequestMethod.Options] = "Options";
-RequestMethod[RequestMethod.Head] = "Head";
-RequestMethod[RequestMethod.Patch] = "Patch";
-/** @enum {number} */
-var ReadyState = {
-    Unsent: 0,
-    Open: 1,
-    HeadersReceived: 2,
-    Loading: 3,
-    Done: 4,
-    Cancelled: 5,
-};
-ReadyState[ReadyState.Unsent] = "Unsent";
-ReadyState[ReadyState.Open] = "Open";
-ReadyState[ReadyState.HeadersReceived] = "HeadersReceived";
-ReadyState[ReadyState.Loading] = "Loading";
-ReadyState[ReadyState.Done] = "Done";
-ReadyState[ReadyState.Cancelled] = "Cancelled";
-/** @enum {number} */
-var ResponseType = {
-    Basic: 0,
-    Cors: 1,
-    Default: 2,
-    Error: 3,
-    Opaque: 4,
-};
-ResponseType[ResponseType.Basic] = "Basic";
-ResponseType[ResponseType.Cors] = "Cors";
-ResponseType[ResponseType.Default] = "Default";
-ResponseType[ResponseType.Error] = "Error";
-ResponseType[ResponseType.Opaque] = "Opaque";
-/** @enum {number} */
-var ContentType = {
-    NONE: 0,
-    JSON: 1,
-    FORM: 2,
-    FORM_DATA: 3,
-    TEXT: 4,
-    BLOB: 5,
-    ARRAY_BUFFER: 6,
-};
-ContentType[ContentType.NONE] = "NONE";
-ContentType[ContentType.JSON] = "JSON";
-ContentType[ContentType.FORM] = "FORM";
-ContentType[ContentType.FORM_DATA] = "FORM_DATA";
-ContentType[ContentType.TEXT] = "TEXT";
-ContentType[ContentType.BLOB] = "BLOB";
-ContentType[ContentType.ARRAY_BUFFER] = "ARRAY_BUFFER";
-/** @enum {number} */
-var ResponseContentType = {
-    Text: 0,
-    Json: 1,
-    ArrayBuffer: 2,
-    Blob: 3,
-};
-ResponseContentType[ResponseContentType.Text] = "Text";
-ResponseContentType[ResponseContentType.Json] = "Json";
-ResponseContentType[ResponseContentType.ArrayBuffer] = "ArrayBuffer";
-ResponseContentType[ResponseContentType.Blob] = "Blob";
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Polyfill for [Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers/Headers), as
- * specified in the [Fetch Spec](https://fetch.spec.whatwg.org/#headers-class).
- *
- * The only known difference between this `Headers` implementation and the spec is the
- * lack of an `entries` method.
- *
- * ### Example
- *
- * ```
- * import {Headers} from '\@angular/http';
- *
- * var firstHeaders = new Headers();
- * firstHeaders.append('Content-Type', 'image/jpeg');
- * console.log(firstHeaders.get('Content-Type')) //'image/jpeg'
- *
- * // Create headers from Plain Old JavaScript Object
- * var secondHeaders = new Headers({
- *   'X-My-Custom-Header': 'Angular'
- * });
- * console.log(secondHeaders.get('X-My-Custom-Header')); //'Angular'
- *
- * var thirdHeaders = new Headers(secondHeaders);
- * console.log(thirdHeaders.get('X-My-Custom-Header')); //'Angular'
- * ```
- *
- * @deprecated use \@angular/common/http instead
- */
-var Headers = /** @class */ (function () {
-    // TODO(vicb): any -> string|string[]
-    function Headers(headers) {
-        var _this = this;
-        /**
-         * \@internal header names are lower case
-         */
-        this._headers = new Map();
-        /**
-         * \@internal map lower case names to actual names
-         */
-        this._normalizedNames = new Map();
-        if (!headers) {
-            return;
-        }
-        if (headers instanceof Headers) {
-            headers.forEach(function (values, name) {
-                values.forEach(function (value) { return _this.append(name, value); });
-            });
-            return;
-        }
-        Object.keys(headers).forEach(function (name) {
-            var /** @type {?} */ values = Array.isArray(headers[name]) ? headers[name] : [headers[name]];
-            _this.delete(name);
-            values.forEach(function (value) { return _this.append(name, value); });
-        });
-    }
-    /**
-     * Returns a new Headers instance from the given DOMString of Response Headers
-     */
-    /**
-     * Returns a new Headers instance from the given DOMString of Response Headers
-     * @param {?} headersString
-     * @return {?}
-     */
-    Headers.fromResponseHeaderString = /**
-     * Returns a new Headers instance from the given DOMString of Response Headers
-     * @param {?} headersString
-     * @return {?}
-     */
-    function (headersString) {
-        var /** @type {?} */ headers = new Headers();
-        headersString.split('\n').forEach(function (line) {
-            var /** @type {?} */ index = line.indexOf(':');
-            if (index > 0) {
-                var /** @type {?} */ name_1 = line.slice(0, index);
-                var /** @type {?} */ value = line.slice(index + 1).trim();
-                headers.set(name_1, value);
-            }
-        });
-        return headers;
-    };
-    /**
-     * Appends a header to existing list of header values for a given header name.
-     */
-    /**
-     * Appends a header to existing list of header values for a given header name.
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    Headers.prototype.append = /**
-     * Appends a header to existing list of header values for a given header name.
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    function (name, value) {
-        var /** @type {?} */ values = this.getAll(name);
-        if (values === null) {
-            this.set(name, value);
-        }
-        else {
-            values.push(value);
-        }
-    };
-    /**
-     * Deletes all header values for the given name.
-     */
-    /**
-     * Deletes all header values for the given name.
-     * @param {?} name
-     * @return {?}
-     */
-    Headers.prototype.delete = /**
-     * Deletes all header values for the given name.
-     * @param {?} name
-     * @return {?}
-     */
-    function (name) {
-        var /** @type {?} */ lcName = name.toLowerCase();
-        this._normalizedNames.delete(lcName);
-        this._headers.delete(lcName);
-    };
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    Headers.prototype.forEach = /**
-     * @param {?} fn
-     * @return {?}
-     */
-    function (fn) {
-        var _this = this;
-        this._headers.forEach(function (values, lcName) { return fn(values, _this._normalizedNames.get(lcName), _this._headers); });
-    };
-    /**
-     * Returns first header that matches given name.
-     */
-    /**
-     * Returns first header that matches given name.
-     * @param {?} name
-     * @return {?}
-     */
-    Headers.prototype.get = /**
-     * Returns first header that matches given name.
-     * @param {?} name
-     * @return {?}
-     */
-    function (name) {
-        var /** @type {?} */ values = this.getAll(name);
-        if (values === null) {
-            return null;
-        }
-        return values.length > 0 ? values[0] : null;
-    };
-    /**
-     * Checks for existence of header by given name.
-     */
-    /**
-     * Checks for existence of header by given name.
-     * @param {?} name
-     * @return {?}
-     */
-    Headers.prototype.has = /**
-     * Checks for existence of header by given name.
-     * @param {?} name
-     * @return {?}
-     */
-    function (name) { return this._headers.has(name.toLowerCase()); };
-    /**
-     * Returns the names of the headers
-     */
-    /**
-     * Returns the names of the headers
-     * @return {?}
-     */
-    Headers.prototype.keys = /**
-     * Returns the names of the headers
-     * @return {?}
-     */
-    function () { return Array.from(this._normalizedNames.values()); };
-    /**
-     * Sets or overrides header value for given name.
-     */
-    /**
-     * Sets or overrides header value for given name.
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    Headers.prototype.set = /**
-     * Sets or overrides header value for given name.
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    function (name, value) {
-        if (Array.isArray(value)) {
-            if (value.length) {
-                this._headers.set(name.toLowerCase(), [value.join(',')]);
-            }
-        }
-        else {
-            this._headers.set(name.toLowerCase(), [value]);
-        }
-        this.mayBeSetNormalizedName(name);
-    };
-    /**
-     * Returns values of all headers.
-     */
-    /**
-     * Returns values of all headers.
-     * @return {?}
-     */
-    Headers.prototype.values = /**
-     * Returns values of all headers.
-     * @return {?}
-     */
-    function () { return Array.from(this._headers.values()); };
-    /**
-     * Returns string of all headers.
-     */
-    // TODO(vicb): returns {[name: string]: string[]}
-    /**
-     * Returns string of all headers.
-     * @return {?}
-     */
-    Headers.prototype.toJSON = /**
-     * Returns string of all headers.
-     * @return {?}
-     */
-    function () {
-        var _this = this;
-        var /** @type {?} */ serialized = {};
-        this._headers.forEach(function (values, name) {
-            var /** @type {?} */ split = [];
-            values.forEach(function (v) { return split.push.apply(split, v.split(',')); });
-            serialized[/** @type {?} */ ((_this._normalizedNames.get(name)))] = split;
-        });
-        return serialized;
-    };
-    /**
-     * Returns list of header values for a given name.
-     */
-    /**
-     * Returns list of header values for a given name.
-     * @param {?} name
-     * @return {?}
-     */
-    Headers.prototype.getAll = /**
-     * Returns list of header values for a given name.
-     * @param {?} name
-     * @return {?}
-     */
-    function (name) {
-        return this.has(name) ? this._headers.get(name.toLowerCase()) || null : null;
-    };
-    /**
-     * This method is not implemented.
-     */
-    /**
-     * This method is not implemented.
-     * @return {?}
-     */
-    Headers.prototype.entries = /**
-     * This method is not implemented.
-     * @return {?}
-     */
-    function () { throw new Error('"entries" method is not implemented on Headers class'); };
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    Headers.prototype.mayBeSetNormalizedName = /**
-     * @param {?} name
-     * @return {?}
-     */
-    function (name) {
-        var /** @type {?} */ lcName = name.toLowerCase();
-        if (!this._normalizedNames.has(lcName)) {
-            this._normalizedNames.set(lcName, name);
-        }
-    };
-    return Headers;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Creates a response options object to be optionally provided when instantiating a
- * {\@link Response}.
- *
- * This class is based on the `ResponseInit` description in the [Fetch
- * Spec](https://fetch.spec.whatwg.org/#responseinit).
- *
- * All values are null by default. Typical defaults can be found in the
- * {\@link BaseResponseOptions} class, which sub-classes `ResponseOptions`.
- *
- * This class may be used in tests to build {\@link Response Responses} for
- * mock responses (see {\@link MockBackend}).
- *
- * ### Example ([live demo](http://plnkr.co/edit/P9Jkk8e8cz6NVzbcxEsD?p=preview))
- *
- * ```typescript
- * import {ResponseOptions, Response} from '\@angular/http';
- *
- * var options = new ResponseOptions({
- *   body: '{"name":"Jeff"}'
- * });
- * var res = new Response(options);
- *
- * console.log('res.json():', res.json()); // Object {name: "Jeff"}
- * ```
- *
- * @deprecated use \@angular/common/http instead
- */
-var ResponseOptions = /** @class */ (function () {
-    function ResponseOptions(opts) {
-        if (opts === void 0) { opts = {}; }
-        var body = opts.body, status = opts.status, headers = opts.headers, statusText = opts.statusText, type = opts.type, url = opts.url;
-        this.body = body != null ? body : null;
-        this.status = status != null ? status : null;
-        this.headers = headers != null ? headers : null;
-        this.statusText = statusText != null ? statusText : null;
-        this.type = type != null ? type : null;
-        this.url = url != null ? url : null;
-    }
-    /**
-     * Creates a copy of the `ResponseOptions` instance, using the optional input as values to
-     * override
-     * existing values. This method will not change the values of the instance on which it is being
-     * called.
-     *
-     * This may be useful when sharing a base `ResponseOptions` object inside tests,
-     * where certain properties may change from test to test.
-     *
-     * ### Example ([live demo](http://plnkr.co/edit/1lXquqFfgduTFBWjNoRE?p=preview))
-     *
-     * ```typescript
-     * import {ResponseOptions, Response} from '@angular/http';
-     *
-     * var options = new ResponseOptions({
-     *   body: {name: 'Jeff'}
-     * });
-     * var res = new Response(options.merge({
-     *   url: 'https://google.com'
-     * }));
-     * console.log('options.url:', options.url); // null
-     * console.log('res.json():', res.json()); // Object {name: "Jeff"}
-     * console.log('res.url:', res.url); // https://google.com
-     * ```
-     */
-    /**
-     * Creates a copy of the `ResponseOptions` instance, using the optional input as values to
-     * override
-     * existing values. This method will not change the values of the instance on which it is being
-     * called.
-     *
-     * This may be useful when sharing a base `ResponseOptions` object inside tests,
-     * where certain properties may change from test to test.
-     *
-     * ### Example ([live demo](http://plnkr.co/edit/1lXquqFfgduTFBWjNoRE?p=preview))
-     *
-     * ```typescript
-     * import {ResponseOptions, Response} from '\@angular/http';
-     *
-     * var options = new ResponseOptions({
-     *   body: {name: 'Jeff'}
-     * });
-     * var res = new Response(options.merge({
-     *   url: 'https://google.com'
-     * }));
-     * console.log('options.url:', options.url); // null
-     * console.log('res.json():', res.json()); // Object {name: "Jeff"}
-     * console.log('res.url:', res.url); // https://google.com
-     * ```
-     * @param {?=} options
-     * @return {?}
-     */
-    ResponseOptions.prototype.merge = /**
-     * Creates a copy of the `ResponseOptions` instance, using the optional input as values to
-     * override
-     * existing values. This method will not change the values of the instance on which it is being
-     * called.
-     *
-     * This may be useful when sharing a base `ResponseOptions` object inside tests,
-     * where certain properties may change from test to test.
-     *
-     * ### Example ([live demo](http://plnkr.co/edit/1lXquqFfgduTFBWjNoRE?p=preview))
-     *
-     * ```typescript
-     * import {ResponseOptions, Response} from '\@angular/http';
-     *
-     * var options = new ResponseOptions({
-     *   body: {name: 'Jeff'}
-     * });
-     * var res = new Response(options.merge({
-     *   url: 'https://google.com'
-     * }));
-     * console.log('options.url:', options.url); // null
-     * console.log('res.json():', res.json()); // Object {name: "Jeff"}
-     * console.log('res.url:', res.url); // https://google.com
-     * ```
-     * @param {?=} options
-     * @return {?}
-     */
-    function (options) {
-        return new ResponseOptions({
-            body: options && options.body != null ? options.body : this.body,
-            status: options && options.status != null ? options.status : this.status,
-            headers: options && options.headers != null ? options.headers : this.headers,
-            statusText: options && options.statusText != null ? options.statusText : this.statusText,
-            type: options && options.type != null ? options.type : this.type,
-            url: options && options.url != null ? options.url : this.url,
-        });
-    };
-    return ResponseOptions;
-}());
-/**
- * Subclass of {\@link ResponseOptions}, with default values.
- *
- * Default values:
- *  * status: 200
- *  * headers: empty {\@link Headers} object
- *
- * This class could be extended and bound to the {\@link ResponseOptions} class
- * when configuring an {\@link Injector}, in order to override the default options
- * used by {\@link Http} to create {\@link Response Responses}.
- *
- * ### Example ([live demo](http://plnkr.co/edit/qv8DLT?p=preview))
- *
- * ```typescript
- * import {provide} from '\@angular/core';
- * import {bootstrap} from '\@angular/platform-browser/browser';
- * import {HTTP_PROVIDERS, Headers, Http, BaseResponseOptions, ResponseOptions} from
- * '\@angular/http';
- * import {App} from './myapp';
- *
- * class MyOptions extends BaseResponseOptions {
- *   headers:Headers = new Headers({network: 'github'});
- * }
- *
- * bootstrap(App, [HTTP_PROVIDERS, {provide: ResponseOptions, useClass: MyOptions}]);
- * ```
- *
- * The options could also be extended when manually creating a {\@link Response}
- * object.
- *
- * ### Example ([live demo](http://plnkr.co/edit/VngosOWiaExEtbstDoix?p=preview))
- *
- * ```
- * import {BaseResponseOptions, Response} from '\@angular/http';
- *
- * var options = new BaseResponseOptions();
- * var res = new Response(options.merge({
- *   body: 'Angular',
- *   headers: new Headers({framework: 'angular'})
- * }));
- * console.log('res.headers.get("framework"):', res.headers.get('framework')); // angular
- * console.log('res.text():', res.text()); // Angular;
- * ```
- *
- * @deprecated use \@angular/common/http instead
- */
-var BaseResponseOptions = /** @class */ (function (_super) {
-    Object(__WEBPACK_IMPORTED_MODULE_1_tslib__["b" /* __extends */])(BaseResponseOptions, _super);
-    function BaseResponseOptions() {
-        return _super.call(this, { status: 200, statusText: 'Ok', type: ResponseType.Default, headers: new Headers() }) || this;
-    }
-    BaseResponseOptions.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    BaseResponseOptions.ctorParameters = function () { return []; };
-    return BaseResponseOptions;
-}(ResponseOptions));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Abstract class from which real backends are derived.
- *
- * The primary purpose of a `ConnectionBackend` is to create new connections to fulfill a given
- * {\@link Request}.
- *
- * @deprecated use \@angular/common/http instead
- * @abstract
- */
-var ConnectionBackend = /** @class */ (function () {
-    function ConnectionBackend() {
-    }
-    return ConnectionBackend;
-}());
-/**
- * Abstract class from which real connections are derived.
- *
- * @deprecated use \@angular/common/http instead
- * @abstract
- */
-var Connection = /** @class */ (function () {
-    function Connection() {
-    }
-    return Connection;
-}());
-/**
- * An XSRFStrategy configures XSRF protection (e.g. via headers) on an HTTP request.
- *
- * @deprecated use \@angular/common/http instead
- * @abstract
- */
-var XSRFStrategy = /** @class */ (function () {
-    function XSRFStrategy() {
-    }
-    return XSRFStrategy;
-}());
-/**
- * Interface for options to construct a RequestOptions, based on
- * [RequestInit](https://fetch.spec.whatwg.org/#requestinit) from the Fetch spec.
- *
- * @deprecated use \@angular/common/http instead
- * @record
- */
-
-/**
- * Required structure when constructing new Request();
- * @record
- */
-
-/**
- * Interface for options to construct a Response, based on
- * [ResponseInit](https://fetch.spec.whatwg.org/#responseinit) from the Fetch spec.
- *
- * @deprecated use \@angular/common/http instead
- * @record
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @param {?} method
- * @return {?}
- */
-function normalizeMethodName(method) {
-    if (typeof method !== 'string')
-        return method;
-    switch (method.toUpperCase()) {
-        case 'GET':
-            return RequestMethod.Get;
-        case 'POST':
-            return RequestMethod.Post;
-        case 'PUT':
-            return RequestMethod.Put;
-        case 'DELETE':
-            return RequestMethod.Delete;
-        case 'OPTIONS':
-            return RequestMethod.Options;
-        case 'HEAD':
-            return RequestMethod.Head;
-        case 'PATCH':
-            return RequestMethod.Patch;
-    }
-    throw new Error("Invalid request method. The method \"" + method + "\" is not supported.");
-}
-var isSuccess = function (status) { return (status >= 200 && status < 300); };
-/**
- * @param {?} xhr
- * @return {?}
- */
-function getResponseURL(xhr) {
-    if ('responseURL' in xhr) {
-        return xhr.responseURL;
-    }
-    if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
-        return xhr.getResponseHeader('X-Request-URL');
-    }
-    return null;
-}
-/**
- * @param {?} input
- * @return {?}
- */
-
-/**
- * @param {?} input
- * @return {?}
- */
-function stringToArrayBuffer(input) {
-    var /** @type {?} */ view = new Uint16Array(input.length);
-    for (var /** @type {?} */ i = 0, /** @type {?} */ strLen = input.length; i < strLen; i++) {
-        view[i] = input.charCodeAt(i);
-    }
-    return view.buffer;
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @param {?=} rawParams
- * @return {?}
- */
-function paramParser(rawParams) {
-    if (rawParams === void 0) { rawParams = ''; }
-    var /** @type {?} */ map = new Map();
-    if (rawParams.length > 0) {
-        var /** @type {?} */ params = rawParams.split('&');
-        params.forEach(function (param) {
-            var /** @type {?} */ eqIdx = param.indexOf('=');
-            var _a = eqIdx == -1 ? [param, ''] : [param.slice(0, eqIdx), param.slice(eqIdx + 1)], key = _a[0], val = _a[1];
-            var /** @type {?} */ list = map.get(key) || [];
-            list.push(val);
-            map.set(key, list);
-        });
-    }
-    return map;
-}
-/**
- * @deprecated use \@angular/common/http instead
- *
- */
-var QueryEncoder = /** @class */ (function () {
-    function QueryEncoder() {
-    }
-    /**
-     * @param {?} k
-     * @return {?}
-     */
-    QueryEncoder.prototype.encodeKey = /**
-     * @param {?} k
-     * @return {?}
-     */
-    function (k) { return standardEncoding(k); };
-    /**
-     * @param {?} v
-     * @return {?}
-     */
-    QueryEncoder.prototype.encodeValue = /**
-     * @param {?} v
-     * @return {?}
-     */
-    function (v) { return standardEncoding(v); };
-    return QueryEncoder;
-}());
-/**
- * @param {?} v
- * @return {?}
- */
-function standardEncoding(v) {
-    return encodeURIComponent(v)
-        .replace(/%40/gi, '@')
-        .replace(/%3A/gi, ':')
-        .replace(/%24/gi, '$')
-        .replace(/%2C/gi, ',')
-        .replace(/%3B/gi, ';')
-        .replace(/%2B/gi, '+')
-        .replace(/%3D/gi, '=')
-        .replace(/%3F/gi, '?')
-        .replace(/%2F/gi, '/');
-}
-/**
- * Map-like representation of url search parameters, based on
- * [URLSearchParams](https://url.spec.whatwg.org/#urlsearchparams) in the url living standard,
- * with several extensions for merging URLSearchParams objects:
- *   - setAll()
- *   - appendAll()
- *   - replaceAll()
- *
- * This class accepts an optional second parameter of ${\@link QueryEncoder},
- * which is used to serialize parameters before making a request. By default,
- * `QueryEncoder` encodes keys and values of parameters using `encodeURIComponent`,
- * and then un-encodes certain characters that are allowed to be part of the query
- * according to IETF RFC 3986: https://tools.ietf.org/html/rfc3986.
- *
- * These are the characters that are not encoded: `! $ \' ( ) * + , ; A 9 - . _ ~ ? /`
- *
- * If the set of allowed query characters is not acceptable for a particular backend,
- * `QueryEncoder` can be subclassed and provided as the 2nd argument to URLSearchParams.
- *
- * ```
- * import {URLSearchParams, QueryEncoder} from '\@angular/http';
- * class MyQueryEncoder extends QueryEncoder {
- *   encodeKey(k: string): string {
- *     return myEncodingFunction(k);
- *   }
- *
- *   encodeValue(v: string): string {
- *     return myEncodingFunction(v);
- *   }
- * }
- *
- * let params = new URLSearchParams('', new MyQueryEncoder());
- * ```
- * @deprecated use \@angular/common/http instead
- */
-var URLSearchParams = /** @class */ (function () {
-    function URLSearchParams(rawParams, queryEncoder) {
-        if (rawParams === void 0) { rawParams = ''; }
-        if (queryEncoder === void 0) { queryEncoder = new QueryEncoder(); }
-        this.rawParams = rawParams;
-        this.queryEncoder = queryEncoder;
-        this.paramsMap = paramParser(rawParams);
-    }
-    /**
-     * @return {?}
-     */
-    URLSearchParams.prototype.clone = /**
-     * @return {?}
-     */
-    function () {
-        var /** @type {?} */ clone = new URLSearchParams('', this.queryEncoder);
-        clone.appendAll(this);
-        return clone;
-    };
-    /**
-     * @param {?} param
-     * @return {?}
-     */
-    URLSearchParams.prototype.has = /**
-     * @param {?} param
-     * @return {?}
-     */
-    function (param) { return this.paramsMap.has(param); };
-    /**
-     * @param {?} param
-     * @return {?}
-     */
-    URLSearchParams.prototype.get = /**
-     * @param {?} param
-     * @return {?}
-     */
-    function (param) {
-        var /** @type {?} */ storedParam = this.paramsMap.get(param);
-        return Array.isArray(storedParam) ? storedParam[0] : null;
-    };
-    /**
-     * @param {?} param
-     * @return {?}
-     */
-    URLSearchParams.prototype.getAll = /**
-     * @param {?} param
-     * @return {?}
-     */
-    function (param) { return this.paramsMap.get(param) || []; };
-    /**
-     * @param {?} param
-     * @param {?} val
-     * @return {?}
-     */
-    URLSearchParams.prototype.set = /**
-     * @param {?} param
-     * @param {?} val
-     * @return {?}
-     */
-    function (param, val) {
-        if (val === void 0 || val === null) {
-            this.delete(param);
-            return;
-        }
-        var /** @type {?} */ list = this.paramsMap.get(param) || [];
-        list.length = 0;
-        list.push(val);
-        this.paramsMap.set(param, list);
-    };
-    // A merge operation
-    // For each name-values pair in `searchParams`, perform `set(name, values[0])`
-    //
-    // E.g: "a=[1,2,3], c=[8]" + "a=[4,5,6], b=[7]" = "a=[4], c=[8], b=[7]"
-    //
-    // TODO(@caitp): document this better
-    /**
-     * @param {?} searchParams
-     * @return {?}
-     */
-    URLSearchParams.prototype.setAll = /**
-     * @param {?} searchParams
-     * @return {?}
-     */
-    function (searchParams) {
-        var _this = this;
-        searchParams.paramsMap.forEach(function (value, param) {
-            var /** @type {?} */ list = _this.paramsMap.get(param) || [];
-            list.length = 0;
-            list.push(value[0]);
-            _this.paramsMap.set(param, list);
-        });
-    };
-    /**
-     * @param {?} param
-     * @param {?} val
-     * @return {?}
-     */
-    URLSearchParams.prototype.append = /**
-     * @param {?} param
-     * @param {?} val
-     * @return {?}
-     */
-    function (param, val) {
-        if (val === void 0 || val === null)
-            return;
-        var /** @type {?} */ list = this.paramsMap.get(param) || [];
-        list.push(val);
-        this.paramsMap.set(param, list);
-    };
-    // A merge operation
-    // For each name-values pair in `searchParams`, perform `append(name, value)`
-    // for each value in `values`.
-    //
-    // E.g: "a=[1,2], c=[8]" + "a=[3,4], b=[7]" = "a=[1,2,3,4], c=[8], b=[7]"
-    //
-    // TODO(@caitp): document this better
-    /**
-     * @param {?} searchParams
-     * @return {?}
-     */
-    URLSearchParams.prototype.appendAll = /**
-     * @param {?} searchParams
-     * @return {?}
-     */
-    function (searchParams) {
-        var _this = this;
-        searchParams.paramsMap.forEach(function (value, param) {
-            var /** @type {?} */ list = _this.paramsMap.get(param) || [];
-            for (var /** @type {?} */ i = 0; i < value.length; ++i) {
-                list.push(value[i]);
-            }
-            _this.paramsMap.set(param, list);
-        });
-    };
-    // A merge operation
-    // For each name-values pair in `searchParams`, perform `delete(name)`,
-    // followed by `set(name, values)`
-    //
-    // E.g: "a=[1,2,3], c=[8]" + "a=[4,5,6], b=[7]" = "a=[4,5,6], c=[8], b=[7]"
-    //
-    // TODO(@caitp): document this better
-    /**
-     * @param {?} searchParams
-     * @return {?}
-     */
-    URLSearchParams.prototype.replaceAll = /**
-     * @param {?} searchParams
-     * @return {?}
-     */
-    function (searchParams) {
-        var _this = this;
-        searchParams.paramsMap.forEach(function (value, param) {
-            var /** @type {?} */ list = _this.paramsMap.get(param) || [];
-            list.length = 0;
-            for (var /** @type {?} */ i = 0; i < value.length; ++i) {
-                list.push(value[i]);
-            }
-            _this.paramsMap.set(param, list);
-        });
-    };
-    /**
-     * @return {?}
-     */
-    URLSearchParams.prototype.toString = /**
-     * @return {?}
-     */
-    function () {
-        var _this = this;
-        var /** @type {?} */ paramsList = [];
-        this.paramsMap.forEach(function (values, k) {
-            values.forEach(function (v) {
-                return paramsList.push(_this.queryEncoder.encodeKey(k) + '=' + _this.queryEncoder.encodeValue(v));
-            });
-        });
-        return paramsList.join('&');
-    };
-    /**
-     * @param {?} param
-     * @return {?}
-     */
-    URLSearchParams.prototype.delete = /**
-     * @param {?} param
-     * @return {?}
-     */
-    function (param) { this.paramsMap.delete(param); };
-    return URLSearchParams;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * HTTP request body used by both {\@link Request} and {\@link Response}
- * https://fetch.spec.whatwg.org/#body
- * @abstract
- */
-var Body = /** @class */ (function () {
-    function Body() {
-    }
-    /**
-     * Attempts to return body as parsed `JSON` object, or raises an exception.
-     */
-    /**
-     * Attempts to return body as parsed `JSON` object, or raises an exception.
-     * @return {?}
-     */
-    Body.prototype.json = /**
-     * Attempts to return body as parsed `JSON` object, or raises an exception.
-     * @return {?}
-     */
-    function () {
-        if (typeof this._body === 'string') {
-            return JSON.parse(/** @type {?} */ (this._body));
-        }
-        if (this._body instanceof ArrayBuffer) {
-            return JSON.parse(this.text());
-        }
-        return this._body;
-    };
-    /**
-     * Returns the body as a string, presuming `toString()` can be called on the response body.
-     *
-     * When decoding an `ArrayBuffer`, the optional `encodingHint` parameter determines how the
-     * bytes in the buffer will be interpreted. Valid values are:
-     *
-     * - `legacy` - incorrectly interpret the bytes as UTF-16 (technically, UCS-2). Only characters
-     *   in the Basic Multilingual Plane are supported, surrogate pairs are not handled correctly.
-     *   In addition, the endianness of the 16-bit octet pairs in the `ArrayBuffer` is not taken
-     *   into consideration. This is the default behavior to avoid breaking apps, but should be
-     *   considered deprecated.
-     *
-     * - `iso-8859` - interpret the bytes as ISO-8859 (which can be used for ASCII encoded text).
-     */
-    /**
-     * Returns the body as a string, presuming `toString()` can be called on the response body.
-     *
-     * When decoding an `ArrayBuffer`, the optional `encodingHint` parameter determines how the
-     * bytes in the buffer will be interpreted. Valid values are:
-     *
-     * - `legacy` - incorrectly interpret the bytes as UTF-16 (technically, UCS-2). Only characters
-     *   in the Basic Multilingual Plane are supported, surrogate pairs are not handled correctly.
-     *   In addition, the endianness of the 16-bit octet pairs in the `ArrayBuffer` is not taken
-     *   into consideration. This is the default behavior to avoid breaking apps, but should be
-     *   considered deprecated.
-     *
-     * - `iso-8859` - interpret the bytes as ISO-8859 (which can be used for ASCII encoded text).
-     * @param {?=} encodingHint
-     * @return {?}
-     */
-    Body.prototype.text = /**
-     * Returns the body as a string, presuming `toString()` can be called on the response body.
-     *
-     * When decoding an `ArrayBuffer`, the optional `encodingHint` parameter determines how the
-     * bytes in the buffer will be interpreted. Valid values are:
-     *
-     * - `legacy` - incorrectly interpret the bytes as UTF-16 (technically, UCS-2). Only characters
-     *   in the Basic Multilingual Plane are supported, surrogate pairs are not handled correctly.
-     *   In addition, the endianness of the 16-bit octet pairs in the `ArrayBuffer` is not taken
-     *   into consideration. This is the default behavior to avoid breaking apps, but should be
-     *   considered deprecated.
-     *
-     * - `iso-8859` - interpret the bytes as ISO-8859 (which can be used for ASCII encoded text).
-     * @param {?=} encodingHint
-     * @return {?}
-     */
-    function (encodingHint) {
-        if (encodingHint === void 0) { encodingHint = 'legacy'; }
-        if (this._body instanceof URLSearchParams) {
-            return this._body.toString();
-        }
-        if (this._body instanceof ArrayBuffer) {
-            switch (encodingHint) {
-                case 'legacy':
-                    return String.fromCharCode.apply(null, new Uint16Array(/** @type {?} */ (this._body)));
-                case 'iso-8859':
-                    return String.fromCharCode.apply(null, new Uint8Array(/** @type {?} */ (this._body)));
-                default:
-                    throw new Error("Invalid value for encodingHint: " + encodingHint);
-            }
-        }
-        if (this._body == null) {
-            return '';
-        }
-        if (typeof this._body === 'object') {
-            return JSON.stringify(this._body, null, 2);
-        }
-        return this._body.toString();
-    };
-    /**
-     * Return the body as an ArrayBuffer
-     */
-    /**
-     * Return the body as an ArrayBuffer
-     * @return {?}
-     */
-    Body.prototype.arrayBuffer = /**
-     * Return the body as an ArrayBuffer
-     * @return {?}
-     */
-    function () {
-        if (this._body instanceof ArrayBuffer) {
-            return /** @type {?} */ (this._body);
-        }
-        return stringToArrayBuffer(this.text());
-    };
-    /**
-      * Returns the request's body as a Blob, assuming that body exists.
-      */
-    /**
-     * Returns the request's body as a Blob, assuming that body exists.
-     * @return {?}
-     */
-    Body.prototype.blob = /**
-     * Returns the request's body as a Blob, assuming that body exists.
-     * @return {?}
-     */
-    function () {
-        if (this._body instanceof Blob) {
-            return /** @type {?} */ (this._body);
-        }
-        if (this._body instanceof ArrayBuffer) {
-            return new Blob([this._body]);
-        }
-        throw new Error('The request body isn\'t either a blob or an array buffer');
-    };
-    return Body;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Creates `Response` instances from provided values.
- *
- * Though this object isn't
- * usually instantiated by end-users, it is the primary object interacted with when it comes time to
- * add data to a view.
- *
- * ### Example
- *
- * ```
- * http.request('my-friends.txt').subscribe(response => this.friends = response.text());
- * ```
- *
- * The Response's interface is inspired by the Response constructor defined in the [Fetch
- * Spec](https://fetch.spec.whatwg.org/#response-class), but is considered a static value whose body
- * can be accessed many times. There are other differences in the implementation, but this is the
- * most significant.
- *
- * @deprecated use \@angular/common/http instead
- */
-var Response = /** @class */ (function (_super) {
-    Object(__WEBPACK_IMPORTED_MODULE_1_tslib__["b" /* __extends */])(Response, _super);
-    function Response(responseOptions) {
-        var _this = _super.call(this) || this;
-        _this._body = responseOptions.body;
-        _this.status = /** @type {?} */ ((responseOptions.status));
-        _this.ok = (_this.status >= 200 && _this.status <= 299);
-        _this.statusText = responseOptions.statusText;
-        _this.headers = responseOptions.headers;
-        _this.type = /** @type {?} */ ((responseOptions.type));
-        _this.url = /** @type {?} */ ((responseOptions.url));
-        return _this;
-    }
-    /**
-     * @return {?}
-     */
-    Response.prototype.toString = /**
-     * @return {?}
-     */
-    function () {
-        return "Response with status: " + this.status + " " + this.statusText + " for URL: " + this.url;
-    };
-    return Response;
-}(Body));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var _nextRequestId = 0;
-var JSONP_HOME = '__ng_jsonp__';
-var _jsonpConnections = null;
-/**
- * @return {?}
- */
-function _getJsonpConnections() {
-    var /** @type {?} */ w = typeof window == 'object' ? window : {};
-    if (_jsonpConnections === null) {
-        _jsonpConnections = w[JSONP_HOME] = {};
-    }
-    return _jsonpConnections;
-}
-var BrowserJsonp = /** @class */ (function () {
-    function BrowserJsonp() {
-    }
-    // Construct a <script> element with the specified URL
-    /**
-     * @param {?} url
-     * @return {?}
-     */
-    BrowserJsonp.prototype.build = /**
-     * @param {?} url
-     * @return {?}
-     */
-    function (url) {
-        var /** @type {?} */ node = document.createElement('script');
-        node.src = url;
-        return node;
-    };
-    /**
-     * @return {?}
-     */
-    BrowserJsonp.prototype.nextRequestID = /**
-     * @return {?}
-     */
-    function () { return "__req" + _nextRequestId++; };
-    /**
-     * @param {?} id
-     * @return {?}
-     */
-    BrowserJsonp.prototype.requestCallback = /**
-     * @param {?} id
-     * @return {?}
-     */
-    function (id) { return JSONP_HOME + "." + id + ".finished"; };
-    /**
-     * @param {?} id
-     * @param {?} connection
-     * @return {?}
-     */
-    BrowserJsonp.prototype.exposeConnection = /**
-     * @param {?} id
-     * @param {?} connection
-     * @return {?}
-     */
-    function (id, connection) {
-        var /** @type {?} */ connections = _getJsonpConnections();
-        connections[id] = connection;
-    };
-    /**
-     * @param {?} id
-     * @return {?}
-     */
-    BrowserJsonp.prototype.removeConnection = /**
-     * @param {?} id
-     * @return {?}
-     */
-    function (id) {
-        var /** @type {?} */ connections = _getJsonpConnections();
-        connections[id] = null;
-    };
-    // Attach the <script> element to the DOM
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserJsonp.prototype.send = /**
-     * @param {?} node
-     * @return {?}
-     */
-    function (node) { document.body.appendChild(/** @type {?} */ ((node))); };
-    // Remove <script> element from the DOM
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserJsonp.prototype.cleanup = /**
-     * @param {?} node
-     * @return {?}
-     */
-    function (node) {
-        if (node.parentNode) {
-            node.parentNode.removeChild(/** @type {?} */ ((node)));
-        }
-    };
-    BrowserJsonp.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    BrowserJsonp.ctorParameters = function () { return []; };
-    return BrowserJsonp;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var JSONP_ERR_NO_CALLBACK = 'JSONP injected script did not invoke callback.';
-var JSONP_ERR_WRONG_METHOD = 'JSONP requests must use GET request method.';
-/**
- * Base class for an in-flight JSONP request.
- *
- * @deprecated use \@angular/common/http instead
- */
-var JSONPConnection = /** @class */ (function () {
-    /** @internal */
-    function JSONPConnection(req, _dom, baseResponseOptions) {
-        var _this = this;
-        this._dom = _dom;
-        this.baseResponseOptions = baseResponseOptions;
-        this._finished = false;
-        if (req.method !== RequestMethod.Get) {
-            throw new TypeError(JSONP_ERR_WRONG_METHOD);
-        }
-        this.request = req;
-        this.response = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */](function (responseObserver) {
-            _this.readyState = ReadyState.Loading;
-            var /** @type {?} */ id = _this._id = _dom.nextRequestID();
-            _dom.exposeConnection(id, _this);
-            // Workaround Dart
-            // url = url.replace(/=JSONP_CALLBACK(&|$)/, `generated method`);
-            var /** @type {?} */ callback = _dom.requestCallback(_this._id);
-            var /** @type {?} */ url = req.url;
-            if (url.indexOf('=JSONP_CALLBACK&') > -1) {
-                url = url.replace('=JSONP_CALLBACK&', "=" + callback + "&");
-            }
-            else if (url.lastIndexOf('=JSONP_CALLBACK') === url.length - '=JSONP_CALLBACK'.length) {
-                url = url.substring(0, url.length - '=JSONP_CALLBACK'.length) + ("=" + callback);
-            }
-            var /** @type {?} */ script = _this._script = _dom.build(url);
-            var /** @type {?} */ onLoad = function (event) {
-                if (_this.readyState === ReadyState.Cancelled)
-                    return;
-                _this.readyState = ReadyState.Done;
-                _dom.cleanup(script);
-                if (!_this._finished) {
-                    var /** @type {?} */ responseOptions_1 = new ResponseOptions({ body: JSONP_ERR_NO_CALLBACK, type: ResponseType.Error, url: url });
-                    if (baseResponseOptions) {
-                        responseOptions_1 = baseResponseOptions.merge(responseOptions_1);
-                    }
-                    responseObserver.error(new Response(responseOptions_1));
-                    return;
-                }
-                var /** @type {?} */ responseOptions = new ResponseOptions({ body: _this._responseData, url: url });
-                if (_this.baseResponseOptions) {
-                    responseOptions = _this.baseResponseOptions.merge(responseOptions);
-                }
-                responseObserver.next(new Response(responseOptions));
-                responseObserver.complete();
-            };
-            var /** @type {?} */ onError = function (error) {
-                if (_this.readyState === ReadyState.Cancelled)
-                    return;
-                _this.readyState = ReadyState.Done;
-                _dom.cleanup(script);
-                var /** @type {?} */ responseOptions = new ResponseOptions({ body: error.message, type: ResponseType.Error });
-                if (baseResponseOptions) {
-                    responseOptions = baseResponseOptions.merge(responseOptions);
-                }
-                responseObserver.error(new Response(responseOptions));
-            };
-            script.addEventListener('load', onLoad);
-            script.addEventListener('error', onError);
-            _dom.send(script);
-            return function () {
-                _this.readyState = ReadyState.Cancelled;
-                script.removeEventListener('load', onLoad);
-                script.removeEventListener('error', onError);
-                _this._dom.cleanup(script);
-            };
-        });
-    }
-    /**
-     * Callback called when the JSONP request completes, to notify the application
-     * of the new data.
-     */
-    /**
-     * Callback called when the JSONP request completes, to notify the application
-     * of the new data.
-     * @param {?=} data
-     * @return {?}
-     */
-    JSONPConnection.prototype.finished = /**
-     * Callback called when the JSONP request completes, to notify the application
-     * of the new data.
-     * @param {?=} data
-     * @return {?}
-     */
-    function (data) {
-        // Don't leak connections
-        this._finished = true;
-        this._dom.removeConnection(this._id);
-        if (this.readyState === ReadyState.Cancelled)
-            return;
-        this._responseData = data;
-    };
-    return JSONPConnection;
-}());
-/**
- * A {\@link ConnectionBackend} that uses the JSONP strategy of making requests.
- *
- * @deprecated use \@angular/common/http instead
- */
-var JSONPBackend = /** @class */ (function (_super) {
-    Object(__WEBPACK_IMPORTED_MODULE_1_tslib__["b" /* __extends */])(JSONPBackend, _super);
-    /** @internal */
-    function JSONPBackend(_browserJSONP, _baseResponseOptions) {
-        var _this = _super.call(this) || this;
-        _this._browserJSONP = _browserJSONP;
-        _this._baseResponseOptions = _baseResponseOptions;
-        return _this;
-    }
-    /**
-     * @param {?} request
-     * @return {?}
-     */
-    JSONPBackend.prototype.createConnection = /**
-     * @param {?} request
-     * @return {?}
-     */
-    function (request) {
-        return new JSONPConnection(request, this._browserJSONP, this._baseResponseOptions);
-    };
-    JSONPBackend.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    JSONPBackend.ctorParameters = function () { return [
-        { type: BrowserJsonp, },
-        { type: ResponseOptions, },
-    ]; };
-    return JSONPBackend;
-}(ConnectionBackend));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var XSSI_PREFIX = /^\)\]\}',?\n/;
-/**
- * Creates connections using `XMLHttpRequest`. Given a fully-qualified
- * request, an `XHRConnection` will immediately create an `XMLHttpRequest` object and send the
- * request.
- *
- * This class would typically not be created or interacted with directly inside applications, though
- * the {\@link MockConnection} may be interacted with in tests.
- *
- * @deprecated use \@angular/common/http instead
- */
-var XHRConnection = /** @class */ (function () {
-    function XHRConnection(req, browserXHR, baseResponseOptions) {
-        var _this = this;
-        this.request = req;
-        this.response = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */](function (responseObserver) {
-            var /** @type {?} */ _xhr = browserXHR.build();
-            _xhr.open(RequestMethod[req.method].toUpperCase(), req.url);
-            if (req.withCredentials != null) {
-                _xhr.withCredentials = req.withCredentials;
-            }
-            // load event handler
-            var /** @type {?} */ onLoad = function () {
-                // normalize IE9 bug (http://bugs.jquery.com/ticket/1450)
-                var /** @type {?} */ status = _xhr.status === 1223 ? 204 : _xhr.status;
-                var /** @type {?} */ body = null;
-                // HTTP 204 means no content
-                if (status !== 204) {
-                    // responseText is the old-school way of retrieving response (supported by IE8 & 9)
-                    // response/responseType properties were introduced in ResourceLoader Level2 spec
-                    // (supported by IE10)
-                    body = (typeof _xhr.response === 'undefined') ? _xhr.responseText : _xhr.response;
-                    // Implicitly strip a potential XSSI prefix.
-                    if (typeof body === 'string') {
-                        body = body.replace(XSSI_PREFIX, '');
-                    }
-                }
-                // fix status code when it is 0 (0 status is undocumented).
-                // Occurs when accessing file resources or on Android 4.1 stock browser
-                // while retrieving files from application cache.
-                if (status === 0) {
-                    status = body ? 200 : 0;
-                }
-                var /** @type {?} */ headers = Headers.fromResponseHeaderString(_xhr.getAllResponseHeaders());
-                // IE 9 does not provide the way to get URL of response
-                var /** @type {?} */ url = getResponseURL(_xhr) || req.url;
-                var /** @type {?} */ statusText = _xhr.statusText || 'OK';
-                var /** @type {?} */ responseOptions = new ResponseOptions({ body: body, status: status, headers: headers, statusText: statusText, url: url });
-                if (baseResponseOptions != null) {
-                    responseOptions = baseResponseOptions.merge(responseOptions);
-                }
-                var /** @type {?} */ response = new Response(responseOptions);
-                response.ok = isSuccess(status);
-                if (response.ok) {
-                    responseObserver.next(response);
-                    // TODO(gdi2290): defer complete if array buffer until done
-                    responseObserver.complete();
-                    return;
-                }
-                responseObserver.error(response);
-            };
-            // error event handler
-            var /** @type {?} */ onError = function (err) {
-                var /** @type {?} */ responseOptions = new ResponseOptions({
-                    body: err,
-                    type: ResponseType.Error,
-                    status: _xhr.status,
-                    statusText: _xhr.statusText,
-                });
-                if (baseResponseOptions != null) {
-                    responseOptions = baseResponseOptions.merge(responseOptions);
-                }
-                responseObserver.error(new Response(responseOptions));
-            };
-            _this.setDetectedContentType(req, _xhr);
-            if (req.headers == null) {
-                req.headers = new Headers();
-            }
-            if (!req.headers.has('Accept')) {
-                req.headers.append('Accept', 'application/json, text/plain, */*');
-            }
-            req.headers.forEach(function (values, name) { return _xhr.setRequestHeader(/** @type {?} */ ((name)), values.join(',')); });
-            // Select the correct buffer type to store the response
-            if (req.responseType != null && _xhr.responseType != null) {
-                switch (req.responseType) {
-                    case ResponseContentType.ArrayBuffer:
-                        _xhr.responseType = 'arraybuffer';
-                        break;
-                    case ResponseContentType.Json:
-                        _xhr.responseType = 'json';
-                        break;
-                    case ResponseContentType.Text:
-                        _xhr.responseType = 'text';
-                        break;
-                    case ResponseContentType.Blob:
-                        _xhr.responseType = 'blob';
-                        break;
-                    default:
-                        throw new Error('The selected responseType is not supported');
-                }
-            }
-            _xhr.addEventListener('load', onLoad);
-            _xhr.addEventListener('error', onError);
-            _xhr.send(_this.request.getBody());
-            return function () {
-                _xhr.removeEventListener('load', onLoad);
-                _xhr.removeEventListener('error', onError);
-                _xhr.abort();
-            };
-        });
-    }
-    /**
-     * @param {?} req
-     * @param {?} _xhr
-     * @return {?}
-     */
-    XHRConnection.prototype.setDetectedContentType = /**
-     * @param {?} req
-     * @param {?} _xhr
-     * @return {?}
-     */
-    function (req /** TODO Request */, _xhr /** XMLHttpRequest */) {
-        // Skip if a custom Content-Type header is provided
-        if (req.headers != null && req.headers.get('Content-Type') != null) {
-            return;
-        }
-        // Set the detected content type
-        switch (req.contentType) {
-            case ContentType.NONE:
-                break;
-            case ContentType.JSON:
-                _xhr.setRequestHeader('content-type', 'application/json');
-                break;
-            case ContentType.FORM:
-                _xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-                break;
-            case ContentType.TEXT:
-                _xhr.setRequestHeader('content-type', 'text/plain');
-                break;
-            case ContentType.BLOB:
-                var /** @type {?} */ blob = req.blob();
-                if (blob.type) {
-                    _xhr.setRequestHeader('content-type', blob.type);
-                }
-                break;
-        }
-    };
-    return XHRConnection;
-}());
-/**
- * `XSRFConfiguration` sets up Cross Site Request Forgery (XSRF) protection for the application
- * using a cookie. See https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
- * for more information on XSRF.
- *
- * Applications can configure custom cookie and header names by binding an instance of this class
- * with different `cookieName` and `headerName` values. See the main HTTP documentation for more
- * details.
- *
- * @deprecated use \@angular/common/http instead
- */
-var CookieXSRFStrategy = /** @class */ (function () {
-    function CookieXSRFStrategy(_cookieName, _headerName) {
-        if (_cookieName === void 0) { _cookieName = 'XSRF-TOKEN'; }
-        if (_headerName === void 0) { _headerName = 'X-XSRF-TOKEN'; }
-        this._cookieName = _cookieName;
-        this._headerName = _headerName;
-    }
-    /**
-     * @param {?} req
-     * @return {?}
-     */
-    CookieXSRFStrategy.prototype.configureRequest = /**
-     * @param {?} req
-     * @return {?}
-     */
-    function (req) {
-        var /** @type {?} */ xsrfToken = Object(__WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["d" /* ɵgetDOM */])().getCookie(this._cookieName);
-        if (xsrfToken) {
-            req.headers.set(this._headerName, xsrfToken);
-        }
-    };
-    return CookieXSRFStrategy;
-}());
-/**
- * Creates {\@link XHRConnection} instances.
- *
- * This class would typically not be used by end users, but could be
- * overridden if a different backend implementation should be used,
- * such as in a node backend.
- *
- * ### Example
- *
- * ```
- * import {Http, MyNodeBackend, HTTP_PROVIDERS, BaseRequestOptions} from '\@angular/http';
- * \@Component({
- *   viewProviders: [
- *     HTTP_PROVIDERS,
- *     {provide: Http, useFactory: (backend, options) => {
- *       return new Http(backend, options);
- *     }, deps: [MyNodeBackend, BaseRequestOptions]}]
- * })
- * class MyComponent {
- *   constructor(http:Http) {
- *     http.request('people.json').subscribe(res => this.people = res.json());
- *   }
- * }
- * ```
- * @deprecated use \@angular/common/http instead
- */
-var XHRBackend = /** @class */ (function () {
-    function XHRBackend(_browserXHR, _baseResponseOptions, _xsrfStrategy) {
-        this._browserXHR = _browserXHR;
-        this._baseResponseOptions = _baseResponseOptions;
-        this._xsrfStrategy = _xsrfStrategy;
-    }
-    /**
-     * @param {?} request
-     * @return {?}
-     */
-    XHRBackend.prototype.createConnection = /**
-     * @param {?} request
-     * @return {?}
-     */
-    function (request) {
-        this._xsrfStrategy.configureRequest(request);
-        return new XHRConnection(request, this._browserXHR, this._baseResponseOptions);
-    };
-    XHRBackend.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    XHRBackend.ctorParameters = function () { return [
-        { type: BrowserXhr, },
-        { type: ResponseOptions, },
-        { type: XSRFStrategy, },
-    ]; };
-    return XHRBackend;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Creates a request options object to be optionally provided when instantiating a
- * {\@link Request}.
- *
- * This class is based on the `RequestInit` description in the [Fetch
- * Spec](https://fetch.spec.whatwg.org/#requestinit).
- *
- * All values are null by default. Typical defaults can be found in the {\@link BaseRequestOptions}
- * class, which sub-classes `RequestOptions`.
- *
- * ```typescript
- * import {RequestOptions, Request, RequestMethod} from '\@angular/http';
- *
- * const options = new RequestOptions({
- *   method: RequestMethod.Post,
- *   url: 'https://google.com'
- * });
- * const req = new Request(options);
- * console.log('req.method:', RequestMethod[req.method]); // Post
- * console.log('options.url:', options.url); // https://google.com
- * ```
- *
- * @deprecated use \@angular/common/http instead
- */
-var RequestOptions = /** @class */ (function () {
-    // TODO(Dzmitry): remove search when this.search is removed
-    function RequestOptions(opts) {
-        if (opts === void 0) { opts = {}; }
-        var method = opts.method, headers = opts.headers, body = opts.body, url = opts.url, search = opts.search, params = opts.params, withCredentials = opts.withCredentials, responseType = opts.responseType;
-        this.method = method != null ? normalizeMethodName(method) : null;
-        this.headers = headers != null ? headers : null;
-        this.body = body != null ? body : null;
-        this.url = url != null ? url : null;
-        this.params = this._mergeSearchParams(params || search);
-        this.withCredentials = withCredentials != null ? withCredentials : null;
-        this.responseType = responseType != null ? responseType : null;
-    }
-    Object.defineProperty(RequestOptions.prototype, "search", {
-        /**
-         * @deprecated from 4.0.0. Use params instead.
-         */
-        get: /**
-         * @deprecated from 4.0.0. Use params instead.
-         * @return {?}
-         */
-        function () { return this.params; },
-        /**
-         * @deprecated from 4.0.0. Use params instead.
-         */
-        set: /**
-         * @deprecated from 4.0.0. Use params instead.
-         * @param {?} params
-         * @return {?}
-         */
-        function (params) { this.params = params; },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * Creates a copy of the `RequestOptions` instance, using the optional input as values to override
-     * existing values. This method will not change the values of the instance on which it is being
-     * called.
-     *
-     * Note that `headers` and `search` will override existing values completely if present in
-     * the `options` object. If these values should be merged, it should be done prior to calling
-     * `merge` on the `RequestOptions` instance.
-     *
-     * ```typescript
-     * import {RequestOptions, Request, RequestMethod} from '@angular/http';
-     *
-     * const options = new RequestOptions({
-     *   method: RequestMethod.Post
-     * });
-     * const req = new Request(options.merge({
-     *   url: 'https://google.com'
-     * }));
-     * console.log('req.method:', RequestMethod[req.method]); // Post
-     * console.log('options.url:', options.url); // null
-     * console.log('req.url:', req.url); // https://google.com
-     * ```
-     */
-    /**
-     * Creates a copy of the `RequestOptions` instance, using the optional input as values to override
-     * existing values. This method will not change the values of the instance on which it is being
-     * called.
-     *
-     * Note that `headers` and `search` will override existing values completely if present in
-     * the `options` object. If these values should be merged, it should be done prior to calling
-     * `merge` on the `RequestOptions` instance.
-     *
-     * ```typescript
-     * import {RequestOptions, Request, RequestMethod} from '\@angular/http';
-     *
-     * const options = new RequestOptions({
-     *   method: RequestMethod.Post
-     * });
-     * const req = new Request(options.merge({
-     *   url: 'https://google.com'
-     * }));
-     * console.log('req.method:', RequestMethod[req.method]); // Post
-     * console.log('options.url:', options.url); // null
-     * console.log('req.url:', req.url); // https://google.com
-     * ```
-     * @param {?=} options
-     * @return {?}
-     */
-    RequestOptions.prototype.merge = /**
-     * Creates a copy of the `RequestOptions` instance, using the optional input as values to override
-     * existing values. This method will not change the values of the instance on which it is being
-     * called.
-     *
-     * Note that `headers` and `search` will override existing values completely if present in
-     * the `options` object. If these values should be merged, it should be done prior to calling
-     * `merge` on the `RequestOptions` instance.
-     *
-     * ```typescript
-     * import {RequestOptions, Request, RequestMethod} from '\@angular/http';
-     *
-     * const options = new RequestOptions({
-     *   method: RequestMethod.Post
-     * });
-     * const req = new Request(options.merge({
-     *   url: 'https://google.com'
-     * }));
-     * console.log('req.method:', RequestMethod[req.method]); // Post
-     * console.log('options.url:', options.url); // null
-     * console.log('req.url:', req.url); // https://google.com
-     * ```
-     * @param {?=} options
-     * @return {?}
-     */
-    function (options) {
-        return new RequestOptions({
-            method: options && options.method != null ? options.method : this.method,
-            headers: options && options.headers != null ? options.headers : new Headers(this.headers),
-            body: options && options.body != null ? options.body : this.body,
-            url: options && options.url != null ? options.url : this.url,
-            params: options && this._mergeSearchParams(options.params || options.search),
-            withCredentials: options && options.withCredentials != null ? options.withCredentials :
-                this.withCredentials,
-            responseType: options && options.responseType != null ? options.responseType :
-                this.responseType
-        });
-    };
-    /**
-     * @param {?=} params
-     * @return {?}
-     */
-    RequestOptions.prototype._mergeSearchParams = /**
-     * @param {?=} params
-     * @return {?}
-     */
-    function (params) {
-        if (!params)
-            return this.params;
-        if (params instanceof URLSearchParams) {
-            return params.clone();
-        }
-        if (typeof params === 'string') {
-            return new URLSearchParams(params);
-        }
-        return this._parseParams(params);
-    };
-    /**
-     * @param {?=} objParams
-     * @return {?}
-     */
-    RequestOptions.prototype._parseParams = /**
-     * @param {?=} objParams
-     * @return {?}
-     */
-    function (objParams) {
-        var _this = this;
-        if (objParams === void 0) { objParams = {}; }
-        var /** @type {?} */ params = new URLSearchParams();
-        Object.keys(objParams).forEach(function (key) {
-            var /** @type {?} */ value = objParams[key];
-            if (Array.isArray(value)) {
-                value.forEach(function (item) { return _this._appendParam(key, item, params); });
-            }
-            else {
-                _this._appendParam(key, value, params);
-            }
-        });
-        return params;
-    };
-    /**
-     * @param {?} key
-     * @param {?} value
-     * @param {?} params
-     * @return {?}
-     */
-    RequestOptions.prototype._appendParam = /**
-     * @param {?} key
-     * @param {?} value
-     * @param {?} params
-     * @return {?}
-     */
-    function (key, value, params) {
-        if (typeof value !== 'string') {
-            value = JSON.stringify(value);
-        }
-        params.append(key, value);
-    };
-    return RequestOptions;
-}());
-/**
- * Subclass of {\@link RequestOptions}, with default values.
- *
- * Default values:
- *  * method: {\@link RequestMethod RequestMethod.Get}
- *  * headers: empty {\@link Headers} object
- *
- * This class could be extended and bound to the {\@link RequestOptions} class
- * when configuring an {\@link Injector}, in order to override the default options
- * used by {\@link Http} to create and send {\@link Request Requests}.
- *
- * ```typescript
- * import {BaseRequestOptions, RequestOptions} from '\@angular/http';
- *
- * class MyOptions extends BaseRequestOptions {
- *   search: string = 'coreTeam=true';
- * }
- *
- * {provide: RequestOptions, useClass: MyOptions};
- * ```
- *
- * The options could also be extended when manually creating a {\@link Request}
- * object.
- *
- * ```
- * import {BaseRequestOptions, Request, RequestMethod} from '\@angular/http';
- *
- * const options = new BaseRequestOptions();
- * const req = new Request(options.merge({
- *   method: RequestMethod.Post,
- *   url: 'https://google.com'
- * }));
- * console.log('req.method:', RequestMethod[req.method]); // Post
- * console.log('options.url:', options.url); // null
- * console.log('req.url:', req.url); // https://google.com
- * ```
- *
- * @deprecated use \@angular/common/http instead
- */
-var BaseRequestOptions = /** @class */ (function (_super) {
-    Object(__WEBPACK_IMPORTED_MODULE_1_tslib__["b" /* __extends */])(BaseRequestOptions, _super);
-    function BaseRequestOptions() {
-        return _super.call(this, { method: RequestMethod.Get, headers: new Headers() }) || this;
-    }
-    BaseRequestOptions.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    BaseRequestOptions.ctorParameters = function () { return []; };
-    return BaseRequestOptions;
-}(RequestOptions));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Creates `Request` instances from provided values.
- *
- * The Request's interface is inspired by the Request constructor defined in the [Fetch
- * Spec](https://fetch.spec.whatwg.org/#request-class),
- * but is considered a static value whose body can be accessed many times. There are other
- * differences in the implementation, but this is the most significant.
- *
- * `Request` instances are typically created by higher-level classes, like {\@link Http} and
- * {\@link Jsonp}, but it may occasionally be useful to explicitly create `Request` instances.
- * One such example is when creating services that wrap higher-level services, like {\@link Http},
- * where it may be useful to generate a `Request` with arbitrary headers and search params.
- *
- * ```typescript
- * import {Injectable, Injector} from '\@angular/core';
- * import {HTTP_PROVIDERS, Http, Request, RequestMethod} from '\@angular/http';
- *
- * \@Injectable()
- * class AutoAuthenticator {
- *   constructor(public http:Http) {}
- *   request(url:string) {
- *     return this.http.request(new Request({
- *       method: RequestMethod.Get,
- *       url: url,
- *       search: 'password=123'
- *     }));
- *   }
- * }
- *
- * var injector = Injector.resolveAndCreate([HTTP_PROVIDERS, AutoAuthenticator]);
- * var authenticator = injector.get(AutoAuthenticator);
- * authenticator.request('people.json').subscribe(res => {
- *   //URL should have included '?password=123'
- *   console.log('people', res.json());
- * });
- * ```
- *
- * @deprecated use \@angular/common/http instead
- */
-var Request = /** @class */ (function (_super) {
-    Object(__WEBPACK_IMPORTED_MODULE_1_tslib__["b" /* __extends */])(Request, _super);
-    function Request(requestOptions) {
-        var _this = _super.call(this) || this;
-        // TODO: assert that url is present
-        var /** @type {?} */ url = requestOptions.url;
-        _this.url = /** @type {?} */ ((requestOptions.url));
-        var /** @type {?} */ paramsArg = requestOptions.params || requestOptions.search;
-        if (paramsArg) {
-            var /** @type {?} */ params = void 0;
-            if (typeof paramsArg === 'object' && !(paramsArg instanceof URLSearchParams)) {
-                params = urlEncodeParams(paramsArg).toString();
-            }
-            else {
-                params = paramsArg.toString();
-            }
-            if (params.length > 0) {
-                var /** @type {?} */ prefix = '?';
-                if (_this.url.indexOf('?') != -1) {
-                    prefix = (_this.url[_this.url.length - 1] == '&') ? '' : '&';
-                }
-                // TODO: just delete search-query-looking string in url?
-                // TODO: just delete search-query-looking string in url?
-                _this.url = url + prefix + params;
-            }
-        }
-        _this._body = requestOptions.body;
-        _this.method = normalizeMethodName(/** @type {?} */ ((requestOptions.method)));
-        // TODO(jeffbcross): implement behavior
-        // Defaults to 'omit', consistent with browser
-        // TODO(jeffbcross): implement behavior
-        // Defaults to 'omit', consistent with browser
-        _this.headers = new Headers(requestOptions.headers);
-        _this.contentType = _this.detectContentType();
-        _this.withCredentials = /** @type {?} */ ((requestOptions.withCredentials));
-        _this.responseType = /** @type {?} */ ((requestOptions.responseType));
-        return _this;
-    }
-    /**
-     * Returns the content type enum based on header options.
-     */
-    /**
-     * Returns the content type enum based on header options.
-     * @return {?}
-     */
-    Request.prototype.detectContentType = /**
-     * Returns the content type enum based on header options.
-     * @return {?}
-     */
-    function () {
-        switch (this.headers.get('content-type')) {
-            case 'application/json':
-                return ContentType.JSON;
-            case 'application/x-www-form-urlencoded':
-                return ContentType.FORM;
-            case 'multipart/form-data':
-                return ContentType.FORM_DATA;
-            case 'text/plain':
-            case 'text/html':
-                return ContentType.TEXT;
-            case 'application/octet-stream':
-                return this._body instanceof ArrayBuffer$1 ? ContentType.ARRAY_BUFFER : ContentType.BLOB;
-            default:
-                return this.detectContentTypeFromBody();
-        }
-    };
-    /**
-     * Returns the content type of request's body based on its type.
-     */
-    /**
-     * Returns the content type of request's body based on its type.
-     * @return {?}
-     */
-    Request.prototype.detectContentTypeFromBody = /**
-     * Returns the content type of request's body based on its type.
-     * @return {?}
-     */
-    function () {
-        if (this._body == null) {
-            return ContentType.NONE;
-        }
-        else if (this._body instanceof URLSearchParams) {
-            return ContentType.FORM;
-        }
-        else if (this._body instanceof FormData) {
-            return ContentType.FORM_DATA;
-        }
-        else if (this._body instanceof Blob$1) {
-            return ContentType.BLOB;
-        }
-        else if (this._body instanceof ArrayBuffer$1) {
-            return ContentType.ARRAY_BUFFER;
-        }
-        else if (this._body && typeof this._body === 'object') {
-            return ContentType.JSON;
-        }
-        else {
-            return ContentType.TEXT;
-        }
-    };
-    /**
-     * Returns the request's body according to its type. If body is undefined, return
-     * null.
-     */
-    /**
-     * Returns the request's body according to its type. If body is undefined, return
-     * null.
-     * @return {?}
-     */
-    Request.prototype.getBody = /**
-     * Returns the request's body according to its type. If body is undefined, return
-     * null.
-     * @return {?}
-     */
-    function () {
-        switch (this.contentType) {
-            case ContentType.JSON:
-                return this.text();
-            case ContentType.FORM:
-                return this.text();
-            case ContentType.FORM_DATA:
-                return this._body;
-            case ContentType.TEXT:
-                return this.text();
-            case ContentType.BLOB:
-                return this.blob();
-            case ContentType.ARRAY_BUFFER:
-                return this.arrayBuffer();
-            default:
-                return null;
-        }
-    };
-    return Request;
-}(Body));
-/**
- * @param {?} params
- * @return {?}
- */
-function urlEncodeParams(params) {
-    var /** @type {?} */ searchParams = new URLSearchParams();
-    Object.keys(params).forEach(function (key) {
-        var /** @type {?} */ value = params[key];
-        if (value && Array.isArray(value)) {
-            value.forEach(function (element) { return searchParams.append(key, element.toString()); });
-        }
-        else {
-            searchParams.append(key, value.toString());
-        }
-    });
-    return searchParams;
-}
-var noop = function () { };
-var w = typeof window == 'object' ? window : noop;
-var FormData = (/** @type {?} */ (w /** TODO #9100 */) /** TODO #9100 */)['FormData'] || noop;
-var Blob$1 = (/** @type {?} */ (w /** TODO #9100 */) /** TODO #9100 */)['Blob'] || noop;
-var ArrayBuffer$1 = (/** @type {?} */ (w /** TODO #9100 */) /** TODO #9100 */)['ArrayBuffer'] || noop;
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @param {?} backend
- * @param {?} request
- * @return {?}
- */
-function httpRequest(backend, request) {
-    return backend.createConnection(request).response;
-}
-/**
- * @param {?} defaultOpts
- * @param {?} providedOpts
- * @param {?} method
- * @param {?} url
- * @return {?}
- */
-function mergeOptions(defaultOpts, providedOpts, method, url) {
-    var /** @type {?} */ newOptions = defaultOpts;
-    if (providedOpts) {
-        // Hack so Dart can used named parameters
-        return /** @type {?} */ (newOptions.merge(new RequestOptions({
-            method: providedOpts.method || method,
-            url: providedOpts.url || url,
-            search: providedOpts.search,
-            params: providedOpts.params,
-            headers: providedOpts.headers,
-            body: providedOpts.body,
-            withCredentials: providedOpts.withCredentials,
-            responseType: providedOpts.responseType
-        })));
-    }
-    return /** @type {?} */ (newOptions.merge(new RequestOptions({ method: method, url: url })));
-}
-/**
- * Performs http requests using `XMLHttpRequest` as the default backend.
- *
- * `Http` is available as an injectable class, with methods to perform http requests. Calling
- * `request` returns an `Observable` which will emit a single {\@link Response} when a
- * response is received.
- *
- * ### Example
- *
- * ```typescript
- * import {Http, HTTP_PROVIDERS} from '\@angular/http';
- * import 'rxjs/add/operator/map'
- * \@Component({
- *   selector: 'http-app',
- *   viewProviders: [HTTP_PROVIDERS],
- *   templateUrl: 'people.html'
- * })
- * class PeopleComponent {
- *   constructor(http: Http) {
- *     http.get('people.json')
- *       // Call map on the response observable to get the parsed people object
- *       .map(res => res.json())
- *       // Subscribe to the observable to get the parsed people object and attach it to the
- *       // component
- *       .subscribe(people => this.people = people);
- *   }
- * }
- * ```
- *
- *
- * ### Example
- *
- * ```
- * http.get('people.json').subscribe((res:Response) => this.people = res.json());
- * ```
- *
- * The default construct used to perform requests, `XMLHttpRequest`, is abstracted as a "Backend" (
- * {\@link XHRBackend} in this case), which could be mocked with dependency injection by replacing
- * the {\@link XHRBackend} provider, as in the following example:
- *
- * ### Example
- *
- * ```typescript
- * import {BaseRequestOptions, Http} from '\@angular/http';
- * import {MockBackend} from '\@angular/http/testing';
- * var injector = Injector.resolveAndCreate([
- *   BaseRequestOptions,
- *   MockBackend,
- *   {provide: Http, useFactory:
- *       function(backend, defaultOptions) {
- *         return new Http(backend, defaultOptions);
- *       },
- *       deps: [MockBackend, BaseRequestOptions]}
- * ]);
- * var http = injector.get(Http);
- * http.get('request-from-mock-backend.json').subscribe((res:Response) => doSomething(res));
- * ```
- *
- * @deprecated use \@angular/common/http instead
- */
-var Http = /** @class */ (function () {
-    function Http(_backend, _defaultOptions) {
-        this._backend = _backend;
-        this._defaultOptions = _defaultOptions;
-    }
-    /**
-     * Performs any type of http request. First argument is required, and can either be a url or
-     * a {@link Request} instance. If the first argument is a url, an optional {@link RequestOptions}
-     * object can be provided as the 2nd argument. The options object will be merged with the values
-     * of {@link BaseRequestOptions} before performing the request.
-     */
-    /**
-     * Performs any type of http request. First argument is required, and can either be a url or
-     * a {\@link Request} instance. If the first argument is a url, an optional {\@link RequestOptions}
-     * object can be provided as the 2nd argument. The options object will be merged with the values
-     * of {\@link BaseRequestOptions} before performing the request.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    Http.prototype.request = /**
-     * Performs any type of http request. First argument is required, and can either be a url or
-     * a {\@link Request} instance. If the first argument is a url, an optional {\@link RequestOptions}
-     * object can be provided as the 2nd argument. The options object will be merged with the values
-     * of {\@link BaseRequestOptions} before performing the request.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, options) {
-        var /** @type {?} */ responseObservable;
-        if (typeof url === 'string') {
-            responseObservable = httpRequest(this._backend, new Request(mergeOptions(this._defaultOptions, options, RequestMethod.Get, /** @type {?} */ (url))));
-        }
-        else if (url instanceof Request) {
-            responseObservable = httpRequest(this._backend, url);
-        }
-        else {
-            throw new Error('First argument must be a url string or Request instance.');
-        }
-        return responseObservable;
-    };
-    /**
-     * Performs a request with `get` http method.
-     */
-    /**
-     * Performs a request with `get` http method.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    Http.prototype.get = /**
-     * Performs a request with `get` http method.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, options) {
-        return this.request(new Request(mergeOptions(this._defaultOptions, options, RequestMethod.Get, url)));
-    };
-    /**
-     * Performs a request with `post` http method.
-     */
-    /**
-     * Performs a request with `post` http method.
-     * @param {?} url
-     * @param {?} body
-     * @param {?=} options
-     * @return {?}
-     */
-    Http.prototype.post = /**
-     * Performs a request with `post` http method.
-     * @param {?} url
-     * @param {?} body
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, body, options) {
-        return this.request(new Request(mergeOptions(this._defaultOptions.merge(new RequestOptions({ body: body })), options, RequestMethod.Post, url)));
-    };
-    /**
-     * Performs a request with `put` http method.
-     */
-    /**
-     * Performs a request with `put` http method.
-     * @param {?} url
-     * @param {?} body
-     * @param {?=} options
-     * @return {?}
-     */
-    Http.prototype.put = /**
-     * Performs a request with `put` http method.
-     * @param {?} url
-     * @param {?} body
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, body, options) {
-        return this.request(new Request(mergeOptions(this._defaultOptions.merge(new RequestOptions({ body: body })), options, RequestMethod.Put, url)));
-    };
-    /**
-     * Performs a request with `delete` http method.
-     */
-    /**
-     * Performs a request with `delete` http method.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    Http.prototype.delete = /**
-     * Performs a request with `delete` http method.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, options) {
-        return this.request(new Request(mergeOptions(this._defaultOptions, options, RequestMethod.Delete, url)));
-    };
-    /**
-     * Performs a request with `patch` http method.
-     */
-    /**
-     * Performs a request with `patch` http method.
-     * @param {?} url
-     * @param {?} body
-     * @param {?=} options
-     * @return {?}
-     */
-    Http.prototype.patch = /**
-     * Performs a request with `patch` http method.
-     * @param {?} url
-     * @param {?} body
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, body, options) {
-        return this.request(new Request(mergeOptions(this._defaultOptions.merge(new RequestOptions({ body: body })), options, RequestMethod.Patch, url)));
-    };
-    /**
-     * Performs a request with `head` http method.
-     */
-    /**
-     * Performs a request with `head` http method.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    Http.prototype.head = /**
-     * Performs a request with `head` http method.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, options) {
-        return this.request(new Request(mergeOptions(this._defaultOptions, options, RequestMethod.Head, url)));
-    };
-    /**
-     * Performs a request with `options` http method.
-     */
-    /**
-     * Performs a request with `options` http method.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    Http.prototype.options = /**
-     * Performs a request with `options` http method.
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, options) {
-        return this.request(new Request(mergeOptions(this._defaultOptions, options, RequestMethod.Options, url)));
-    };
-    Http.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    Http.ctorParameters = function () { return [
-        { type: ConnectionBackend, },
-        { type: RequestOptions, },
-    ]; };
-    return Http;
-}());
-/**
- * @deprecated use \@angular/common/http instead
- */
-var Jsonp = /** @class */ (function (_super) {
-    Object(__WEBPACK_IMPORTED_MODULE_1_tslib__["b" /* __extends */])(Jsonp, _super);
-    function Jsonp(backend, defaultOptions) {
-        return _super.call(this, backend, defaultOptions) || this;
-    }
-    /**
-     * Performs any type of http request. First argument is required, and can either be a url or
-     * a {@link Request} instance. If the first argument is a url, an optional {@link RequestOptions}
-     * object can be provided as the 2nd argument. The options object will be merged with the values
-     * of {@link BaseRequestOptions} before performing the request.
-     *
-     * @security Regular XHR is the safest alternative to JSONP for most applications, and is
-     * supported by all current browsers. Because JSONP creates a `<script>` element with
-     * contents retrieved from a remote source, attacker-controlled data introduced by an untrusted
-     * source could expose your application to XSS risks. Data exposed by JSONP may also be
-     * readable by malicious third-party websites. In addition, JSONP introduces potential risk for
-     * future security issues (e.g. content sniffing).  For more detail, see the
-     * [Security Guide](http://g.co/ng/security).
-     */
-    /**
-     * Performs any type of http request. First argument is required, and can either be a url or
-     * a {\@link Request} instance. If the first argument is a url, an optional {\@link RequestOptions}
-     * object can be provided as the 2nd argument. The options object will be merged with the values
-     * of {\@link BaseRequestOptions} before performing the request.
-     *
-     * \@security Regular XHR is the safest alternative to JSONP for most applications, and is
-     * supported by all current browsers. Because JSONP creates a `<script>` element with
-     * contents retrieved from a remote source, attacker-controlled data introduced by an untrusted
-     * source could expose your application to XSS risks. Data exposed by JSONP may also be
-     * readable by malicious third-party websites. In addition, JSONP introduces potential risk for
-     * future security issues (e.g. content sniffing).  For more detail, see the
-     * [Security Guide](http://g.co/ng/security).
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    Jsonp.prototype.request = /**
-     * Performs any type of http request. First argument is required, and can either be a url or
-     * a {\@link Request} instance. If the first argument is a url, an optional {\@link RequestOptions}
-     * object can be provided as the 2nd argument. The options object will be merged with the values
-     * of {\@link BaseRequestOptions} before performing the request.
-     *
-     * \@security Regular XHR is the safest alternative to JSONP for most applications, and is
-     * supported by all current browsers. Because JSONP creates a `<script>` element with
-     * contents retrieved from a remote source, attacker-controlled data introduced by an untrusted
-     * source could expose your application to XSS risks. Data exposed by JSONP may also be
-     * readable by malicious third-party websites. In addition, JSONP introduces potential risk for
-     * future security issues (e.g. content sniffing).  For more detail, see the
-     * [Security Guide](http://g.co/ng/security).
-     * @param {?} url
-     * @param {?=} options
-     * @return {?}
-     */
-    function (url, options) {
-        var /** @type {?} */ responseObservable;
-        if (typeof url === 'string') {
-            url =
-                new Request(mergeOptions(this._defaultOptions, options, RequestMethod.Get, /** @type {?} */ (url)));
-        }
-        if (url instanceof Request) {
-            if (url.method !== RequestMethod.Get) {
-                throw new Error('JSONP requests must use GET request method.');
-            }
-            responseObservable = httpRequest(this._backend, url);
-        }
-        else {
-            throw new Error('First argument must be a url string or Request instance.');
-        }
-        return responseObservable;
-    };
-    Jsonp.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    Jsonp.ctorParameters = function () { return [
-        { type: ConnectionBackend, },
-        { type: RequestOptions, },
-    ]; };
-    return Jsonp;
-}(Http));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @return {?}
- */
-function _createDefaultCookieXSRFStrategy() {
-    return new CookieXSRFStrategy();
-}
-/**
- * @param {?} xhrBackend
- * @param {?} requestOptions
- * @return {?}
- */
-function httpFactory(xhrBackend, requestOptions) {
-    return new Http(xhrBackend, requestOptions);
-}
-/**
- * @param {?} jsonpBackend
- * @param {?} requestOptions
- * @return {?}
- */
-function jsonpFactory(jsonpBackend, requestOptions) {
-    return new Jsonp(jsonpBackend, requestOptions);
-}
-/**
- * The module that includes http's providers
- *
- * @deprecated use \@angular/common/http instead
- */
-var HttpModule = /** @class */ (function () {
-    function HttpModule() {
-    }
-    HttpModule.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */], args: [{
-                    providers: [
-                        // TODO(pascal): use factory type annotations once supported in DI
-                        // issue: https://github.com/angular/angular/issues/3183
-                        { provide: Http, useFactory: httpFactory, deps: [XHRBackend, RequestOptions] },
-                        BrowserXhr,
-                        { provide: RequestOptions, useClass: BaseRequestOptions },
-                        { provide: ResponseOptions, useClass: BaseResponseOptions },
-                        XHRBackend,
-                        { provide: XSRFStrategy, useFactory: _createDefaultCookieXSRFStrategy },
-                    ],
-                },] },
-    ];
-    /** @nocollapse */
-    HttpModule.ctorParameters = function () { return []; };
-    return HttpModule;
-}());
-/**
- * The module that includes jsonp's providers
- *
- * @deprecated use \@angular/common/http instead
- */
-var JsonpModule = /** @class */ (function () {
-    function JsonpModule() {
-    }
-    JsonpModule.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */], args: [{
-                    providers: [
-                        // TODO(pascal): use factory type annotations once supported in DI
-                        // issue: https://github.com/angular/angular/issues/3183
-                        { provide: Jsonp, useFactory: jsonpFactory, deps: [JSONPBackend, RequestOptions] },
-                        BrowserJsonp,
-                        { provide: RequestOptions, useClass: BaseRequestOptions },
-                        { provide: ResponseOptions, useClass: BaseResponseOptions },
-                        JSONPBackend,
-                    ],
-                },] },
-    ];
-    /** @nocollapse */
-    JsonpModule.ctorParameters = function () { return []; };
-    return JsonpModule;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @deprecated use \@angular/common/http instead
- */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["_7" /* Version */]('5.2.11');
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @module
- * @description
- * Entry point for all public APIs of this package.
- */
-
-// This file only reexports content of the `src` folder. Keep it that way.
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * Generated bundle index. Do not edit.
- */
-
-
-//# sourceMappingURL=http.js.map
-
-
-/***/ }),
-
 /***/ "./node_modules/@angular/platform-browser-dynamic/esm5/platform-browser-dynamic.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -78354,22 +78337,3947 @@ var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["_7" /* Version */
 
 /***/ }),
 
-/***/ "./node_modules/ng2-page-scroll/ng2-page-scroll.js":
+/***/ "./node_modules/@ngx-translate/core/@ngx-translate/core.es5.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_ng2_page_scroll_directive__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll.directive.js");
+/* WEBPACK VAR INJECTION */(function(global) {/* unused harmony export ɵa */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return TranslateModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TranslateLoader; });
+/* unused harmony export TranslateFakeLoader */
+/* unused harmony export USE_STORE */
+/* unused harmony export USE_DEFAULT_LANG */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return TranslateService; });
+/* unused harmony export MissingTranslationHandler */
+/* unused harmony export FakeMissingTranslationHandler */
+/* unused harmony export TranslateParser */
+/* unused harmony export TranslateDefaultParser */
+/* unused harmony export TranslateCompiler */
+/* unused harmony export TranslateFakeCompiler */
+/* unused harmony export TranslateDirective */
+/* unused harmony export TranslatePipe */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operators_share__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/share.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators_map__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operators_merge__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/merge.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_operators_switchMap__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/switchMap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_operators_toArray__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/toArray.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_operators_take__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/take.js");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+
+
+
+
+
+
+
+var __decorate$1 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var TranslateLoader = (function () {
+    function TranslateLoader() {
+    }
+    return TranslateLoader;
+}());
+/**
+ * This loader is just a placeholder that does nothing, in case you don't need a loader at all
+ */
+var TranslateFakeLoader = (function (_super) {
+    __extends(TranslateFakeLoader, _super);
+    function TranslateFakeLoader() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TranslateFakeLoader.prototype.getTranslation = function (lang) {
+        return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])({});
+    };
+    return TranslateFakeLoader;
+}(TranslateLoader));
+TranslateFakeLoader = __decorate$1([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])()
+], TranslateFakeLoader);
+function isScheduler(value) {
+    return value && typeof value.schedule === 'function';
+}
+var isScheduler_2 = isScheduler;
+var isScheduler_1 = {
+    isScheduler: isScheduler_2
+};
+var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+function createCommonjsModule(fn, module) {
+    return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+// CommonJS / Node have global context exposed as "global" variable.
+// We don't want to include the whole node.d.ts this this compilation unit so we'll just fake
+// the global "global" var for now.
+var __window = typeof window !== 'undefined' && window;
+var __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefined' &&
+    self instanceof WorkerGlobalScope && self;
+var __global = typeof commonjsGlobal !== 'undefined' && commonjsGlobal;
+var _root = __window || __global || __self;
+var root_1 = _root;
+// Workaround Closure Compiler restriction: The body of a goog.module cannot use throw.
+// This is needed when used with angular/tsickle which inserts a goog.module statement.
+// Wrap in IIFE
+(function () {
+    if (!_root) {
+        throw new Error('RxJS could not find any global context (window, self, global)');
+    }
+})();
+var root = {
+    root: root_1
+};
+function isFunction(x) {
+    return typeof x === 'function';
+}
+var isFunction_2 = isFunction;
+var isFunction_1 = {
+    isFunction: isFunction_2
+};
+var isArray_1 = Array.isArray || (function (x) { return x && typeof x.length === 'number'; });
+var isArray = {
+    isArray: isArray_1
+};
+function isObject(x) {
+    return x != null && typeof x === 'object';
+}
+var isObject_2 = isObject;
+var isObject_1 = {
+    isObject: isObject_2
+};
+// typeof any so that it we don't have to cast when comparing a result to the error object
+var errorObject_1 = { e: {} };
+var errorObject = {
+    errorObject: errorObject_1
+};
+var tryCatchTarget;
+function tryCatcher() {
+    try {
+        return tryCatchTarget.apply(this, arguments);
+    }
+    catch (e) {
+        errorObject.errorObject.e = e;
+        return errorObject.errorObject;
+    }
+}
+function tryCatch(fn) {
+    tryCatchTarget = fn;
+    return tryCatcher;
+}
+var tryCatch_2 = tryCatch;
+var tryCatch_1 = {
+    tryCatch: tryCatch_2
+};
+var __extends$2 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * An error thrown when one or more errors have occurred during the
+ * `unsubscribe` of a {@link Subscription}.
+ */
+var UnsubscriptionError = (function (_super) {
+    __extends$2(UnsubscriptionError, _super);
+    function UnsubscriptionError(errors) {
+        _super.call(this);
+        this.errors = errors;
+        var err = Error.call(this, errors ?
+            errors.length + " errors occurred during unsubscription:\n  " + errors.map(function (err, i) { return ((i + 1) + ") " + err.toString()); }).join('\n  ') : '');
+        this.name = err.name = 'UnsubscriptionError';
+        this.stack = err.stack;
+        this.message = err.message;
+    }
+    return UnsubscriptionError;
+}(Error));
+var UnsubscriptionError_2 = UnsubscriptionError;
+var UnsubscriptionError_1 = {
+    UnsubscriptionError: UnsubscriptionError_2
+};
+/**
+ * Represents a disposable resource, such as the execution of an Observable. A
+ * Subscription has one important method, `unsubscribe`, that takes no argument
+ * and just disposes the resource held by the subscription.
+ *
+ * Additionally, subscriptions may be grouped together through the `add()`
+ * method, which will attach a child Subscription to the current Subscription.
+ * When a Subscription is unsubscribed, all its children (and its grandchildren)
+ * will be unsubscribed as well.
+ *
+ * @class Subscription
+ */
+var Subscription = (function () {
+    /**
+     * @param {function(): void} [unsubscribe] A function describing how to
+     * perform the disposal of resources when the `unsubscribe` method is called.
+     */
+    function Subscription(unsubscribe) {
+        /**
+         * A flag to indicate whether this Subscription has already been unsubscribed.
+         * @type {boolean}
+         */
+        this.closed = false;
+        this._parent = null;
+        this._parents = null;
+        this._subscriptions = null;
+        if (unsubscribe) {
+            this._unsubscribe = unsubscribe;
+        }
+    }
+    /**
+     * Disposes the resources held by the subscription. May, for instance, cancel
+     * an ongoing Observable execution or cancel any other type of work that
+     * started when the Subscription was created.
+     * @return {void}
+     */
+    Subscription.prototype.unsubscribe = function () {
+        var hasErrors = false;
+        var errors;
+        if (this.closed) {
+            return;
+        }
+        var _a = this, _parent = _a._parent, _parents = _a._parents, _unsubscribe = _a._unsubscribe, _subscriptions = _a._subscriptions;
+        this.closed = true;
+        this._parent = null;
+        this._parents = null;
+        // null out _subscriptions first so any child subscriptions that attempt
+        // to remove themselves from this subscription will noop
+        this._subscriptions = null;
+        var index = -1;
+        var len = _parents ? _parents.length : 0;
+        // if this._parent is null, then so is this._parents, and we
+        // don't have to remove ourselves from any parent subscriptions.
+        while (_parent) {
+            _parent.remove(this);
+            // if this._parents is null or index >= len,
+            // then _parent is set to null, and the loop exits
+            _parent = ++index < len && _parents[index] || null;
+        }
+        if (isFunction_1.isFunction(_unsubscribe)) {
+            var trial = tryCatch_1.tryCatch(_unsubscribe).call(this);
+            if (trial === errorObject.errorObject) {
+                hasErrors = true;
+                errors = errors || (errorObject.errorObject.e instanceof UnsubscriptionError_1.UnsubscriptionError ?
+                    flattenUnsubscriptionErrors(errorObject.errorObject.e.errors) : [errorObject.errorObject.e]);
+            }
+        }
+        if (isArray.isArray(_subscriptions)) {
+            index = -1;
+            len = _subscriptions.length;
+            while (++index < len) {
+                var sub = _subscriptions[index];
+                if (isObject_1.isObject(sub)) {
+                    var trial = tryCatch_1.tryCatch(sub.unsubscribe).call(sub);
+                    if (trial === errorObject.errorObject) {
+                        hasErrors = true;
+                        errors = errors || [];
+                        var err = errorObject.errorObject.e;
+                        if (err instanceof UnsubscriptionError_1.UnsubscriptionError) {
+                            errors = errors.concat(flattenUnsubscriptionErrors(err.errors));
+                        }
+                        else {
+                            errors.push(err);
+                        }
+                    }
+                }
+            }
+        }
+        if (hasErrors) {
+            throw new UnsubscriptionError_1.UnsubscriptionError(errors);
+        }
+    };
+    /**
+     * Adds a tear down to be called during the unsubscribe() of this
+     * Subscription.
+     *
+     * If the tear down being added is a subscription that is already
+     * unsubscribed, is the same reference `add` is being called on, or is
+     * `Subscription.EMPTY`, it will not be added.
+     *
+     * If this subscription is already in an `closed` state, the passed
+     * tear down logic will be executed immediately.
+     *
+     * @param {TeardownLogic} teardown The additional logic to execute on
+     * teardown.
+     * @return {Subscription} Returns the Subscription used or created to be
+     * added to the inner subscriptions list. This Subscription can be used with
+     * `remove()` to remove the passed teardown logic from the inner subscriptions
+     * list.
+     */
+    Subscription.prototype.add = function (teardown) {
+        if (!teardown || (teardown === Subscription.EMPTY)) {
+            return Subscription.EMPTY;
+        }
+        if (teardown === this) {
+            return this;
+        }
+        var subscription = teardown;
+        switch (typeof teardown) {
+            case 'function':
+                subscription = new Subscription(teardown);
+            case 'object':
+                if (subscription.closed || typeof subscription.unsubscribe !== 'function') {
+                    return subscription;
+                }
+                else if (this.closed) {
+                    subscription.unsubscribe();
+                    return subscription;
+                }
+                else if (typeof subscription._addParent !== 'function' /* quack quack */) {
+                    var tmp = subscription;
+                    subscription = new Subscription();
+                    subscription._subscriptions = [tmp];
+                }
+                break;
+            default:
+                throw new Error('unrecognized teardown ' + teardown + ' added to Subscription.');
+        }
+        var subscriptions = this._subscriptions || (this._subscriptions = []);
+        subscriptions.push(subscription);
+        subscription._addParent(this);
+        return subscription;
+    };
+    /**
+     * Removes a Subscription from the internal list of subscriptions that will
+     * unsubscribe during the unsubscribe process of this Subscription.
+     * @param {Subscription} subscription The subscription to remove.
+     * @return {void}
+     */
+    Subscription.prototype.remove = function (subscription) {
+        var subscriptions = this._subscriptions;
+        if (subscriptions) {
+            var subscriptionIndex = subscriptions.indexOf(subscription);
+            if (subscriptionIndex !== -1) {
+                subscriptions.splice(subscriptionIndex, 1);
+            }
+        }
+    };
+    Subscription.prototype._addParent = function (parent) {
+        var _a = this, _parent = _a._parent, _parents = _a._parents;
+        if (!_parent || _parent === parent) {
+            // If we don't have a parent, or the new parent is the same as the
+            // current parent, then set this._parent to the new parent.
+            this._parent = parent;
+        }
+        else if (!_parents) {
+            // If there's already one parent, but not multiple, allocate an Array to
+            // store the rest of the parent Subscriptions.
+            this._parents = [parent];
+        }
+        else if (_parents.indexOf(parent) === -1) {
+            // Only add the new parent to the _parents list if it's not already there.
+            _parents.push(parent);
+        }
+    };
+    Subscription.EMPTY = (function (empty) {
+        empty.closed = true;
+        return empty;
+    }(new Subscription()));
+    return Subscription;
+}());
+var Subscription_2 = Subscription;
+function flattenUnsubscriptionErrors(errors) {
+    return errors.reduce(function (errs, err) { return errs.concat((err instanceof UnsubscriptionError_1.UnsubscriptionError) ? err.errors : err); }, []);
+}
+var Subscription_1 = {
+    Subscription: Subscription_2
+};
+var empty = {
+    closed: true,
+    next: function (value) { },
+    error: function (err) { throw err; },
+    complete: function () { }
+};
+var Observer = {
+    empty: empty
+};
+var rxSubscriber = createCommonjsModule(function (module, exports) {
+    var Symbol = root.root.Symbol;
+    exports.rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'function') ?
+        Symbol.for('rxSubscriber') : '@@rxSubscriber';
+    /**
+     * @deprecated use rxSubscriber instead
+     */
+    exports.$$rxSubscriber = exports.rxSubscriber;
+});
+var rxSubscriber_1 = rxSubscriber.rxSubscriber;
+var rxSubscriber_2 = rxSubscriber.$$rxSubscriber;
+var __extends$1 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * Implements the {@link Observer} interface and extends the
+ * {@link Subscription} class. While the {@link Observer} is the public API for
+ * consuming the values of an {@link Observable}, all Observers get converted to
+ * a Subscriber, in order to provide Subscription-like capabilities such as
+ * `unsubscribe`. Subscriber is a common type in RxJS, and crucial for
+ * implementing operators, but it is rarely used as a public API.
+ *
+ * @class Subscriber<T>
+ */
+var Subscriber = (function (_super) {
+    __extends$1(Subscriber, _super);
+    /**
+     * @param {Observer|function(value: T): void} [destinationOrNext] A partially
+     * defined Observer or a `next` callback function.
+     * @param {function(e: ?any): void} [error] The `error` callback of an
+     * Observer.
+     * @param {function(): void} [complete] The `complete` callback of an
+     * Observer.
+     */
+    function Subscriber(destinationOrNext, error, complete) {
+        _super.call(this);
+        this.syncErrorValue = null;
+        this.syncErrorThrown = false;
+        this.syncErrorThrowable = false;
+        this.isStopped = false;
+        switch (arguments.length) {
+            case 0:
+                this.destination = Observer.empty;
+                break;
+            case 1:
+                if (!destinationOrNext) {
+                    this.destination = Observer.empty;
+                    break;
+                }
+                if (typeof destinationOrNext === 'object') {
+                    if (destinationOrNext instanceof Subscriber) {
+                        this.destination = destinationOrNext;
+                        this.destination.add(this);
+                    }
+                    else {
+                        this.syncErrorThrowable = true;
+                        this.destination = new SafeSubscriber(this, destinationOrNext);
+                    }
+                    break;
+                }
+            default:
+                this.syncErrorThrowable = true;
+                this.destination = new SafeSubscriber(this, destinationOrNext, error, complete);
+                break;
+        }
+    }
+    Subscriber.prototype[rxSubscriber.rxSubscriber] = function () { return this; };
+    /**
+     * A static factory for a Subscriber, given a (potentially partial) definition
+     * of an Observer.
+     * @param {function(x: ?T): void} [next] The `next` callback of an Observer.
+     * @param {function(e: ?any): void} [error] The `error` callback of an
+     * Observer.
+     * @param {function(): void} [complete] The `complete` callback of an
+     * Observer.
+     * @return {Subscriber<T>} A Subscriber wrapping the (partially defined)
+     * Observer represented by the given arguments.
+     */
+    Subscriber.create = function (next, error, complete) {
+        var subscriber = new Subscriber(next, error, complete);
+        subscriber.syncErrorThrowable = false;
+        return subscriber;
+    };
+    /**
+     * The {@link Observer} callback to receive notifications of type `next` from
+     * the Observable, with a value. The Observable may call this method 0 or more
+     * times.
+     * @param {T} [value] The `next` value.
+     * @return {void}
+     */
+    Subscriber.prototype.next = function (value) {
+        if (!this.isStopped) {
+            this._next(value);
+        }
+    };
+    /**
+     * The {@link Observer} callback to receive notifications of type `error` from
+     * the Observable, with an attached {@link Error}. Notifies the Observer that
+     * the Observable has experienced an error condition.
+     * @param {any} [err] The `error` exception.
+     * @return {void}
+     */
+    Subscriber.prototype.error = function (err) {
+        if (!this.isStopped) {
+            this.isStopped = true;
+            this._error(err);
+        }
+    };
+    /**
+     * The {@link Observer} callback to receive a valueless notification of type
+     * `complete` from the Observable. Notifies the Observer that the Observable
+     * has finished sending push-based notifications.
+     * @return {void}
+     */
+    Subscriber.prototype.complete = function () {
+        if (!this.isStopped) {
+            this.isStopped = true;
+            this._complete();
+        }
+    };
+    Subscriber.prototype.unsubscribe = function () {
+        if (this.closed) {
+            return;
+        }
+        this.isStopped = true;
+        _super.prototype.unsubscribe.call(this);
+    };
+    Subscriber.prototype._next = function (value) {
+        this.destination.next(value);
+    };
+    Subscriber.prototype._error = function (err) {
+        this.destination.error(err);
+        this.unsubscribe();
+    };
+    Subscriber.prototype._complete = function () {
+        this.destination.complete();
+        this.unsubscribe();
+    };
+    Subscriber.prototype._unsubscribeAndRecycle = function () {
+        var _a = this, _parent = _a._parent, _parents = _a._parents;
+        this._parent = null;
+        this._parents = null;
+        this.unsubscribe();
+        this.closed = false;
+        this.isStopped = false;
+        this._parent = _parent;
+        this._parents = _parents;
+        return this;
+    };
+    return Subscriber;
+}(Subscription_1.Subscription));
+var Subscriber_2 = Subscriber;
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var SafeSubscriber = (function (_super) {
+    __extends$1(SafeSubscriber, _super);
+    function SafeSubscriber(_parentSubscriber, observerOrNext, error, complete) {
+        _super.call(this);
+        this._parentSubscriber = _parentSubscriber;
+        var next;
+        var context = this;
+        if (isFunction_1.isFunction(observerOrNext)) {
+            next = observerOrNext;
+        }
+        else if (observerOrNext) {
+            next = observerOrNext.next;
+            error = observerOrNext.error;
+            complete = observerOrNext.complete;
+            if (observerOrNext !== Observer.empty) {
+                context = Object.create(observerOrNext);
+                if (isFunction_1.isFunction(context.unsubscribe)) {
+                    this.add(context.unsubscribe.bind(context));
+                }
+                context.unsubscribe = this.unsubscribe.bind(this);
+            }
+        }
+        this._context = context;
+        this._next = next;
+        this._error = error;
+        this._complete = complete;
+    }
+    SafeSubscriber.prototype.next = function (value) {
+        if (!this.isStopped && this._next) {
+            var _parentSubscriber = this._parentSubscriber;
+            if (!_parentSubscriber.syncErrorThrowable) {
+                this.__tryOrUnsub(this._next, value);
+            }
+            else if (this.__tryOrSetError(_parentSubscriber, this._next, value)) {
+                this.unsubscribe();
+            }
+        }
+    };
+    SafeSubscriber.prototype.error = function (err) {
+        if (!this.isStopped) {
+            var _parentSubscriber = this._parentSubscriber;
+            if (this._error) {
+                if (!_parentSubscriber.syncErrorThrowable) {
+                    this.__tryOrUnsub(this._error, err);
+                    this.unsubscribe();
+                }
+                else {
+                    this.__tryOrSetError(_parentSubscriber, this._error, err);
+                    this.unsubscribe();
+                }
+            }
+            else if (!_parentSubscriber.syncErrorThrowable) {
+                this.unsubscribe();
+                throw err;
+            }
+            else {
+                _parentSubscriber.syncErrorValue = err;
+                _parentSubscriber.syncErrorThrown = true;
+                this.unsubscribe();
+            }
+        }
+    };
+    SafeSubscriber.prototype.complete = function () {
+        var _this = this;
+        if (!this.isStopped) {
+            var _parentSubscriber = this._parentSubscriber;
+            if (this._complete) {
+                var wrappedComplete = function () { return _this._complete.call(_this._context); };
+                if (!_parentSubscriber.syncErrorThrowable) {
+                    this.__tryOrUnsub(wrappedComplete);
+                    this.unsubscribe();
+                }
+                else {
+                    this.__tryOrSetError(_parentSubscriber, wrappedComplete);
+                    this.unsubscribe();
+                }
+            }
+            else {
+                this.unsubscribe();
+            }
+        }
+    };
+    SafeSubscriber.prototype.__tryOrUnsub = function (fn, value) {
+        try {
+            fn.call(this._context, value);
+        }
+        catch (err) {
+            this.unsubscribe();
+            throw err;
+        }
+    };
+    SafeSubscriber.prototype.__tryOrSetError = function (parent, fn, value) {
+        try {
+            fn.call(this._context, value);
+        }
+        catch (err) {
+            parent.syncErrorValue = err;
+            parent.syncErrorThrown = true;
+            return true;
+        }
+        return false;
+    };
+    SafeSubscriber.prototype._unsubscribe = function () {
+        var _parentSubscriber = this._parentSubscriber;
+        this._context = null;
+        this._parentSubscriber = null;
+        _parentSubscriber.unsubscribe();
+    };
+    return SafeSubscriber;
+}(Subscriber));
+var Subscriber_1 = {
+    Subscriber: Subscriber_2
+};
+function toSubscriber(nextOrObserver, error, complete) {
+    if (nextOrObserver) {
+        if (nextOrObserver instanceof Subscriber_1.Subscriber) {
+            return nextOrObserver;
+        }
+        if (nextOrObserver[rxSubscriber.rxSubscriber]) {
+            return nextOrObserver[rxSubscriber.rxSubscriber]();
+        }
+    }
+    if (!nextOrObserver && !error && !complete) {
+        return new Subscriber_1.Subscriber(Observer.empty);
+    }
+    return new Subscriber_1.Subscriber(nextOrObserver, error, complete);
+}
+var toSubscriber_2 = toSubscriber;
+var toSubscriber_1 = {
+    toSubscriber: toSubscriber_2
+};
+var observable = createCommonjsModule(function (module, exports) {
+    function getSymbolObservable(context) {
+        var $$observable;
+        var Symbol = context.Symbol;
+        if (typeof Symbol === 'function') {
+            if (Symbol.observable) {
+                $$observable = Symbol.observable;
+            }
+            else {
+                $$observable = Symbol('observable');
+                Symbol.observable = $$observable;
+            }
+        }
+        else {
+            $$observable = '@@observable';
+        }
+        return $$observable;
+    }
+    exports.getSymbolObservable = getSymbolObservable;
+    exports.observable = getSymbolObservable(root.root);
+    /**
+     * @deprecated use observable instead
+     */
+    exports.$$observable = exports.observable;
+});
+var observable_1 = observable.getSymbolObservable;
+var observable_2 = observable.observable;
+var observable_3 = observable.$$observable;
+/* tslint:disable:no-empty */
+function noop() { }
+var noop_2 = noop;
+var noop_1 = {
+    noop: noop_2
+};
+/* tslint:enable:max-line-length */
+function pipe() {
+    var fns = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        fns[_i - 0] = arguments[_i];
+    }
+    return pipeFromArray(fns);
+}
+var pipe_2 = pipe;
+/* @internal */
+function pipeFromArray(fns) {
+    if (!fns) {
+        return noop_1.noop;
+    }
+    if (fns.length === 1) {
+        return fns[0];
+    }
+    return function piped(input) {
+        return fns.reduce(function (prev, fn) { return fn(prev); }, input);
+    };
+}
+var pipeFromArray_1 = pipeFromArray;
+var pipe_1 = {
+    pipe: pipe_2,
+    pipeFromArray: pipeFromArray_1
+};
+/**
+ * A representation of any set of values over any amount of time. This is the most basic building block
+ * of RxJS.
+ *
+ * @class Observable<T>
+ */
+var Observable$2 = (function () {
+    /**
+     * @constructor
+     * @param {Function} subscribe the function that is called when the Observable is
+     * initially subscribed to. This function is given a Subscriber, to which new values
+     * can be `next`ed, or an `error` method can be called to raise an error, or
+     * `complete` can be called to notify of a successful completion.
+     */
+    function Observable$$1(subscribe) {
+        this._isScalar = false;
+        if (subscribe) {
+            this._subscribe = subscribe;
+        }
+    }
+    /**
+     * Creates a new Observable, with this Observable as the source, and the passed
+     * operator defined as the new observable's operator.
+     * @method lift
+     * @param {Operator} operator the operator defining the operation to take on the observable
+     * @return {Observable} a new observable with the Operator applied
+     */
+    Observable$$1.prototype.lift = function (operator) {
+        var observable$$1 = new Observable$$1();
+        observable$$1.source = this;
+        observable$$1.operator = operator;
+        return observable$$1;
+    };
+    /**
+     * Invokes an execution of an Observable and registers Observer handlers for notifications it will emit.
+     *
+     * <span class="informal">Use it when you have all these Observables, but still nothing is happening.</span>
+     *
+     * `subscribe` is not a regular operator, but a method that calls Observable's internal `subscribe` function. It
+     * might be for example a function that you passed to a {@link create} static factory, but most of the time it is
+     * a library implementation, which defines what and when will be emitted by an Observable. This means that calling
+     * `subscribe` is actually the moment when Observable starts its work, not when it is created, as it is often
+     * thought.
+     *
+     * Apart from starting the execution of an Observable, this method allows you to listen for values
+     * that an Observable emits, as well as for when it completes or errors. You can achieve this in two
+     * following ways.
+     *
+     * The first way is creating an object that implements {@link Observer} interface. It should have methods
+     * defined by that interface, but note that it should be just a regular JavaScript object, which you can create
+     * yourself in any way you want (ES6 class, classic function constructor, object literal etc.). In particular do
+     * not attempt to use any RxJS implementation details to create Observers - you don't need them. Remember also
+     * that your object does not have to implement all methods. If you find yourself creating a method that doesn't
+     * do anything, you can simply omit it. Note however, that if `error` method is not provided, all errors will
+     * be left uncaught.
+     *
+     * The second way is to give up on Observer object altogether and simply provide callback functions in place of its methods.
+     * This means you can provide three functions as arguments to `subscribe`, where first function is equivalent
+     * of a `next` method, second of an `error` method and third of a `complete` method. Just as in case of Observer,
+     * if you do not need to listen for something, you can omit a function, preferably by passing `undefined` or `null`,
+     * since `subscribe` recognizes these functions by where they were placed in function call. When it comes
+     * to `error` function, just as before, if not provided, errors emitted by an Observable will be thrown.
+     *
+     * Whatever style of calling `subscribe` you use, in both cases it returns a Subscription object.
+     * This object allows you to call `unsubscribe` on it, which in turn will stop work that an Observable does and will clean
+     * up all resources that an Observable used. Note that cancelling a subscription will not call `complete` callback
+     * provided to `subscribe` function, which is reserved for a regular completion signal that comes from an Observable.
+     *
+     * Remember that callbacks provided to `subscribe` are not guaranteed to be called asynchronously.
+     * It is an Observable itself that decides when these functions will be called. For example {@link of}
+     * by default emits all its values synchronously. Always check documentation for how given Observable
+     * will behave when subscribed and if its default behavior can be modified with a {@link Scheduler}.
+     *
+     * @example <caption>Subscribe with an Observer</caption>
+     * const sumObserver = {
+     *   sum: 0,
+     *   next(value) {
+     *     console.log('Adding: ' + value);
+     *     this.sum = this.sum + value;
+     *   },
+     *   error() { // We actually could just remove this method,
+     *   },        // since we do not really care about errors right now.
+     *   complete() {
+     *     console.log('Sum equals: ' + this.sum);
+     *   }
+     * };
+     *
+     * Rx.Observable.of(1, 2, 3) // Synchronously emits 1, 2, 3 and then completes.
+     * .subscribe(sumObserver);
+     *
+     * // Logs:
+     * // "Adding: 1"
+     * // "Adding: 2"
+     * // "Adding: 3"
+     * // "Sum equals: 6"
+     *
+     *
+     * @example <caption>Subscribe with functions</caption>
+     * let sum = 0;
+     *
+     * Rx.Observable.of(1, 2, 3)
+     * .subscribe(
+     *   function(value) {
+     *     console.log('Adding: ' + value);
+     *     sum = sum + value;
+     *   },
+     *   undefined,
+     *   function() {
+     *     console.log('Sum equals: ' + sum);
+     *   }
+     * );
+     *
+     * // Logs:
+     * // "Adding: 1"
+     * // "Adding: 2"
+     * // "Adding: 3"
+     * // "Sum equals: 6"
+     *
+     *
+     * @example <caption>Cancel a subscription</caption>
+     * const subscription = Rx.Observable.interval(1000).subscribe(
+     *   num => console.log(num),
+     *   undefined,
+     *   () => console.log('completed!') // Will not be called, even
+     * );                                // when cancelling subscription
+     *
+     *
+     * setTimeout(() => {
+     *   subscription.unsubscribe();
+     *   console.log('unsubscribed!');
+     * }, 2500);
+     *
+     * // Logs:
+     * // 0 after 1s
+     * // 1 after 2s
+     * // "unsubscribed!" after 2.5s
+     *
+     *
+     * @param {Observer|Function} observerOrNext (optional) Either an observer with methods to be called,
+     *  or the first of three possible handlers, which is the handler for each value emitted from the subscribed
+     *  Observable.
+     * @param {Function} error (optional) A handler for a terminal event resulting from an error. If no error handler is provided,
+     *  the error will be thrown as unhandled.
+     * @param {Function} complete (optional) A handler for a terminal event resulting from successful completion.
+     * @return {ISubscription} a subscription reference to the registered handlers
+     * @method subscribe
+     */
+    Observable$$1.prototype.subscribe = function (observerOrNext, error, complete) {
+        var operator = this.operator;
+        var sink = toSubscriber_1.toSubscriber(observerOrNext, error, complete);
+        if (operator) {
+            operator.call(sink, this.source);
+        }
+        else {
+            sink.add(this.source ? this._subscribe(sink) : this._trySubscribe(sink));
+        }
+        if (sink.syncErrorThrowable) {
+            sink.syncErrorThrowable = false;
+            if (sink.syncErrorThrown) {
+                throw sink.syncErrorValue;
+            }
+        }
+        return sink;
+    };
+    Observable$$1.prototype._trySubscribe = function (sink) {
+        try {
+            return this._subscribe(sink);
+        }
+        catch (err) {
+            sink.syncErrorThrown = true;
+            sink.syncErrorValue = err;
+            sink.error(err);
+        }
+    };
+    /**
+     * @method forEach
+     * @param {Function} next a handler for each value emitted by the observable
+     * @param {PromiseConstructor} [PromiseCtor] a constructor function used to instantiate the Promise
+     * @return {Promise} a promise that either resolves on observable completion or
+     *  rejects with the handled error
+     */
+    Observable$$1.prototype.forEach = function (next, PromiseCtor) {
+        var _this = this;
+        if (!PromiseCtor) {
+            if (root.root.Rx && root.root.Rx.config && root.root.Rx.config.Promise) {
+                PromiseCtor = root.root.Rx.config.Promise;
+            }
+            else if (root.root.Promise) {
+                PromiseCtor = root.root.Promise;
+            }
+        }
+        if (!PromiseCtor) {
+            throw new Error('no Promise impl found');
+        }
+        return new PromiseCtor(function (resolve, reject) {
+            // Must be declared in a separate statement to avoid a RefernceError when
+            // accessing subscription below in the closure due to Temporal Dead Zone.
+            var subscription;
+            subscription = _this.subscribe(function (value) {
+                if (subscription) {
+                    // if there is a subscription, then we can surmise
+                    // the next handling is asynchronous. Any errors thrown
+                    // need to be rejected explicitly and unsubscribe must be
+                    // called manually
+                    try {
+                        next(value);
+                    }
+                    catch (err) {
+                        reject(err);
+                        subscription.unsubscribe();
+                    }
+                }
+                else {
+                    // if there is NO subscription, then we're getting a nexted
+                    // value synchronously during subscription. We can just call it.
+                    // If it errors, Observable's `subscribe` will ensure the
+                    // unsubscription logic is called, then synchronously rethrow the error.
+                    // After that, Promise will trap the error and send it
+                    // down the rejection path.
+                    next(value);
+                }
+            }, reject, resolve);
+        });
+    };
+    Observable$$1.prototype._subscribe = function (subscriber) {
+        return this.source.subscribe(subscriber);
+    };
+    /**
+     * An interop point defined by the es7-observable spec https://github.com/zenparsing/es-observable
+     * @method Symbol.observable
+     * @return {Observable} this instance of the observable
+     */
+    Observable$$1.prototype[observable.observable] = function () {
+        return this;
+    };
+    /* tslint:enable:max-line-length */
+    /**
+     * Used to stitch together functional operators into a chain.
+     * @method pipe
+     * @return {Observable} the Observable result of all of the operators having
+     * been called in the order they were passed in.
+     *
+     * @example
+     *
+     * import { map, filter, scan } from 'rxjs/operators';
+     *
+     * Rx.Observable.interval(1000)
+     *   .pipe(
+     *     filter(x => x % 2 === 0),
+     *     map(x => x + x),
+     *     scan((acc, x) => acc + x)
+     *   )
+     *   .subscribe(x => console.log(x))
+     */
+    Observable$$1.prototype.pipe = function () {
+        var operations = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            operations[_i - 0] = arguments[_i];
+        }
+        if (operations.length === 0) {
+            return this;
+        }
+        return pipe_1.pipeFromArray(operations)(this);
+    };
+    /* tslint:enable:max-line-length */
+    Observable$$1.prototype.toPromise = function (PromiseCtor) {
+        var _this = this;
+        if (!PromiseCtor) {
+            if (root.root.Rx && root.root.Rx.config && root.root.Rx.config.Promise) {
+                PromiseCtor = root.root.Rx.config.Promise;
+            }
+            else if (root.root.Promise) {
+                PromiseCtor = root.root.Promise;
+            }
+        }
+        if (!PromiseCtor) {
+            throw new Error('no Promise impl found');
+        }
+        return new PromiseCtor(function (resolve, reject) {
+            var value;
+            _this.subscribe(function (x) { return value = x; }, function (err) { return reject(err); }, function () { return resolve(value); });
+        });
+    };
+    // HACK: Since TypeScript inherits static properties too, we have to
+    // fight against TypeScript here so Subject can have a different static create signature
+    /**
+     * Creates a new cold Observable by calling the Observable constructor
+     * @static true
+     * @owner Observable
+     * @method create
+     * @param {Function} subscribe? the subscriber function to be passed to the Observable constructor
+     * @return {Observable} a new cold observable
+     */
+    Observable$$1.create = function (subscribe) {
+        return new Observable$$1(subscribe);
+    };
+    return Observable$$1;
+}());
+var Observable_2 = Observable$2;
+var Observable_1 = {
+    Observable: Observable_2
+};
+var __extends$3 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
+var ScalarObservable = (function (_super) {
+    __extends$3(ScalarObservable, _super);
+    function ScalarObservable(value, scheduler) {
+        _super.call(this);
+        this.value = value;
+        this.scheduler = scheduler;
+        this._isScalar = true;
+        if (scheduler) {
+            this._isScalar = false;
+        }
+    }
+    ScalarObservable.create = function (value, scheduler) {
+        return new ScalarObservable(value, scheduler);
+    };
+    ScalarObservable.dispatch = function (state) {
+        var done = state.done, value = state.value, subscriber = state.subscriber;
+        if (done) {
+            subscriber.complete();
+            return;
+        }
+        subscriber.next(value);
+        if (subscriber.closed) {
+            return;
+        }
+        state.done = true;
+        this.schedule(state);
+    };
+    ScalarObservable.prototype._subscribe = function (subscriber) {
+        var value = this.value;
+        var scheduler = this.scheduler;
+        if (scheduler) {
+            return scheduler.schedule(ScalarObservable.dispatch, 0, {
+                done: false, value: value, subscriber: subscriber
+            });
+        }
+        else {
+            subscriber.next(value);
+            if (!subscriber.closed) {
+                subscriber.complete();
+            }
+        }
+    };
+    return ScalarObservable;
+}(Observable_1.Observable));
+var ScalarObservable_2 = ScalarObservable;
+var ScalarObservable_1 = {
+    ScalarObservable: ScalarObservable_2
+};
+var __extends$4 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
+var EmptyObservable = (function (_super) {
+    __extends$4(EmptyObservable, _super);
+    function EmptyObservable(scheduler) {
+        _super.call(this);
+        this.scheduler = scheduler;
+    }
+    /**
+     * Creates an Observable that emits no items to the Observer and immediately
+     * emits a complete notification.
+     *
+     * <span class="informal">Just emits 'complete', and nothing else.
+     * </span>
+     *
+     * <img src="./img/empty.png" width="100%">
+     *
+     * This static operator is useful for creating a simple Observable that only
+     * emits the complete notification. It can be used for composing with other
+     * Observables, such as in a {@link mergeMap}.
+     *
+     * @example <caption>Emit the number 7, then complete.</caption>
+     * var result = Rx.Observable.empty().startWith(7);
+     * result.subscribe(x => console.log(x));
+     *
+     * @example <caption>Map and flatten only odd numbers to the sequence 'a', 'b', 'c'</caption>
+     * var interval = Rx.Observable.interval(1000);
+     * var result = interval.mergeMap(x =>
+     *   x % 2 === 1 ? Rx.Observable.of('a', 'b', 'c') : Rx.Observable.empty()
+     * );
+     * result.subscribe(x => console.log(x));
+     *
+     * // Results in the following to the console:
+     * // x is equal to the count on the interval eg(0,1,2,3,...)
+     * // x will occur every 1000ms
+     * // if x % 2 is equal to 1 print abc
+     * // if x % 2 is not equal to 1 nothing will be output
+     *
+     * @see {@link create}
+     * @see {@link never}
+     * @see {@link of}
+     * @see {@link throw}
+     *
+     * @param {Scheduler} [scheduler] A {@link IScheduler} to use for scheduling
+     * the emission of the complete notification.
+     * @return {Observable} An "empty" Observable: emits only the complete
+     * notification.
+     * @static true
+     * @name empty
+     * @owner Observable
+     */
+    EmptyObservable.create = function (scheduler) {
+        return new EmptyObservable(scheduler);
+    };
+    EmptyObservable.dispatch = function (arg) {
+        var subscriber = arg.subscriber;
+        subscriber.complete();
+    };
+    EmptyObservable.prototype._subscribe = function (subscriber) {
+        var scheduler = this.scheduler;
+        if (scheduler) {
+            return scheduler.schedule(EmptyObservable.dispatch, 0, { subscriber: subscriber });
+        }
+        else {
+            subscriber.complete();
+        }
+    };
+    return EmptyObservable;
+}(Observable_1.Observable));
+var EmptyObservable_2 = EmptyObservable;
+var EmptyObservable_1 = {
+    EmptyObservable: EmptyObservable_2
+};
+var __extends = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
+var ArrayObservable = (function (_super) {
+    __extends(ArrayObservable, _super);
+    function ArrayObservable(array, scheduler) {
+        _super.call(this);
+        this.array = array;
+        this.scheduler = scheduler;
+        if (!scheduler && array.length === 1) {
+            this._isScalar = true;
+            this.value = array[0];
+        }
+    }
+    ArrayObservable.create = function (array, scheduler) {
+        return new ArrayObservable(array, scheduler);
+    };
+    /**
+     * Creates an Observable that emits some values you specify as arguments,
+     * immediately one after the other, and then emits a complete notification.
+     *
+     * <span class="informal">Emits the arguments you provide, then completes.
+     * </span>
+     *
+     * <img src="./img/of.png" width="100%">
+     *
+     * This static operator is useful for creating a simple Observable that only
+     * emits the arguments given, and the complete notification thereafter. It can
+     * be used for composing with other Observables, such as with {@link concat}.
+     * By default, it uses a `null` IScheduler, which means the `next`
+     * notifications are sent synchronously, although with a different IScheduler
+     * it is possible to determine when those notifications will be delivered.
+     *
+     * @example <caption>Emit 10, 20, 30, then 'a', 'b', 'c', then start ticking every second.</caption>
+     * var numbers = Rx.Observable.of(10, 20, 30);
+     * var letters = Rx.Observable.of('a', 'b', 'c');
+     * var interval = Rx.Observable.interval(1000);
+     * var result = numbers.concat(letters).concat(interval);
+     * result.subscribe(x => console.log(x));
+     *
+     * @see {@link create}
+     * @see {@link empty}
+     * @see {@link never}
+     * @see {@link throw}
+     *
+     * @param {...T} values Arguments that represent `next` values to be emitted.
+     * @param {Scheduler} [scheduler] A {@link IScheduler} to use for scheduling
+     * the emissions of the `next` notifications.
+     * @return {Observable<T>} An Observable that emits each given input value.
+     * @static true
+     * @name of
+     * @owner Observable
+     */
+    ArrayObservable.of = function () {
+        var array = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            array[_i - 0] = arguments[_i];
+        }
+        var scheduler = array[array.length - 1];
+        if (isScheduler_1.isScheduler(scheduler)) {
+            array.pop();
+        }
+        else {
+            scheduler = null;
+        }
+        var len = array.length;
+        if (len > 1) {
+            return new ArrayObservable(array, scheduler);
+        }
+        else if (len === 1) {
+            return new ScalarObservable_1.ScalarObservable(array[0], scheduler);
+        }
+        else {
+            return new EmptyObservable_1.EmptyObservable(scheduler);
+        }
+    };
+    ArrayObservable.dispatch = function (state) {
+        var array = state.array, index = state.index, count = state.count, subscriber = state.subscriber;
+        if (index >= count) {
+            subscriber.complete();
+            return;
+        }
+        subscriber.next(array[index]);
+        if (subscriber.closed) {
+            return;
+        }
+        state.index = index + 1;
+        this.schedule(state);
+    };
+    ArrayObservable.prototype._subscribe = function (subscriber) {
+        var index = 0;
+        var array = this.array;
+        var count = array.length;
+        var scheduler = this.scheduler;
+        if (scheduler) {
+            return scheduler.schedule(ArrayObservable.dispatch, 0, {
+                array: array, index: index, count: count, subscriber: subscriber
+            });
+        }
+        else {
+            for (var i = 0; i < count && !subscriber.closed; i++) {
+                subscriber.next(array[i]);
+            }
+            subscriber.complete();
+        }
+    };
+    return ArrayObservable;
+}(Observable_1.Observable));
+var ArrayObservable_2 = ArrayObservable;
+var ArrayObservable_1 = {
+    ArrayObservable: ArrayObservable_2
+};
+var of_1 = ArrayObservable_1.ArrayObservable.of;
+var of$2 = {
+    of: of_1
+};
+var isArrayLike_1 = (function (x) { return x && typeof x.length === 'number'; });
+var isArrayLike = {
+    isArrayLike: isArrayLike_1
+};
+function isPromise(value) {
+    return value && typeof value.subscribe !== 'function' && typeof value.then === 'function';
+}
+var isPromise_2 = isPromise;
+var isPromise_1 = {
+    isPromise: isPromise_2
+};
+var __extends$6 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
+var PromiseObservable = (function (_super) {
+    __extends$6(PromiseObservable, _super);
+    function PromiseObservable(promise, scheduler) {
+        _super.call(this);
+        this.promise = promise;
+        this.scheduler = scheduler;
+    }
+    /**
+     * Converts a Promise to an Observable.
+     *
+     * <span class="informal">Returns an Observable that just emits the Promise's
+     * resolved value, then completes.</span>
+     *
+     * Converts an ES2015 Promise or a Promises/A+ spec compliant Promise to an
+     * Observable. If the Promise resolves with a value, the output Observable
+     * emits that resolved value as a `next`, and then completes. If the Promise
+     * is rejected, then the output Observable emits the corresponding Error.
+     *
+     * @example <caption>Convert the Promise returned by Fetch to an Observable</caption>
+     * var result = Rx.Observable.fromPromise(fetch('http://myserver.com/'));
+     * result.subscribe(x => console.log(x), e => console.error(e));
+     *
+     * @see {@link bindCallback}
+     * @see {@link from}
+     *
+     * @param {PromiseLike<T>} promise The promise to be converted.
+     * @param {Scheduler} [scheduler] An optional IScheduler to use for scheduling
+     * the delivery of the resolved value (or the rejection).
+     * @return {Observable<T>} An Observable which wraps the Promise.
+     * @static true
+     * @name fromPromise
+     * @owner Observable
+     */
+    PromiseObservable.create = function (promise, scheduler) {
+        return new PromiseObservable(promise, scheduler);
+    };
+    PromiseObservable.prototype._subscribe = function (subscriber) {
+        var _this = this;
+        var promise = this.promise;
+        var scheduler = this.scheduler;
+        if (scheduler == null) {
+            if (this._isScalar) {
+                if (!subscriber.closed) {
+                    subscriber.next(this.value);
+                    subscriber.complete();
+                }
+            }
+            else {
+                promise.then(function (value) {
+                    _this.value = value;
+                    _this._isScalar = true;
+                    if (!subscriber.closed) {
+                        subscriber.next(value);
+                        subscriber.complete();
+                    }
+                }, function (err) {
+                    if (!subscriber.closed) {
+                        subscriber.error(err);
+                    }
+                })
+                    .then(null, function (err) {
+                    // escape the promise trap, throw unhandled errors
+                    root.root.setTimeout(function () { throw err; });
+                });
+            }
+        }
+        else {
+            if (this._isScalar) {
+                if (!subscriber.closed) {
+                    return scheduler.schedule(dispatchNext, 0, { value: this.value, subscriber: subscriber });
+                }
+            }
+            else {
+                promise.then(function (value) {
+                    _this.value = value;
+                    _this._isScalar = true;
+                    if (!subscriber.closed) {
+                        subscriber.add(scheduler.schedule(dispatchNext, 0, { value: value, subscriber: subscriber }));
+                    }
+                }, function (err) {
+                    if (!subscriber.closed) {
+                        subscriber.add(scheduler.schedule(dispatchError, 0, { err: err, subscriber: subscriber }));
+                    }
+                })
+                    .then(null, function (err) {
+                    // escape the promise trap, throw unhandled errors
+                    root.root.setTimeout(function () { throw err; });
+                });
+            }
+        }
+    };
+    return PromiseObservable;
+}(Observable_1.Observable));
+var PromiseObservable_2 = PromiseObservable;
+function dispatchNext(arg) {
+    var value = arg.value, subscriber = arg.subscriber;
+    if (!subscriber.closed) {
+        subscriber.next(value);
+        subscriber.complete();
+    }
+}
+function dispatchError(arg) {
+    var err = arg.err, subscriber = arg.subscriber;
+    if (!subscriber.closed) {
+        subscriber.error(err);
+    }
+}
+var PromiseObservable_1 = {
+    PromiseObservable: PromiseObservable_2
+};
+var iterator = createCommonjsModule(function (module, exports) {
+    function symbolIteratorPonyfill(root$$2) {
+        var Symbol = root$$2.Symbol;
+        if (typeof Symbol === 'function') {
+            if (!Symbol.iterator) {
+                Symbol.iterator = Symbol('iterator polyfill');
+            }
+            return Symbol.iterator;
+        }
+        else {
+            // [for Mozilla Gecko 27-35:](https://mzl.la/2ewE1zC)
+            var Set_1 = root$$2.Set;
+            if (Set_1 && typeof new Set_1()['@@iterator'] === 'function') {
+                return '@@iterator';
+            }
+            var Map_1 = root$$2.Map;
+            // required for compatability with es6-shim
+            if (Map_1) {
+                var keys = Object.getOwnPropertyNames(Map_1.prototype);
+                for (var i = 0; i < keys.length; ++i) {
+                    var key = keys[i];
+                    // according to spec, Map.prototype[@@iterator] and Map.orototype.entries must be equal.
+                    if (key !== 'entries' && key !== 'size' && Map_1.prototype[key] === Map_1.prototype['entries']) {
+                        return key;
+                    }
+                }
+            }
+            return '@@iterator';
+        }
+    }
+    exports.symbolIteratorPonyfill = symbolIteratorPonyfill;
+    exports.iterator = symbolIteratorPonyfill(root.root);
+    /**
+     * @deprecated use iterator instead
+     */
+    exports.$$iterator = exports.iterator;
+});
+var iterator_1 = iterator.symbolIteratorPonyfill;
+var iterator_2 = iterator.iterator;
+var iterator_3 = iterator.$$iterator;
+var __extends$7 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
+var IteratorObservable = (function (_super) {
+    __extends$7(IteratorObservable, _super);
+    function IteratorObservable(iterator$$1, scheduler) {
+        _super.call(this);
+        this.scheduler = scheduler;
+        if (iterator$$1 == null) {
+            throw new Error('iterator cannot be null.');
+        }
+        this.iterator = getIterator(iterator$$1);
+    }
+    IteratorObservable.create = function (iterator$$1, scheduler) {
+        return new IteratorObservable(iterator$$1, scheduler);
+    };
+    IteratorObservable.dispatch = function (state) {
+        var index = state.index, hasError = state.hasError, iterator$$1 = state.iterator, subscriber = state.subscriber;
+        if (hasError) {
+            subscriber.error(state.error);
+            return;
+        }
+        var result = iterator$$1.next();
+        if (result.done) {
+            subscriber.complete();
+            return;
+        }
+        subscriber.next(result.value);
+        state.index = index + 1;
+        if (subscriber.closed) {
+            if (typeof iterator$$1.return === 'function') {
+                iterator$$1.return();
+            }
+            return;
+        }
+        this.schedule(state);
+    };
+    IteratorObservable.prototype._subscribe = function (subscriber) {
+        var index = 0;
+        var _a = this, iterator$$1 = _a.iterator, scheduler = _a.scheduler;
+        if (scheduler) {
+            return scheduler.schedule(IteratorObservable.dispatch, 0, {
+                index: index, iterator: iterator$$1, subscriber: subscriber
+            });
+        }
+        else {
+            do {
+                var result = iterator$$1.next();
+                if (result.done) {
+                    subscriber.complete();
+                    break;
+                }
+                else {
+                    subscriber.next(result.value);
+                }
+                if (subscriber.closed) {
+                    if (typeof iterator$$1.return === 'function') {
+                        iterator$$1.return();
+                    }
+                    break;
+                }
+            } while (true);
+        }
+    };
+    return IteratorObservable;
+}(Observable_1.Observable));
+var IteratorObservable_2 = IteratorObservable;
+var StringIterator = (function () {
+    function StringIterator(str, idx, len) {
+        if (idx === void 0) {
+            idx = 0;
+        }
+        if (len === void 0) {
+            len = str.length;
+        }
+        this.str = str;
+        this.idx = idx;
+        this.len = len;
+    }
+    StringIterator.prototype[iterator.iterator] = function () { return (this); };
+    StringIterator.prototype.next = function () {
+        return this.idx < this.len ? {
+            done: false,
+            value: this.str.charAt(this.idx++)
+        } : {
+            done: true,
+            value: undefined
+        };
+    };
+    return StringIterator;
+}());
+var ArrayIterator = (function () {
+    function ArrayIterator(arr, idx, len) {
+        if (idx === void 0) {
+            idx = 0;
+        }
+        if (len === void 0) {
+            len = toLength(arr);
+        }
+        this.arr = arr;
+        this.idx = idx;
+        this.len = len;
+    }
+    ArrayIterator.prototype[iterator.iterator] = function () { return this; };
+    ArrayIterator.prototype.next = function () {
+        return this.idx < this.len ? {
+            done: false,
+            value: this.arr[this.idx++]
+        } : {
+            done: true,
+            value: undefined
+        };
+    };
+    return ArrayIterator;
+}());
+function getIterator(obj) {
+    var i = obj[iterator.iterator];
+    if (!i && typeof obj === 'string') {
+        return new StringIterator(obj);
+    }
+    if (!i && obj.length !== undefined) {
+        return new ArrayIterator(obj);
+    }
+    if (!i) {
+        throw new TypeError('object is not iterable');
+    }
+    return obj[iterator.iterator]();
+}
+var maxSafeInteger = Math.pow(2, 53) - 1;
+function toLength(o) {
+    var len = +o.length;
+    if (isNaN(len)) {
+        return 0;
+    }
+    if (len === 0 || !numberIsFinite(len)) {
+        return len;
+    }
+    len = sign(len) * Math.floor(Math.abs(len));
+    if (len <= 0) {
+        return 0;
+    }
+    if (len > maxSafeInteger) {
+        return maxSafeInteger;
+    }
+    return len;
+}
+function numberIsFinite(value) {
+    return typeof value === 'number' && root.root.isFinite(value);
+}
+function sign(value) {
+    var valueAsNumber = +value;
+    if (valueAsNumber === 0) {
+        return valueAsNumber;
+    }
+    if (isNaN(valueAsNumber)) {
+        return valueAsNumber;
+    }
+    return valueAsNumber < 0 ? -1 : 1;
+}
+var IteratorObservable_1 = {
+    IteratorObservable: IteratorObservable_2
+};
+var __extends$8 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
+var ArrayLikeObservable = (function (_super) {
+    __extends$8(ArrayLikeObservable, _super);
+    function ArrayLikeObservable(arrayLike, scheduler) {
+        _super.call(this);
+        this.arrayLike = arrayLike;
+        this.scheduler = scheduler;
+        if (!scheduler && arrayLike.length === 1) {
+            this._isScalar = true;
+            this.value = arrayLike[0];
+        }
+    }
+    ArrayLikeObservable.create = function (arrayLike, scheduler) {
+        var length = arrayLike.length;
+        if (length === 0) {
+            return new EmptyObservable_1.EmptyObservable();
+        }
+        else if (length === 1) {
+            return new ScalarObservable_1.ScalarObservable(arrayLike[0], scheduler);
+        }
+        else {
+            return new ArrayLikeObservable(arrayLike, scheduler);
+        }
+    };
+    ArrayLikeObservable.dispatch = function (state) {
+        var arrayLike = state.arrayLike, index = state.index, length = state.length, subscriber = state.subscriber;
+        if (subscriber.closed) {
+            return;
+        }
+        if (index >= length) {
+            subscriber.complete();
+            return;
+        }
+        subscriber.next(arrayLike[index]);
+        state.index = index + 1;
+        this.schedule(state);
+    };
+    ArrayLikeObservable.prototype._subscribe = function (subscriber) {
+        var index = 0;
+        var _a = this, arrayLike = _a.arrayLike, scheduler = _a.scheduler;
+        var length = arrayLike.length;
+        if (scheduler) {
+            return scheduler.schedule(ArrayLikeObservable.dispatch, 0, {
+                arrayLike: arrayLike, index: index, length: length, subscriber: subscriber
+            });
+        }
+        else {
+            for (var i = 0; i < length && !subscriber.closed; i++) {
+                subscriber.next(arrayLike[i]);
+            }
+            subscriber.complete();
+        }
+    };
+    return ArrayLikeObservable;
+}(Observable_1.Observable));
+var ArrayLikeObservable_2 = ArrayLikeObservable;
+var ArrayLikeObservable_1 = {
+    ArrayLikeObservable: ArrayLikeObservable_2
+};
+/**
+ * Represents a push-based event or value that an {@link Observable} can emit.
+ * This class is particularly useful for operators that manage notifications,
+ * like {@link materialize}, {@link dematerialize}, {@link observeOn}, and
+ * others. Besides wrapping the actual delivered value, it also annotates it
+ * with metadata of, for instance, what type of push message it is (`next`,
+ * `error`, or `complete`).
+ *
+ * @see {@link materialize}
+ * @see {@link dematerialize}
+ * @see {@link observeOn}
+ *
+ * @class Notification<T>
+ */
+var Notification = (function () {
+    function Notification(kind, value, error) {
+        this.kind = kind;
+        this.value = value;
+        this.error = error;
+        this.hasValue = kind === 'N';
+    }
+    /**
+     * Delivers to the given `observer` the value wrapped by this Notification.
+     * @param {Observer} observer
+     * @return
+     */
+    Notification.prototype.observe = function (observer) {
+        switch (this.kind) {
+            case 'N':
+                return observer.next && observer.next(this.value);
+            case 'E':
+                return observer.error && observer.error(this.error);
+            case 'C':
+                return observer.complete && observer.complete();
+        }
+    };
+    /**
+     * Given some {@link Observer} callbacks, deliver the value represented by the
+     * current Notification to the correctly corresponding callback.
+     * @param {function(value: T): void} next An Observer `next` callback.
+     * @param {function(err: any): void} [error] An Observer `error` callback.
+     * @param {function(): void} [complete] An Observer `complete` callback.
+     * @return {any}
+     */
+    Notification.prototype.do = function (next, error, complete) {
+        var kind = this.kind;
+        switch (kind) {
+            case 'N':
+                return next && next(this.value);
+            case 'E':
+                return error && error(this.error);
+            case 'C':
+                return complete && complete();
+        }
+    };
+    /**
+     * Takes an Observer or its individual callback functions, and calls `observe`
+     * or `do` methods accordingly.
+     * @param {Observer|function(value: T): void} nextOrObserver An Observer or
+     * the `next` callback.
+     * @param {function(err: any): void} [error] An Observer `error` callback.
+     * @param {function(): void} [complete] An Observer `complete` callback.
+     * @return {any}
+     */
+    Notification.prototype.accept = function (nextOrObserver, error, complete) {
+        if (nextOrObserver && typeof nextOrObserver.next === 'function') {
+            return this.observe(nextOrObserver);
+        }
+        else {
+            return this.do(nextOrObserver, error, complete);
+        }
+    };
+    /**
+     * Returns a simple Observable that just delivers the notification represented
+     * by this Notification instance.
+     * @return {any}
+     */
+    Notification.prototype.toObservable = function () {
+        var kind = this.kind;
+        switch (kind) {
+            case 'N':
+                return Observable_1.Observable.of(this.value);
+            case 'E':
+                return Observable_1.Observable.throw(this.error);
+            case 'C':
+                return Observable_1.Observable.empty();
+        }
+        throw new Error('unexpected notification kind value');
+    };
+    /**
+     * A shortcut to create a Notification instance of the type `next` from a
+     * given value.
+     * @param {T} value The `next` value.
+     * @return {Notification<T>} The "next" Notification representing the
+     * argument.
+     */
+    Notification.createNext = function (value) {
+        if (typeof value !== 'undefined') {
+            return new Notification('N', value);
+        }
+        return Notification.undefinedValueNotification;
+    };
+    /**
+     * A shortcut to create a Notification instance of the type `error` from a
+     * given error.
+     * @param {any} [err] The `error` error.
+     * @return {Notification<T>} The "error" Notification representing the
+     * argument.
+     */
+    Notification.createError = function (err) {
+        return new Notification('E', undefined, err);
+    };
+    /**
+     * A shortcut to create a Notification instance of the type `complete`.
+     * @return {Notification<any>} The valueless "complete" Notification.
+     */
+    Notification.createComplete = function () {
+        return Notification.completeNotification;
+    };
+    Notification.completeNotification = new Notification('C');
+    Notification.undefinedValueNotification = new Notification('N', undefined);
+    return Notification;
+}());
+var Notification_2 = Notification;
+var Notification_1 = {
+    Notification: Notification_2
+};
+var __extends$9 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ *
+ * Re-emits all notifications from source Observable with specified scheduler.
+ *
+ * <span class="informal">Ensure a specific scheduler is used, from outside of an Observable.</span>
+ *
+ * `observeOn` is an operator that accepts a scheduler as a first parameter, which will be used to reschedule
+ * notifications emitted by the source Observable. It might be useful, if you do not have control over
+ * internal scheduler of a given Observable, but want to control when its values are emitted nevertheless.
+ *
+ * Returned Observable emits the same notifications (nexted values, complete and error events) as the source Observable,
+ * but rescheduled with provided scheduler. Note that this doesn't mean that source Observables internal
+ * scheduler will be replaced in any way. Original scheduler still will be used, but when the source Observable emits
+ * notification, it will be immediately scheduled again - this time with scheduler passed to `observeOn`.
+ * An anti-pattern would be calling `observeOn` on Observable that emits lots of values synchronously, to split
+ * that emissions into asynchronous chunks. For this to happen, scheduler would have to be passed into the source
+ * Observable directly (usually into the operator that creates it). `observeOn` simply delays notifications a
+ * little bit more, to ensure that they are emitted at expected moments.
+ *
+ * As a matter of fact, `observeOn` accepts second parameter, which specifies in milliseconds with what delay notifications
+ * will be emitted. The main difference between {@link delay} operator and `observeOn` is that `observeOn`
+ * will delay all notifications - including error notifications - while `delay` will pass through error
+ * from source Observable immediately when it is emitted. In general it is highly recommended to use `delay` operator
+ * for any kind of delaying of values in the stream, while using `observeOn` to specify which scheduler should be used
+ * for notification emissions in general.
+ *
+ * @example <caption>Ensure values in subscribe are called just before browser repaint.</caption>
+ * const intervals = Rx.Observable.interval(10); // Intervals are scheduled
+ *                                               // with async scheduler by default...
+ *
+ * intervals
+ * .observeOn(Rx.Scheduler.animationFrame)       // ...but we will observe on animationFrame
+ * .subscribe(val => {                           // scheduler to ensure smooth animation.
+ *   someDiv.style.height = val + 'px';
+ * });
+ *
+ * @see {@link delay}
+ *
+ * @param {IScheduler} scheduler Scheduler that will be used to reschedule notifications from source Observable.
+ * @param {number} [delay] Number of milliseconds that states with what delay every notification should be rescheduled.
+ * @return {Observable<T>} Observable that emits the same notifications as the source Observable,
+ * but with provided scheduler.
+ *
+ * @method observeOn
+ * @owner Observable
+ */
+function observeOn(scheduler, delay) {
+    if (delay === void 0) {
+        delay = 0;
+    }
+    return function observeOnOperatorFunction(source) {
+        return source.lift(new ObserveOnOperator(scheduler, delay));
+    };
+}
+var observeOn_2 = observeOn;
+var ObserveOnOperator = (function () {
+    function ObserveOnOperator(scheduler, delay) {
+        if (delay === void 0) {
+            delay = 0;
+        }
+        this.scheduler = scheduler;
+        this.delay = delay;
+    }
+    ObserveOnOperator.prototype.call = function (subscriber, source) {
+        return source.subscribe(new ObserveOnSubscriber(subscriber, this.scheduler, this.delay));
+    };
+    return ObserveOnOperator;
+}());
+var ObserveOnOperator_1 = ObserveOnOperator;
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var ObserveOnSubscriber = (function (_super) {
+    __extends$9(ObserveOnSubscriber, _super);
+    function ObserveOnSubscriber(destination, scheduler, delay) {
+        if (delay === void 0) {
+            delay = 0;
+        }
+        _super.call(this, destination);
+        this.scheduler = scheduler;
+        this.delay = delay;
+    }
+    ObserveOnSubscriber.dispatch = function (arg) {
+        var notification = arg.notification, destination = arg.destination;
+        notification.observe(destination);
+        this.unsubscribe();
+    };
+    ObserveOnSubscriber.prototype.scheduleMessage = function (notification) {
+        this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
+    };
+    ObserveOnSubscriber.prototype._next = function (value) {
+        this.scheduleMessage(Notification_1.Notification.createNext(value));
+    };
+    ObserveOnSubscriber.prototype._error = function (err) {
+        this.scheduleMessage(Notification_1.Notification.createError(err));
+    };
+    ObserveOnSubscriber.prototype._complete = function () {
+        this.scheduleMessage(Notification_1.Notification.createComplete());
+    };
+    return ObserveOnSubscriber;
+}(Subscriber_1.Subscriber));
+var ObserveOnSubscriber_1 = ObserveOnSubscriber;
+var ObserveOnMessage = (function () {
+    function ObserveOnMessage(notification, destination) {
+        this.notification = notification;
+        this.destination = destination;
+    }
+    return ObserveOnMessage;
+}());
+var ObserveOnMessage_1 = ObserveOnMessage;
+var observeOn_1 = {
+    observeOn: observeOn_2,
+    ObserveOnOperator: ObserveOnOperator_1,
+    ObserveOnSubscriber: ObserveOnSubscriber_1,
+    ObserveOnMessage: ObserveOnMessage_1
+};
+var __extends$5 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
+var FromObservable = (function (_super) {
+    __extends$5(FromObservable, _super);
+    function FromObservable(ish, scheduler) {
+        _super.call(this, null);
+        this.ish = ish;
+        this.scheduler = scheduler;
+    }
+    /**
+     * Creates an Observable from an Array, an array-like object, a Promise, an
+     * iterable object, or an Observable-like object.
+     *
+     * <span class="informal">Converts almost anything to an Observable.</span>
+     *
+     * <img src="./img/from.png" width="100%">
+     *
+     * Convert various other objects and data types into Observables. `from`
+     * converts a Promise or an array-like or an
+     * [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable)
+     * object into an Observable that emits the items in that promise or array or
+     * iterable. A String, in this context, is treated as an array of characters.
+     * Observable-like objects (contains a function named with the ES2015 Symbol
+     * for Observable) can also be converted through this operator.
+     *
+     * @example <caption>Converts an array to an Observable</caption>
+     * var array = [10, 20, 30];
+     * var result = Rx.Observable.from(array);
+     * result.subscribe(x => console.log(x));
+     *
+     * // Results in the following:
+     * // 10 20 30
+     *
+     * @example <caption>Convert an infinite iterable (from a generator) to an Observable</caption>
+     * function* generateDoubles(seed) {
+     *   var i = seed;
+     *   while (true) {
+     *     yield i;
+     *     i = 2 * i; // double it
+     *   }
+     * }
+     *
+     * var iterator = generateDoubles(3);
+     * var result = Rx.Observable.from(iterator).take(10);
+     * result.subscribe(x => console.log(x));
+     *
+     * // Results in the following:
+     * // 3 6 12 24 48 96 192 384 768 1536
+     *
+     * @see {@link create}
+     * @see {@link fromEvent}
+     * @see {@link fromEventPattern}
+     * @see {@link fromPromise}
+     *
+     * @param {ObservableInput<T>} ish A subscribable object, a Promise, an
+     * Observable-like, an Array, an iterable or an array-like object to be
+     * converted.
+     * @param {Scheduler} [scheduler] The scheduler on which to schedule the
+     * emissions of values.
+     * @return {Observable<T>} The Observable whose values are originally from the
+     * input object that was converted.
+     * @static true
+     * @name from
+     * @owner Observable
+     */
+    FromObservable.create = function (ish, scheduler) {
+        if (ish != null) {
+            if (typeof ish[observable.observable] === 'function') {
+                if (ish instanceof Observable_1.Observable && !scheduler) {
+                    return ish;
+                }
+                return new FromObservable(ish, scheduler);
+            }
+            else if (isArray.isArray(ish)) {
+                return new ArrayObservable_1.ArrayObservable(ish, scheduler);
+            }
+            else if (isPromise_1.isPromise(ish)) {
+                return new PromiseObservable_1.PromiseObservable(ish, scheduler);
+            }
+            else if (typeof ish[iterator.iterator] === 'function' || typeof ish === 'string') {
+                return new IteratorObservable_1.IteratorObservable(ish, scheduler);
+            }
+            else if (isArrayLike.isArrayLike(ish)) {
+                return new ArrayLikeObservable_1.ArrayLikeObservable(ish, scheduler);
+            }
+        }
+        throw new TypeError((ish !== null && typeof ish || ish) + ' is not observable');
+    };
+    FromObservable.prototype._subscribe = function (subscriber) {
+        var ish = this.ish;
+        var scheduler = this.scheduler;
+        if (scheduler == null) {
+            return ish[observable.observable]().subscribe(subscriber);
+        }
+        else {
+            return ish[observable.observable]().subscribe(new observeOn_1.ObserveOnSubscriber(subscriber, scheduler, 0));
+        }
+    };
+    return FromObservable;
+}(Observable_1.Observable));
+var FromObservable_2 = FromObservable;
+var FromObservable_1 = {
+    FromObservable: FromObservable_2
+};
+var from_1 = FromObservable_1.FromObservable.create;
+var from = {
+    from: from_1
+};
+var __extends$11 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var InnerSubscriber = (function (_super) {
+    __extends$11(InnerSubscriber, _super);
+    function InnerSubscriber(parent, outerValue, outerIndex) {
+        _super.call(this);
+        this.parent = parent;
+        this.outerValue = outerValue;
+        this.outerIndex = outerIndex;
+        this.index = 0;
+    }
+    InnerSubscriber.prototype._next = function (value) {
+        this.parent.notifyNext(this.outerValue, value, this.outerIndex, this.index++, this);
+    };
+    InnerSubscriber.prototype._error = function (error) {
+        this.parent.notifyError(error, this);
+        this.unsubscribe();
+    };
+    InnerSubscriber.prototype._complete = function () {
+        this.parent.notifyComplete(this);
+        this.unsubscribe();
+    };
+    return InnerSubscriber;
+}(Subscriber_1.Subscriber));
+var InnerSubscriber_2 = InnerSubscriber;
+var InnerSubscriber_1 = {
+    InnerSubscriber: InnerSubscriber_2
+};
+function subscribeToResult(outerSubscriber, result, outerValue, outerIndex) {
+    var destination = new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex);
+    if (destination.closed) {
+        return null;
+    }
+    if (result instanceof Observable_1.Observable) {
+        if (result._isScalar) {
+            destination.next(result.value);
+            destination.complete();
+            return null;
+        }
+        else {
+            destination.syncErrorThrowable = true;
+            return result.subscribe(destination);
+        }
+    }
+    else if (isArrayLike.isArrayLike(result)) {
+        for (var i = 0, len = result.length; i < len && !destination.closed; i++) {
+            destination.next(result[i]);
+        }
+        if (!destination.closed) {
+            destination.complete();
+        }
+    }
+    else if (isPromise_1.isPromise(result)) {
+        result.then(function (value) {
+            if (!destination.closed) {
+                destination.next(value);
+                destination.complete();
+            }
+        }, function (err) { return destination.error(err); })
+            .then(null, function (err) {
+            // Escaping the Promise trap: globally throw unhandled errors
+            root.root.setTimeout(function () { throw err; });
+        });
+        return destination;
+    }
+    else if (result && typeof result[iterator.iterator] === 'function') {
+        var iterator$$2 = result[iterator.iterator]();
+        do {
+            var item = iterator$$2.next();
+            if (item.done) {
+                destination.complete();
+                break;
+            }
+            destination.next(item.value);
+            if (destination.closed) {
+                break;
+            }
+        } while (true);
+    }
+    else if (result && typeof result[observable.observable] === 'function') {
+        var obs = result[observable.observable]();
+        if (typeof obs.subscribe !== 'function') {
+            destination.error(new TypeError('Provided object does not correctly implement Symbol.observable'));
+        }
+        else {
+            return obs.subscribe(new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex));
+        }
+    }
+    else {
+        var value = isObject_1.isObject(result) ? 'an invalid object' : "'" + result + "'";
+        var msg = ("You provided " + value + " where a stream was expected.")
+            + ' You can provide an Observable, Promise, Array, or Iterable.';
+        destination.error(new TypeError(msg));
+    }
+    return null;
+}
+var subscribeToResult_2 = subscribeToResult;
+var subscribeToResult_1 = {
+    subscribeToResult: subscribeToResult_2
+};
+var __extends$12 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var OuterSubscriber = (function (_super) {
+    __extends$12(OuterSubscriber, _super);
+    function OuterSubscriber() {
+        _super.apply(this, arguments);
+    }
+    OuterSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        this.destination.next(innerValue);
+    };
+    OuterSubscriber.prototype.notifyError = function (error, innerSub) {
+        this.destination.error(error);
+    };
+    OuterSubscriber.prototype.notifyComplete = function (innerSub) {
+        this.destination.complete();
+    };
+    return OuterSubscriber;
+}(Subscriber_1.Subscriber));
+var OuterSubscriber_2 = OuterSubscriber;
+var OuterSubscriber_1 = {
+    OuterSubscriber: OuterSubscriber_2
+};
+var __extends$10 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+/* tslint:enable:max-line-length */
+/**
+ * Projects each source value to an Observable which is merged in the output
+ * Observable.
+ *
+ * <span class="informal">Maps each value to an Observable, then flattens all of
+ * these inner Observables using {@link mergeAll}.</span>
+ *
+ * <img src="./img/mergeMap.png" width="100%">
+ *
+ * Returns an Observable that emits items based on applying a function that you
+ * supply to each item emitted by the source Observable, where that function
+ * returns an Observable, and then merging those resulting Observables and
+ * emitting the results of this merger.
+ *
+ * @example <caption>Map and flatten each letter to an Observable ticking every 1 second</caption>
+ * var letters = Rx.Observable.of('a', 'b', 'c');
+ * var result = letters.mergeMap(x =>
+ *   Rx.Observable.interval(1000).map(i => x+i)
+ * );
+ * result.subscribe(x => console.log(x));
+ *
+ * // Results in the following:
+ * // a0
+ * // b0
+ * // c0
+ * // a1
+ * // b1
+ * // c1
+ * // continues to list a,b,c with respective ascending integers
+ *
+ * @see {@link concatMap}
+ * @see {@link exhaustMap}
+ * @see {@link merge}
+ * @see {@link mergeAll}
+ * @see {@link mergeMapTo}
+ * @see {@link mergeScan}
+ * @see {@link switchMap}
+ *
+ * @param {function(value: T, ?index: number): ObservableInput} project A function
+ * that, when applied to an item emitted by the source Observable, returns an
+ * Observable.
+ * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
+ * A function to produce the value on the output Observable based on the values
+ * and the indices of the source (outer) emission and the inner Observable
+ * emission. The arguments passed to this function are:
+ * - `outerValue`: the value that came from the source
+ * - `innerValue`: the value that came from the projected Observable
+ * - `outerIndex`: the "index" of the value that came from the source
+ * - `innerIndex`: the "index" of the value from the projected Observable
+ * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
+ * Observables being subscribed to concurrently.
+ * @return {Observable} An Observable that emits the result of applying the
+ * projection function (and the optional `resultSelector`) to each item emitted
+ * by the source Observable and merging the results of the Observables obtained
+ * from this transformation.
+ * @method mergeMap
+ * @owner Observable
+ */
+function mergeMap(project, resultSelector, concurrent) {
+    if (concurrent === void 0) {
+        concurrent = Number.POSITIVE_INFINITY;
+    }
+    return function mergeMapOperatorFunction(source) {
+        if (typeof resultSelector === 'number') {
+            concurrent = resultSelector;
+            resultSelector = null;
+        }
+        return source.lift(new MergeMapOperator(project, resultSelector, concurrent));
+    };
+}
+var mergeMap_2 = mergeMap;
+var MergeMapOperator = (function () {
+    function MergeMapOperator(project, resultSelector, concurrent) {
+        if (concurrent === void 0) {
+            concurrent = Number.POSITIVE_INFINITY;
+        }
+        this.project = project;
+        this.resultSelector = resultSelector;
+        this.concurrent = concurrent;
+    }
+    MergeMapOperator.prototype.call = function (observer, source) {
+        return source.subscribe(new MergeMapSubscriber(observer, this.project, this.resultSelector, this.concurrent));
+    };
+    return MergeMapOperator;
+}());
+var MergeMapOperator_1 = MergeMapOperator;
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var MergeMapSubscriber = (function (_super) {
+    __extends$10(MergeMapSubscriber, _super);
+    function MergeMapSubscriber(destination, project, resultSelector, concurrent) {
+        if (concurrent === void 0) {
+            concurrent = Number.POSITIVE_INFINITY;
+        }
+        _super.call(this, destination);
+        this.project = project;
+        this.resultSelector = resultSelector;
+        this.concurrent = concurrent;
+        this.hasCompleted = false;
+        this.buffer = [];
+        this.active = 0;
+        this.index = 0;
+    }
+    MergeMapSubscriber.prototype._next = function (value) {
+        if (this.active < this.concurrent) {
+            this._tryNext(value);
+        }
+        else {
+            this.buffer.push(value);
+        }
+    };
+    MergeMapSubscriber.prototype._tryNext = function (value) {
+        var result;
+        var index = this.index++;
+        try {
+            result = this.project(value, index);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.active++;
+        this._innerSub(result, value, index);
+    };
+    MergeMapSubscriber.prototype._innerSub = function (ish, value, index) {
+        this.add(subscribeToResult_1.subscribeToResult(this, ish, value, index));
+    };
+    MergeMapSubscriber.prototype._complete = function () {
+        this.hasCompleted = true;
+        if (this.active === 0 && this.buffer.length === 0) {
+            this.destination.complete();
+        }
+    };
+    MergeMapSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        if (this.resultSelector) {
+            this._notifyResultSelector(outerValue, innerValue, outerIndex, innerIndex);
+        }
+        else {
+            this.destination.next(innerValue);
+        }
+    };
+    MergeMapSubscriber.prototype._notifyResultSelector = function (outerValue, innerValue, outerIndex, innerIndex) {
+        var result;
+        try {
+            result = this.resultSelector(outerValue, innerValue, outerIndex, innerIndex);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.destination.next(result);
+    };
+    MergeMapSubscriber.prototype.notifyComplete = function (innerSub) {
+        var buffer = this.buffer;
+        this.remove(innerSub);
+        this.active--;
+        if (buffer.length > 0) {
+            this._next(buffer.shift());
+        }
+        else if (this.active === 0 && this.hasCompleted) {
+            this.destination.complete();
+        }
+    };
+    return MergeMapSubscriber;
+}(OuterSubscriber_1.OuterSubscriber));
+var MergeMapSubscriber_1 = MergeMapSubscriber;
+var mergeMap_1 = {
+    mergeMap: mergeMap_2,
+    MergeMapOperator: MergeMapOperator_1,
+    MergeMapSubscriber: MergeMapSubscriber_1
+};
+function identity(x) {
+    return x;
+}
+var identity_2 = identity;
+var identity_1 = {
+    identity: identity_2
+};
+/**
+ * Converts a higher-order Observable into a first-order Observable which
+ * concurrently delivers all values that are emitted on the inner Observables.
+ *
+ * <span class="informal">Flattens an Observable-of-Observables.</span>
+ *
+ * <img src="./img/mergeAll.png" width="100%">
+ *
+ * `mergeAll` subscribes to an Observable that emits Observables, also known as
+ * a higher-order Observable. Each time it observes one of these emitted inner
+ * Observables, it subscribes to that and delivers all the values from the
+ * inner Observable on the output Observable. The output Observable only
+ * completes once all inner Observables have completed. Any error delivered by
+ * a inner Observable will be immediately emitted on the output Observable.
+ *
+ * @example <caption>Spawn a new interval Observable for each click event, and blend their outputs as one Observable</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var higherOrder = clicks.map((ev) => Rx.Observable.interval(1000));
+ * var firstOrder = higherOrder.mergeAll();
+ * firstOrder.subscribe(x => console.log(x));
+ *
+ * @example <caption>Count from 0 to 9 every second for each click, but only allow 2 concurrent timers</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var higherOrder = clicks.map((ev) => Rx.Observable.interval(1000).take(10));
+ * var firstOrder = higherOrder.mergeAll(2);
+ * firstOrder.subscribe(x => console.log(x));
+ *
+ * @see {@link combineAll}
+ * @see {@link concatAll}
+ * @see {@link exhaust}
+ * @see {@link merge}
+ * @see {@link mergeMap}
+ * @see {@link mergeMapTo}
+ * @see {@link mergeScan}
+ * @see {@link switch}
+ * @see {@link zipAll}
+ *
+ * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of inner
+ * Observables being subscribed to concurrently.
+ * @return {Observable} An Observable that emits values coming from all the
+ * inner Observables emitted by the source Observable.
+ * @method mergeAll
+ * @owner Observable
+ */
+function mergeAll(concurrent) {
+    if (concurrent === void 0) {
+        concurrent = Number.POSITIVE_INFINITY;
+    }
+    return mergeMap_1.mergeMap(identity_1.identity, null, concurrent);
+}
+var mergeAll_2 = mergeAll;
+var mergeAll_1 = {
+    mergeAll: mergeAll_2
+};
+/**
+ * Converts a higher-order Observable into a first-order Observable by
+ * concatenating the inner Observables in order.
+ *
+ * <span class="informal">Flattens an Observable-of-Observables by putting one
+ * inner Observable after the other.</span>
+ *
+ * <img src="./img/concatAll.png" width="100%">
+ *
+ * Joins every Observable emitted by the source (a higher-order Observable), in
+ * a serial fashion. It subscribes to each inner Observable only after the
+ * previous inner Observable has completed, and merges all of their values into
+ * the returned observable.
+ *
+ * __Warning:__ If the source Observable emits Observables quickly and
+ * endlessly, and the inner Observables it emits generally complete slower than
+ * the source emits, you can run into memory issues as the incoming Observables
+ * collect in an unbounded buffer.
+ *
+ * Note: `concatAll` is equivalent to `mergeAll` with concurrency parameter set
+ * to `1`.
+ *
+ * @example <caption>For each click event, tick every second from 0 to 3, with no concurrency</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var higherOrder = clicks.map(ev => Rx.Observable.interval(1000).take(4));
+ * var firstOrder = higherOrder.concatAll();
+ * firstOrder.subscribe(x => console.log(x));
+ *
+ * // Results in the following:
+ * // (results are not concurrent)
+ * // For every click on the "document" it will emit values 0 to 3 spaced
+ * // on a 1000ms interval
+ * // one click = 1000ms-> 0 -1000ms-> 1 -1000ms-> 2 -1000ms-> 3
+ *
+ * @see {@link combineAll}
+ * @see {@link concat}
+ * @see {@link concatMap}
+ * @see {@link concatMapTo}
+ * @see {@link exhaust}
+ * @see {@link mergeAll}
+ * @see {@link switch}
+ * @see {@link zipAll}
+ *
+ * @return {Observable} An Observable emitting values from all the inner
+ * Observables concatenated.
+ * @method concatAll
+ * @owner Observable
+ */
+function concatAll() {
+    return mergeAll_1.mergeAll(1);
+}
+var concatAll_2 = concatAll;
+var concatAll_1 = {
+    concatAll: concatAll_2
+};
+/* tslint:enable:max-line-length */
+/**
+ * Creates an output Observable which sequentially emits all values from given
+ * Observable and then moves on to the next.
+ *
+ * <span class="informal">Concatenates multiple Observables together by
+ * sequentially emitting their values, one Observable after the other.</span>
+ *
+ * <img src="./img/concat.png" width="100%">
+ *
+ * `concat` joins multiple Observables together, by subscribing to them one at a time and
+ * merging their results into the output Observable. You can pass either an array of
+ * Observables, or put them directly as arguments. Passing an empty array will result
+ * in Observable that completes immediately.
+ *
+ * `concat` will subscribe to first input Observable and emit all its values, without
+ * changing or affecting them in any way. When that Observable completes, it will
+ * subscribe to then next Observable passed and, again, emit its values. This will be
+ * repeated, until the operator runs out of Observables. When last input Observable completes,
+ * `concat` will complete as well. At any given moment only one Observable passed to operator
+ * emits values. If you would like to emit values from passed Observables concurrently, check out
+ * {@link merge} instead, especially with optional `concurrent` parameter. As a matter of fact,
+ * `concat` is an equivalent of `merge` operator with `concurrent` parameter set to `1`.
+ *
+ * Note that if some input Observable never completes, `concat` will also never complete
+ * and Observables following the one that did not complete will never be subscribed. On the other
+ * hand, if some Observable simply completes immediately after it is subscribed, it will be
+ * invisible for `concat`, which will just move on to the next Observable.
+ *
+ * If any Observable in chain errors, instead of passing control to the next Observable,
+ * `concat` will error immediately as well. Observables that would be subscribed after
+ * the one that emitted error, never will.
+ *
+ * If you pass to `concat` the same Observable many times, its stream of values
+ * will be "replayed" on every subscription, which means you can repeat given Observable
+ * as many times as you like. If passing the same Observable to `concat` 1000 times becomes tedious,
+ * you can always use {@link repeat}.
+ *
+ * @example <caption>Concatenate a timer counting from 0 to 3 with a synchronous sequence from 1 to 10</caption>
+ * var timer = Rx.Observable.interval(1000).take(4);
+ * var sequence = Rx.Observable.range(1, 10);
+ * var result = Rx.Observable.concat(timer, sequence);
+ * result.subscribe(x => console.log(x));
+ *
+ * // results in:
+ * // 0 -1000ms-> 1 -1000ms-> 2 -1000ms-> 3 -immediate-> 1 ... 10
+ *
+ *
+ * @example <caption>Concatenate an array of 3 Observables</caption>
+ * var timer1 = Rx.Observable.interval(1000).take(10);
+ * var timer2 = Rx.Observable.interval(2000).take(6);
+ * var timer3 = Rx.Observable.interval(500).take(10);
+ * var result = Rx.Observable.concat([timer1, timer2, timer3]); // note that array is passed
+ * result.subscribe(x => console.log(x));
+ *
+ * // results in the following:
+ * // (Prints to console sequentially)
+ * // -1000ms-> 0 -1000ms-> 1 -1000ms-> ... 9
+ * // -2000ms-> 0 -2000ms-> 1 -2000ms-> ... 5
+ * // -500ms-> 0 -500ms-> 1 -500ms-> ... 9
+ *
+ *
+ * @example <caption>Concatenate the same Observable to repeat it</caption>
+ * const timer = Rx.Observable.interval(1000).take(2);
+ *
+ * Rx.Observable.concat(timer, timer) // concating the same Observable!
+ * .subscribe(
+ *   value => console.log(value),
+ *   err => {},
+ *   () => console.log('...and it is done!')
+ * );
+ *
+ * // Logs:
+ * // 0 after 1s
+ * // 1 after 2s
+ * // 0 after 3s
+ * // 1 after 4s
+ * // "...and it is done!" also after 4s
+ *
+ * @see {@link concatAll}
+ * @see {@link concatMap}
+ * @see {@link concatMapTo}
+ *
+ * @param {ObservableInput} input1 An input Observable to concatenate with others.
+ * @param {ObservableInput} input2 An input Observable to concatenate with others.
+ * More than one input Observables may be given as argument.
+ * @param {Scheduler} [scheduler=null] An optional IScheduler to schedule each
+ * Observable subscription on.
+ * @return {Observable} All values of each passed Observable merged into a
+ * single Observable, in order, in serial fashion.
+ * @static true
+ * @name concat
+ * @owner Observable
+ */
+function concat$1() {
+    var observables = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        observables[_i - 0] = arguments[_i];
+    }
+    if (observables.length === 1 || (observables.length === 2 && isScheduler_1.isScheduler(observables[1]))) {
+        return from.from(observables[0]);
+    }
+    return concatAll_1.concatAll()(of$2.of.apply(void 0, observables));
+}
+var concat_2$2 = concat$1;
+var concat_1 = {
+    concat: concat_2$2
+};
+/* tslint:enable:max-line-length */
+/**
+ * Creates an output Observable which sequentially emits all values from every
+ * given input Observable after the current Observable.
+ *
+ * <span class="informal">Concatenates multiple Observables together by
+ * sequentially emitting their values, one Observable after the other.</span>
+ *
+ * <img src="./img/concat.png" width="100%">
+ *
+ * Joins this Observable with multiple other Observables by subscribing to them
+ * one at a time, starting with the source, and merging their results into the
+ * output Observable. Will wait for each Observable to complete before moving
+ * on to the next.
+ *
+ * @example <caption>Concatenate a timer counting from 0 to 3 with a synchronous sequence from 1 to 10</caption>
+ * var timer = Rx.Observable.interval(1000).take(4);
+ * var sequence = Rx.Observable.range(1, 10);
+ * var result = timer.concat(sequence);
+ * result.subscribe(x => console.log(x));
+ *
+ * // results in:
+ * // 1000ms-> 0 -1000ms-> 1 -1000ms-> 2 -1000ms-> 3 -immediate-> 1 ... 10
+ *
+ * @example <caption>Concatenate 3 Observables</caption>
+ * var timer1 = Rx.Observable.interval(1000).take(10);
+ * var timer2 = Rx.Observable.interval(2000).take(6);
+ * var timer3 = Rx.Observable.interval(500).take(10);
+ * var result = timer1.concat(timer2, timer3);
+ * result.subscribe(x => console.log(x));
+ *
+ * // results in the following:
+ * // (Prints to console sequentially)
+ * // -1000ms-> 0 -1000ms-> 1 -1000ms-> ... 9
+ * // -2000ms-> 0 -2000ms-> 1 -2000ms-> ... 5
+ * // -500ms-> 0 -500ms-> 1 -500ms-> ... 9
+ *
+ * @see {@link concatAll}
+ * @see {@link concatMap}
+ * @see {@link concatMapTo}
+ *
+ * @param {ObservableInput} other An input Observable to concatenate after the source
+ * Observable. More than one input Observables may be given as argument.
+ * @param {Scheduler} [scheduler=null] An optional IScheduler to schedule each
+ * Observable subscription on.
+ * @return {Observable} All values of each passed Observable merged into a
+ * single Observable, in order, in serial fashion.
+ * @method concat
+ * @owner Observable
+ */
+function concat() {
+    var observables = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        observables[_i - 0] = arguments[_i];
+    }
+    return function (source) { return source.lift.call(concat_1.concat.apply(void 0, [source].concat(observables))); };
+}
+var concat_3 = concat;
+var __decorate$3 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var MissingTranslationHandler = (function () {
+    function MissingTranslationHandler() {
+    }
+    return MissingTranslationHandler;
+}());
+/**
+ * This handler is just a placeholder that does nothing, in case you don't need a missing translation handler at all
+ */
+var FakeMissingTranslationHandler = (function () {
+    function FakeMissingTranslationHandler() {
+    }
+    FakeMissingTranslationHandler.prototype.handle = function (params) {
+        return params.key;
+    };
+    return FakeMissingTranslationHandler;
+}());
+FakeMissingTranslationHandler = __decorate$3([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])()
+], FakeMissingTranslationHandler);
+var __decorate$4 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var TranslateCompiler = (function () {
+    function TranslateCompiler() {
+    }
+    return TranslateCompiler;
+}());
+/**
+ * This compiler is just a placeholder that does nothing, in case you don't need a compiler at all
+ */
+var TranslateFakeCompiler = (function (_super) {
+    __extends(TranslateFakeCompiler, _super);
+    function TranslateFakeCompiler() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TranslateFakeCompiler.prototype.compile = function (value, lang) {
+        return value;
+    };
+    TranslateFakeCompiler.prototype.compileTranslations = function (translations, lang) {
+        return translations;
+    };
+    return TranslateFakeCompiler;
+}(TranslateCompiler));
+TranslateFakeCompiler = __decorate$4([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])()
+], TranslateFakeCompiler);
+/* tslint:disable */
+/**
+ * @name equals
+ *
+ * @description
+ * Determines if two objects or two values are equivalent.
+ *
+ * Two objects or values are considered equivalent if at least one of the following is true:
+ *
+ * * Both objects or values pass `===` comparison.
+ * * Both objects or values are of the same type and all of their properties are equal by
+ *   comparing them with `equals`.
+ *
+ * @param {*} o1 Object or value to compare.
+ * @param {*} o2 Object or value to compare.
+ * @returns {boolean} True if arguments are equal.
+ */
+function equals(o1, o2) {
+    if (o1 === o2)
+        return true;
+    if (o1 === null || o2 === null)
+        return false;
+    if (o1 !== o1 && o2 !== o2)
+        return true; // NaN === NaN
+    var t1 = typeof o1, t2 = typeof o2, length, key, keySet;
+    if (t1 == t2 && t1 == 'object') {
+        if (Array.isArray(o1)) {
+            if (!Array.isArray(o2))
+                return false;
+            if ((length = o1.length) == o2.length) {
+                for (key = 0; key < length; key++) {
+                    if (!equals(o1[key], o2[key]))
+                        return false;
+                }
+                return true;
+            }
+        }
+        else {
+            if (Array.isArray(o2)) {
+                return false;
+            }
+            keySet = Object.create(null);
+            for (key in o1) {
+                if (!equals(o1[key], o2[key])) {
+                    return false;
+                }
+                keySet[key] = true;
+            }
+            for (key in o2) {
+                if (!(key in keySet) && typeof o2[key] !== 'undefined') {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    return false;
+}
+/* tslint:enable */
+function isDefined(value) {
+    return typeof value !== 'undefined' && value !== null;
+}
+function isObject$1(item) {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+}
+function mergeDeep(target, source) {
+    var output = Object.assign({}, target);
+    if (isObject$1(target) && isObject$1(source)) {
+        Object.keys(source).forEach(function (key) {
+            if (isObject$1(source[key])) {
+                if (!(key in target)) {
+                    Object.assign(output, (_b = {}, _b[key] = source[key], _b));
+                }
+                else {
+                    output[key] = mergeDeep(target[key], source[key]);
+                }
+            }
+            else {
+                Object.assign(output, (_c = {}, _c[key] = source[key], _c));
+            }
+            var _b, _c;
+        });
+    }
+    return output;
+}
+var __decorate$5 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var TranslateParser = (function () {
+    function TranslateParser() {
+    }
+    return TranslateParser;
+}());
+var TranslateDefaultParser = (function (_super) {
+    __extends(TranslateDefaultParser, _super);
+    function TranslateDefaultParser() {
+        var _this = _super.apply(this, arguments) || this;
+        _this.templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
+        return _this;
+    }
+    TranslateDefaultParser.prototype.interpolate = function (expr, params) {
+        var result;
+        if (typeof expr === 'string') {
+            result = this.interpolateString(expr, params);
+        }
+        else if (typeof expr === 'function') {
+            result = this.interpolateFunction(expr, params);
+        }
+        else {
+            // this should not happen, but an unrelated TranslateService test depends on it
+            result = expr;
+        }
+        return result;
+    };
+    TranslateDefaultParser.prototype.getValue = function (target, key) {
+        var keys = key.split('.');
+        key = '';
+        do {
+            key += keys.shift();
+            if (isDefined(target) && isDefined(target[key]) && (typeof target[key] === 'object' || !keys.length)) {
+                target = target[key];
+                key = '';
+            }
+            else if (!keys.length) {
+                target = undefined;
+            }
+            else {
+                key += '.';
+            }
+        } while (keys.length);
+        return target;
+    };
+    TranslateDefaultParser.prototype.interpolateFunction = function (fn, params) {
+        return fn(params);
+    };
+    TranslateDefaultParser.prototype.interpolateString = function (expr, params) {
+        var _this = this;
+        if (!params) {
+            return expr;
+        }
+        return expr.replace(this.templateMatcher, function (substring, b) {
+            var r = _this.getValue(params, b);
+            return isDefined(r) ? r : substring;
+        });
+    };
+    return TranslateDefaultParser;
+}(TranslateParser));
+TranslateDefaultParser = __decorate$5([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])()
+], TranslateDefaultParser);
+var TranslateStore = (function () {
+    function TranslateStore() {
+        /**
+         * The lang currently used
+         * @type {string}
+         */
+        this.currentLang = this.defaultLang;
+        /**
+         * a list of translations per lang
+         * @type {{}}
+         */
+        this.translations = {};
+        /**
+         * an array of langs
+         * @type {Array}
+         */
+        this.langs = [];
+        /**
+         * An EventEmitter to listen to translation change events
+         * onTranslationChange.subscribe((params: TranslationChangeEvent) => {
+         *     // do something
+         * });
+         * @type {EventEmitter<TranslationChangeEvent>}
+         */
+        this.onTranslationChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        /**
+         * An EventEmitter to listen to lang change events
+         * onLangChange.subscribe((params: LangChangeEvent) => {
+         *     // do something
+         * });
+         * @type {EventEmitter<LangChangeEvent>}
+         */
+        this.onLangChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        /**
+         * An EventEmitter to listen to default lang change events
+         * onDefaultLangChange.subscribe((params: DefaultLangChangeEvent) => {
+         *     // do something
+         * });
+         * @type {EventEmitter<DefaultLangChangeEvent>}
+         */
+        this.onDefaultLangChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+    }
+    return TranslateStore;
+}());
+var __decorate$2 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+        return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); };
+};
+var USE_STORE = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* InjectionToken */]('USE_STORE');
+var USE_DEFAULT_LANG = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* InjectionToken */]('USE_DEFAULT_LANG');
+var TranslateService = (function () {
+    /**
+     *
+     * @param store an instance of the store (that is supposed to be unique)
+     * @param currentLoader An instance of the loader currently used
+     * @param compiler An instance of the compiler currently used
+     * @param parser An instance of the parser currently used
+     * @param missingTranslationHandler A handler for missing translations.
+     * @param isolate whether this service should use the store or not
+     * @param useDefaultLang whether we should use default language translation when current language translation is missing.
+     */
+    function TranslateService(store, currentLoader, compiler, parser, missingTranslationHandler, useDefaultLang, isolate) {
+        if (useDefaultLang === void 0) { useDefaultLang = true; }
+        if (isolate === void 0) { isolate = false; }
+        this.store = store;
+        this.currentLoader = currentLoader;
+        this.compiler = compiler;
+        this.parser = parser;
+        this.missingTranslationHandler = missingTranslationHandler;
+        this.useDefaultLang = useDefaultLang;
+        this.isolate = isolate;
+        this.pending = false;
+        this._onTranslationChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this._onLangChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this._onDefaultLangChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this._langs = [];
+        this._translations = {};
+        this._translationRequests = {};
+    }
+    Object.defineProperty(TranslateService.prototype, "onTranslationChange", {
+        /**
+         * An EventEmitter to listen to translation change events
+         * onTranslationChange.subscribe((params: TranslationChangeEvent) => {
+         *     // do something
+         * });
+         * @type {EventEmitter<TranslationChangeEvent>}
+         */
+        get: function () {
+            return this.isolate ? this._onTranslationChange : this.store.onTranslationChange;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslateService.prototype, "onLangChange", {
+        /**
+         * An EventEmitter to listen to lang change events
+         * onLangChange.subscribe((params: LangChangeEvent) => {
+         *     // do something
+         * });
+         * @type {EventEmitter<LangChangeEvent>}
+         */
+        get: function () {
+            return this.isolate ? this._onLangChange : this.store.onLangChange;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslateService.prototype, "onDefaultLangChange", {
+        /**
+         * An EventEmitter to listen to default lang change events
+         * onDefaultLangChange.subscribe((params: DefaultLangChangeEvent) => {
+         *     // do something
+         * });
+         * @type {EventEmitter<DefaultLangChangeEvent>}
+         */
+        get: function () {
+            return this.isolate ? this._onDefaultLangChange : this.store.onDefaultLangChange;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslateService.prototype, "defaultLang", {
+        /**
+         * The default lang to fallback when translations are missing on the current lang
+         */
+        get: function () {
+            return this.isolate ? this._defaultLang : this.store.defaultLang;
+        },
+        set: function (defaultLang) {
+            if (this.isolate) {
+                this._defaultLang = defaultLang;
+            }
+            else {
+                this.store.defaultLang = defaultLang;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslateService.prototype, "currentLang", {
+        /**
+         * The lang currently used
+         * @type {string}
+         */
+        get: function () {
+            return this.isolate ? this._currentLang : this.store.currentLang;
+        },
+        set: function (currentLang) {
+            if (this.isolate) {
+                this._currentLang = currentLang;
+            }
+            else {
+                this.store.currentLang = currentLang;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslateService.prototype, "langs", {
+        /**
+         * an array of langs
+         * @type {Array}
+         */
+        get: function () {
+            return this.isolate ? this._langs : this.store.langs;
+        },
+        set: function (langs) {
+            if (this.isolate) {
+                this._langs = langs;
+            }
+            else {
+                this.store.langs = langs;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslateService.prototype, "translations", {
+        /**
+         * a list of translations per lang
+         * @type {{}}
+         */
+        get: function () {
+            return this.isolate ? this._translations : this.store.translations;
+        },
+        set: function (translations) {
+            if (this.isolate) {
+                this._translations = translations;
+            }
+            else {
+                this.store.translations = translations;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Sets the default language to use as a fallback
+     * @param lang
+     */
+    TranslateService.prototype.setDefaultLang = function (lang) {
+        var _this = this;
+        if (lang === this.defaultLang) {
+            return;
+        }
+        var pending = this.retrieveTranslations(lang);
+        if (typeof pending !== "undefined") {
+            // on init set the defaultLang immediately
+            if (!this.defaultLang) {
+                this.defaultLang = lang;
+            }
+            pending.pipe(Object(__WEBPACK_IMPORTED_MODULE_8_rxjs_operators_take__["a" /* take */])(1))
+                .subscribe(function (res) {
+                _this.changeDefaultLang(lang);
+            });
+        }
+        else {
+            this.changeDefaultLang(lang);
+        }
+    };
+    /**
+     * Gets the default language used
+     * @returns string
+     */
+    TranslateService.prototype.getDefaultLang = function () {
+        return this.defaultLang;
+    };
+    /**
+     * Changes the lang currently used
+     * @param lang
+     * @returns {Observable<*>}
+     */
+    TranslateService.prototype.use = function (lang) {
+        var _this = this;
+        // don't change the language if the language given is already selected
+        if (lang === this.currentLang) {
+            return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(this.translations[lang]);
+        }
+        var pending = this.retrieveTranslations(lang);
+        if (typeof pending !== "undefined") {
+            // on init set the currentLang immediately
+            if (!this.currentLang) {
+                this.currentLang = lang;
+            }
+            pending.pipe(Object(__WEBPACK_IMPORTED_MODULE_8_rxjs_operators_take__["a" /* take */])(1))
+                .subscribe(function (res) {
+                _this.changeLang(lang);
+            });
+            return pending;
+        }
+        else {
+            this.changeLang(lang);
+            return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(this.translations[lang]);
+        }
+    };
+    /**
+     * Retrieves the given translations
+     * @param lang
+     * @returns {Observable<*>}
+     */
+    TranslateService.prototype.retrieveTranslations = function (lang) {
+        var pending;
+        // if this language is unavailable, ask for it
+        if (typeof this.translations[lang] === "undefined") {
+            this._translationRequests[lang] = this._translationRequests[lang] || this.getTranslation(lang);
+            pending = this._translationRequests[lang];
+        }
+        return pending;
+    };
+    /**
+     * Gets an object of translations for a given language with the current loader
+     * and passes it through the compiler
+     * @param lang
+     * @returns {Observable<*>}
+     */
+    TranslateService.prototype.getTranslation = function (lang) {
+        var _this = this;
+        this.pending = true;
+        this.loadingTranslations = this.currentLoader.getTranslation(lang).pipe(Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_operators_share__["a" /* share */])());
+        this.loadingTranslations.pipe(Object(__WEBPACK_IMPORTED_MODULE_8_rxjs_operators_take__["a" /* take */])(1))
+            .subscribe(function (res) {
+            _this.translations[lang] = _this.compiler.compileTranslations(res, lang);
+            _this.updateLangs();
+            _this.pending = false;
+        }, function (err) {
+            _this.pending = false;
+        });
+        return this.loadingTranslations;
+    };
+    /**
+     * Manually sets an object of translations for a given language
+     * after passing it through the compiler
+     * @param lang
+     * @param translations
+     * @param shouldMerge
+     */
+    TranslateService.prototype.setTranslation = function (lang, translations, shouldMerge) {
+        if (shouldMerge === void 0) { shouldMerge = false; }
+        translations = this.compiler.compileTranslations(translations, lang);
+        if (shouldMerge && this.translations[lang]) {
+            this.translations[lang] = mergeDeep(this.translations[lang], translations);
+        }
+        else {
+            this.translations[lang] = translations;
+        }
+        this.updateLangs();
+        this.onTranslationChange.emit({ lang: lang, translations: this.translations[lang] });
+    };
+    /**
+     * Returns an array of currently available langs
+     * @returns {any}
+     */
+    TranslateService.prototype.getLangs = function () {
+        return this.langs;
+    };
+    /**
+     * @param langs
+     * Add available langs
+     */
+    TranslateService.prototype.addLangs = function (langs) {
+        var _this = this;
+        langs.forEach(function (lang) {
+            if (_this.langs.indexOf(lang) === -1) {
+                _this.langs.push(lang);
+            }
+        });
+    };
+    /**
+     * Update the list of available langs
+     */
+    TranslateService.prototype.updateLangs = function () {
+        this.addLangs(Object.keys(this.translations));
+    };
+    /**
+     * Returns the parsed result of the translations
+     * @param translations
+     * @param key
+     * @param interpolateParams
+     * @returns {any}
+     */
+    TranslateService.prototype.getParsedResult = function (translations, key, interpolateParams) {
+        var res;
+        if (key instanceof Array) {
+            var result = {}, observables = false;
+            for (var _b = 0, key_1 = key; _b < key_1.length; _b++) {
+                var k = key_1[_b];
+                result[k] = this.getParsedResult(translations, k, interpolateParams);
+                if (typeof result[k].subscribe === "function") {
+                    observables = true;
+                }
+            }
+            if (observables) {
+                var mergedObs = void 0;
+                for (var _c = 0, key_2 = key; _c < key_2.length; _c++) {
+                    var k = key_2[_c];
+                    var obs = typeof result[k].subscribe === "function" ? result[k] : Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(result[k]);
+                    if (typeof mergedObs === "undefined") {
+                        mergedObs = obs;
+                    }
+                    else {
+                        mergedObs = mergedObs.pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators_merge__["a" /* merge */])(obs));
+                    }
+                }
+                return mergedObs.pipe(Object(__WEBPACK_IMPORTED_MODULE_7_rxjs_operators_toArray__["a" /* toArray */])(), Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators_map__["a" /* map */])(function (arr) {
+                    var obj = {};
+                    arr.forEach(function (value, index) {
+                        obj[key[index]] = value;
+                    });
+                    return obj;
+                }));
+            }
+            return result;
+        }
+        if (translations) {
+            res = this.parser.interpolate(this.parser.getValue(translations, key), interpolateParams);
+        }
+        if (typeof res === "undefined" && this.defaultLang && this.defaultLang !== this.currentLang && this.useDefaultLang) {
+            res = this.parser.interpolate(this.parser.getValue(this.translations[this.defaultLang], key), interpolateParams);
+        }
+        if (typeof res === "undefined") {
+            var params = { key: key, translateService: this };
+            if (typeof interpolateParams !== 'undefined') {
+                params.interpolateParams = interpolateParams;
+            }
+            res = this.missingTranslationHandler.handle(params);
+        }
+        return typeof res !== "undefined" ? res : key;
+    };
+    /**
+     * Gets the translated value of a key (or an array of keys)
+     * @param key
+     * @param interpolateParams
+     * @returns {any} the translated key, or an object of translated keys
+     */
+    TranslateService.prototype.get = function (key, interpolateParams) {
+        var _this = this;
+        if (!isDefined(key) || !key.length) {
+            throw new Error("Parameter \"key\" required");
+        }
+        // check if we are loading a new translation to use
+        if (this.pending) {
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].create(function (observer) {
+                var onComplete = function (res) {
+                    observer.next(res);
+                    observer.complete();
+                };
+                var onError = function (err) {
+                    observer.error(err);
+                };
+                _this.loadingTranslations.subscribe(function (res) {
+                    res = _this.getParsedResult(_this.compiler.compileTranslations(res, _this.currentLang), key, interpolateParams);
+                    if (typeof res.subscribe === "function") {
+                        res.subscribe(onComplete, onError);
+                    }
+                    else {
+                        onComplete(res);
+                    }
+                }, onError);
+            });
+        }
+        else {
+            var res = this.getParsedResult(this.translations[this.currentLang], key, interpolateParams);
+            if (typeof res.subscribe === "function") {
+                return res;
+            }
+            else {
+                return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(res);
+            }
+        }
+    };
+    /**
+     * Returns a stream of translated values of a key (or an array of keys) which updates
+     * whenever the language changes.
+     * @param key
+     * @param interpolateParams
+     * @returns {any} A stream of the translated key, or an object of translated keys
+     */
+    TranslateService.prototype.stream = function (key, interpolateParams) {
+        var _this = this;
+        if (!isDefined(key) || !key.length) {
+            throw new Error("Parameter \"key\" required");
+        }
+        return this
+            .get(key, interpolateParams)
+            .pipe(concat_3(this.onLangChange.pipe(Object(__WEBPACK_IMPORTED_MODULE_6_rxjs_operators_switchMap__["a" /* switchMap */])(function (event) {
+            var res = _this.getParsedResult(event.translations, key, interpolateParams);
+            if (typeof res.subscribe === "function") {
+                return res;
+            }
+            else {
+                return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(res);
+            }
+        }))));
+    };
+    /**
+     * Returns a translation instantly from the internal state of loaded translation.
+     * All rules regarding the current language, the preferred language of even fallback languages will be used except any promise handling.
+     * @param key
+     * @param interpolateParams
+     * @returns {string}
+     */
+    TranslateService.prototype.instant = function (key, interpolateParams) {
+        if (!isDefined(key) || !key.length) {
+            throw new Error("Parameter \"key\" required");
+        }
+        var res = this.getParsedResult(this.translations[this.currentLang], key, interpolateParams);
+        if (typeof res.subscribe !== "undefined") {
+            if (key instanceof Array) {
+                var obj_1 = {};
+                key.forEach(function (value, index) {
+                    obj_1[key[index]] = key[index];
+                });
+                return obj_1;
+            }
+            return key;
+        }
+        else {
+            return res;
+        }
+    };
+    /**
+     * Sets the translated value of a key, after compiling it
+     * @param key
+     * @param value
+     * @param lang
+     */
+    TranslateService.prototype.set = function (key, value, lang) {
+        if (lang === void 0) { lang = this.currentLang; }
+        this.translations[lang][key] = this.compiler.compile(value, lang);
+        this.updateLangs();
+        this.onTranslationChange.emit({ lang: lang, translations: this.translations[lang] });
+    };
+    /**
+     * Changes the current lang
+     * @param lang
+     */
+    TranslateService.prototype.changeLang = function (lang) {
+        this.currentLang = lang;
+        this.onLangChange.emit({ lang: lang, translations: this.translations[lang] });
+        // if there is no default lang, use the one that we just set
+        if (!this.defaultLang) {
+            this.changeDefaultLang(lang);
+        }
+    };
+    /**
+     * Changes the default lang
+     * @param lang
+     */
+    TranslateService.prototype.changeDefaultLang = function (lang) {
+        this.defaultLang = lang;
+        this.onDefaultLangChange.emit({ lang: lang, translations: this.translations[lang] });
+    };
+    /**
+     * Allows to reload the lang file from the file
+     * @param lang
+     * @returns {Observable<any>}
+     */
+    TranslateService.prototype.reloadLang = function (lang) {
+        this.resetLang(lang);
+        return this.getTranslation(lang);
+    };
+    /**
+     * Deletes inner translation
+     * @param lang
+     */
+    TranslateService.prototype.resetLang = function (lang) {
+        this._translationRequests[lang] = undefined;
+        this.translations[lang] = undefined;
+    };
+    /**
+     * Returns the language code name from the browser, e.g. "de"
+     *
+     * @returns string
+     */
+    TranslateService.prototype.getBrowserLang = function () {
+        if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+            return undefined;
+        }
+        var browserLang = window.navigator.languages ? window.navigator.languages[0] : null;
+        browserLang = browserLang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
+        if (browserLang.indexOf('-') !== -1) {
+            browserLang = browserLang.split('-')[0];
+        }
+        if (browserLang.indexOf('_') !== -1) {
+            browserLang = browserLang.split('_')[0];
+        }
+        return browserLang;
+    };
+    /**
+     * Returns the culture language code name from the browser, e.g. "de-DE"
+     *
+     * @returns string
+     */
+    TranslateService.prototype.getBrowserCultureLang = function () {
+        if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+            return undefined;
+        }
+        var browserCultureLang = window.navigator.languages ? window.navigator.languages[0] : null;
+        browserCultureLang = browserCultureLang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
+        return browserCultureLang;
+    };
+    return TranslateService;
+}());
+TranslateService = __decorate$2([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+    __param(5, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */])(USE_DEFAULT_LANG)),
+    __param(6, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */])(USE_STORE)),
+    __metadata("design:paramtypes", [TranslateStore,
+        TranslateLoader,
+        TranslateCompiler,
+        TranslateParser,
+        MissingTranslationHandler, Boolean, Boolean])
+], TranslateService);
+var __decorate$6 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$1 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+        return Reflect.metadata(k, v);
+};
+var TranslateDirective = (function () {
+    function TranslateDirective(translateService, element, _ref) {
+        var _this = this;
+        this.translateService = translateService;
+        this.element = element;
+        this._ref = _ref;
+        // subscribe to onTranslationChange event, in case the translations of the current lang change
+        if (!this.onTranslationChangeSub) {
+            this.onTranslationChangeSub = this.translateService.onTranslationChange.subscribe(function (event) {
+                if (event.lang === _this.translateService.currentLang) {
+                    _this.checkNodes(true, event.translations);
+                }
+            });
+        }
+        // subscribe to onLangChange event, in case the language changes
+        if (!this.onLangChangeSub) {
+            this.onLangChangeSub = this.translateService.onLangChange.subscribe(function (event) {
+                _this.checkNodes(true, event.translations);
+            });
+        }
+        // subscribe to onDefaultLangChange event, in case the default language changes
+        if (!this.onDefaultLangChangeSub) {
+            this.onDefaultLangChangeSub = this.translateService.onDefaultLangChange.subscribe(function (event) {
+                _this.checkNodes(true);
+            });
+        }
+    }
+    Object.defineProperty(TranslateDirective.prototype, "translate", {
+        set: function (key) {
+            if (key) {
+                this.key = key;
+                this.checkNodes();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslateDirective.prototype, "translateParams", {
+        set: function (params) {
+            if (!equals(this.currentParams, params)) {
+                this.currentParams = params;
+                this.checkNodes(true);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TranslateDirective.prototype.ngAfterViewChecked = function () {
+        this.checkNodes();
+    };
+    TranslateDirective.prototype.checkNodes = function (forceUpdate, translations) {
+        if (forceUpdate === void 0) { forceUpdate = false; }
+        var nodes = this.element.nativeElement.childNodes;
+        // if the element is empty
+        if (!nodes.length) {
+            // we add the key as content
+            this.setContent(this.element.nativeElement, this.key);
+            nodes = this.element.nativeElement.childNodes;
+        }
+        for (var i = 0; i < nodes.length; ++i) {
+            var node = nodes[i];
+            if (node.nodeType === 3) {
+                var key = void 0;
+                if (this.key) {
+                    key = this.key;
+                    if (forceUpdate) {
+                        node.lastKey = null;
+                    }
+                }
+                else {
+                    var content = this.getContent(node).trim();
+                    if (content.length) {
+                        // we want to use the content as a key, not the translation value
+                        if (content !== node.currentValue) {
+                            key = content;
+                            // the content was changed from the user, we'll use it as a reference if needed
+                            node.originalContent = this.getContent(node);
+                        }
+                        else if (node.originalContent && forceUpdate) {
+                            node.lastKey = null;
+                            // the current content is the translation, not the key, use the last real content as key
+                            key = node.originalContent.trim();
+                        }
+                    }
+                }
+                this.updateValue(key, node, translations);
+            }
+        }
+    };
+    TranslateDirective.prototype.updateValue = function (key, node, translations) {
+        var _this = this;
+        if (key) {
+            if (node.lastKey === key && this.lastParams === this.currentParams) {
+                return;
+            }
+            this.lastParams = this.currentParams;
+            var onTranslation = function (res) {
+                if (res !== key) {
+                    node.lastKey = key;
+                }
+                if (!node.originalContent) {
+                    node.originalContent = _this.getContent(node);
+                }
+                node.currentValue = isDefined(res) ? res : (node.originalContent || key);
+                // we replace in the original content to preserve spaces that we might have trimmed
+                _this.setContent(node, _this.key ? node.currentValue : node.originalContent.replace(key, node.currentValue));
+                _this._ref.markForCheck();
+            };
+            if (isDefined(translations)) {
+                var res = this.translateService.getParsedResult(translations, key, this.currentParams);
+                if (typeof res.subscribe === "function") {
+                    res.subscribe(onTranslation);
+                }
+                else {
+                    onTranslation(res);
+                }
+            }
+            else {
+                this.translateService.get(key, this.currentParams).subscribe(onTranslation);
+            }
+        }
+    };
+    TranslateDirective.prototype.getContent = function (node) {
+        return isDefined(node.textContent) ? node.textContent : node.data;
+    };
+    TranslateDirective.prototype.setContent = function (node, content) {
+        if (isDefined(node.textContent)) {
+            node.textContent = content;
+        }
+        else {
+            node.data = content;
+        }
+    };
+    TranslateDirective.prototype.ngOnDestroy = function () {
+        if (this.onLangChangeSub) {
+            this.onLangChangeSub.unsubscribe();
+        }
+        if (this.onDefaultLangChangeSub) {
+            this.onDefaultLangChangeSub.unsubscribe();
+        }
+        if (this.onTranslationChangeSub) {
+            this.onTranslationChangeSub.unsubscribe();
+        }
+    };
+    return TranslateDirective;
+}());
+__decorate$6([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
+    __metadata$1("design:type", String),
+    __metadata$1("design:paramtypes", [String])
+], TranslateDirective.prototype, "translate", null);
+__decorate$6([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
+    __metadata$1("design:type", Object),
+    __metadata$1("design:paramtypes", [Object])
+], TranslateDirective.prototype, "translateParams", null);
+TranslateDirective = __decorate$6([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* Directive */])({
+        selector: '[translate],[ngx-translate]'
+    }),
+    __metadata$1("design:paramtypes", [TranslateService, __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */]])
+], TranslateDirective);
+var __decorate$7 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$2 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+        return Reflect.metadata(k, v);
+};
+var TranslatePipe = (function () {
+    function TranslatePipe(translate, _ref) {
+        this.translate = translate;
+        this._ref = _ref;
+        this.value = '';
+    }
+    TranslatePipe.prototype.updateValue = function (key, interpolateParams, translations) {
+        var _this = this;
+        var onTranslation = function (res) {
+            _this.value = res !== undefined ? res : key;
+            _this.lastKey = key;
+            _this._ref.markForCheck();
+        };
+        if (translations) {
+            var res = this.translate.getParsedResult(translations, key, interpolateParams);
+            if (typeof res.subscribe === 'function') {
+                res.subscribe(onTranslation);
+            }
+            else {
+                onTranslation(res);
+            }
+        }
+        this.translate.get(key, interpolateParams).subscribe(onTranslation);
+    };
+    TranslatePipe.prototype.transform = function (query) {
+        var _this = this;
+        var args = [];
+        for (var _b = 1; _b < arguments.length; _b++) {
+            args[_b - 1] = arguments[_b];
+        }
+        if (!query || query.length === 0) {
+            return query;
+        }
+        // if we ask another time for the same key, return the last value
+        if (equals(query, this.lastKey) && equals(args, this.lastParams)) {
+            return this.value;
+        }
+        var interpolateParams;
+        if (isDefined(args[0]) && args.length) {
+            if (typeof args[0] === 'string' && args[0].length) {
+                // we accept objects written in the template such as {n:1}, {'n':1}, {n:'v'}
+                // which is why we might need to change it to real JSON objects such as {"n":1} or {"n":"v"}
+                var validArgs = args[0]
+                    .replace(/(\')?([a-zA-Z0-9_]+)(\')?(\s)?:/g, '"$2":')
+                    .replace(/:(\s)?(\')(.*?)(\')/g, ':"$3"');
+                try {
+                    interpolateParams = JSON.parse(validArgs);
+                }
+                catch (e) {
+                    throw new SyntaxError("Wrong parameter in TranslatePipe. Expected a valid Object, received: " + args[0]);
+                }
+            }
+            else if (typeof args[0] === 'object' && !Array.isArray(args[0])) {
+                interpolateParams = args[0];
+            }
+        }
+        // store the query, in case it changes
+        this.lastKey = query;
+        // store the params, in case they change
+        this.lastParams = args;
+        // set the value
+        this.updateValue(query, interpolateParams);
+        // if there is a subscription to onLangChange, clean it
+        this._dispose();
+        // subscribe to onTranslationChange event, in case the translations change
+        if (!this.onTranslationChange) {
+            this.onTranslationChange = this.translate.onTranslationChange.subscribe(function (event) {
+                if (_this.lastKey && event.lang === _this.translate.currentLang) {
+                    _this.lastKey = null;
+                    _this.updateValue(query, interpolateParams, event.translations);
+                }
+            });
+        }
+        // subscribe to onLangChange event, in case the language changes
+        if (!this.onLangChange) {
+            this.onLangChange = this.translate.onLangChange.subscribe(function (event) {
+                if (_this.lastKey) {
+                    _this.lastKey = null; // we want to make sure it doesn't return the same value until it's been updated
+                    _this.updateValue(query, interpolateParams, event.translations);
+                }
+            });
+        }
+        // subscribe to onDefaultLangChange event, in case the default language changes
+        if (!this.onDefaultLangChange) {
+            this.onDefaultLangChange = this.translate.onDefaultLangChange.subscribe(function () {
+                if (_this.lastKey) {
+                    _this.lastKey = null; // we want to make sure it doesn't return the same value until it's been updated
+                    _this.updateValue(query, interpolateParams);
+                }
+            });
+        }
+        return this.value;
+    };
+    /**
+     * Clean any existing subscription to change events
+     * @private
+     */
+    TranslatePipe.prototype._dispose = function () {
+        if (typeof this.onTranslationChange !== 'undefined') {
+            this.onTranslationChange.unsubscribe();
+            this.onTranslationChange = undefined;
+        }
+        if (typeof this.onLangChange !== 'undefined') {
+            this.onLangChange.unsubscribe();
+            this.onLangChange = undefined;
+        }
+        if (typeof this.onDefaultLangChange !== 'undefined') {
+            this.onDefaultLangChange.unsubscribe();
+            this.onDefaultLangChange = undefined;
+        }
+    };
+    TranslatePipe.prototype.ngOnDestroy = function () {
+        this._dispose();
+    };
+    return TranslatePipe;
+}());
+TranslatePipe = __decorate$7([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["T" /* Pipe */])({
+        name: 'translate',
+        pure: false // required to update the value when the promise is resolved
+    }),
+    __metadata$2("design:paramtypes", [TranslateService, __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */]])
+], TranslatePipe);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+        r = Reflect.decorate(decorators, target, key, desc);
+    else
+        for (var i = decorators.length - 1; i >= 0; i--)
+            if (d = decorators[i])
+                r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var TranslateModule = TranslateModule_1 = (function () {
+    function TranslateModule() {
+    }
+    /**
+     * Use this method in your root module to provide the TranslateService
+     * @param {TranslateModuleConfig} config
+     * @returns {ModuleWithProviders}
+     */
+    TranslateModule.forRoot = function (config) {
+        if (config === void 0) { config = {}; }
+        return {
+            ngModule: TranslateModule_1,
+            providers: [
+                config.loader || { provide: TranslateLoader, useClass: TranslateFakeLoader },
+                config.compiler || { provide: TranslateCompiler, useClass: TranslateFakeCompiler },
+                config.parser || { provide: TranslateParser, useClass: TranslateDefaultParser },
+                config.missingTranslationHandler || { provide: MissingTranslationHandler, useClass: FakeMissingTranslationHandler },
+                TranslateStore,
+                { provide: USE_STORE, useValue: config.isolate },
+                { provide: USE_DEFAULT_LANG, useValue: config.useDefaultLang },
+                TranslateService
+            ]
+        };
+    };
+    /**
+     * Use this method in your other (non root) modules to import the directive/pipe
+     * @param {TranslateModuleConfig} config
+     * @returns {ModuleWithProviders}
+     */
+    TranslateModule.forChild = function (config) {
+        if (config === void 0) { config = {}; }
+        return {
+            ngModule: TranslateModule_1,
+            providers: [
+                config.loader || { provide: TranslateLoader, useClass: TranslateFakeLoader },
+                config.compiler || { provide: TranslateCompiler, useClass: TranslateFakeCompiler },
+                config.parser || { provide: TranslateParser, useClass: TranslateDefaultParser },
+                config.missingTranslationHandler || { provide: MissingTranslationHandler, useClass: FakeMissingTranslationHandler },
+                { provide: USE_STORE, useValue: config.isolate },
+                { provide: USE_DEFAULT_LANG, useValue: config.useDefaultLang },
+                TranslateService
+            ]
+        };
+    };
+    return TranslateModule;
+}());
+TranslateModule = TranslateModule_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+        declarations: [
+            TranslatePipe,
+            TranslateDirective
+        ],
+        exports: [
+            TranslatePipe,
+            TranslateDirective
+        ]
+    })
+], TranslateModule);
+var TranslateModule_1;
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+//# sourceMappingURL=core.es5.js.map
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__("./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/@ngx-translate/http-loader/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_http_loader__ = __webpack_require__("./node_modules/@ngx-translate/http-loader/src/http-loader.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__src_http_loader__["a"]; });
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@ngx-translate/http-loader/src/http-loader.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TranslateHttpLoader; });
+var TranslateHttpLoader = (function () {
+    function TranslateHttpLoader(http, prefix, suffix) {
+        if (prefix === void 0) { prefix = "/assets/i18n/"; }
+        if (suffix === void 0) { suffix = ".json"; }
+        this.http = http;
+        this.prefix = prefix;
+        this.suffix = suffix;
+    }
+    /**
+     * Gets the translations from the server
+     * @param lang
+     * @returns {any}
+     */
+    TranslateHttpLoader.prototype.getTranslation = function (lang) {
+        return this.http.get("" + this.prefix + lang + this.suffix);
+    };
+    return TranslateHttpLoader;
+}());
+
+
+
+/***/ }),
+
+/***/ "./node_modules/ngx-page-scroll/ngx-page-scroll.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_ngx_page_scroll_directive__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll.directive.js");
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_ng2_page_scroll_service__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll.service.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_ngx_page_scroll_service__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll.service.js");
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_ng2_page_scroll_config__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-config.js");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__src_ng2_page_scroll_config__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_ng2_page_scroll_instance__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-instance.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_ngx_page_scroll_config__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-config.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__src_ngx_page_scroll_config__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_ngx_page_scroll_instance__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-instance.js");
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_ng2_page_scroll_util_service__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-util.service.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_ngx_page_scroll_util_service__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-util.service.js");
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_ng2_page_scroll_module__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll.module.js");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_5__src_ng2_page_scroll_module__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_ngx_page_scroll_module__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll.module.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_5__src_ngx_page_scroll_module__["a"]; });
 
 
 
@@ -78380,7 +82288,7 @@ var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["_7" /* Version */
 
 /***/ }),
 
-/***/ "./node_modules/ng2-page-scroll/src/ng2-page-scroll-config.js":
+/***/ "./node_modules/ngx-page-scroll/src/ngx-page-scroll-config.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78410,7 +82318,6 @@ var PageScrollConfig = (function () {
      * The number of milliseconds to wait till updating the scroll position again.
      * Small amounts may produce smoother animations but require more processing power.
      * @type {number}
-     * @private
      */
     PageScrollConfig._interval = 10;
     /**
@@ -78420,13 +82327,11 @@ var PageScrollConfig = (function () {
      * Due to dpi or rounding irregularities in browsers floating point numbers for scrollTop/scrollLeft values
      * are possible, making a === comparison of current scrollTop or scrollLeft and target scrollPosition error-prone.
      * @type {number}
-     * @private
      */
     PageScrollConfig._minScrollDistance = 2;
     /**
      * Name of the default namespace.
      * @type {string}
-     * @private
      */
     PageScrollConfig._defaultNamespace = 'default';
     /**
@@ -78441,13 +82346,12 @@ var PageScrollConfig = (function () {
      * 1: Animation errors in dev mode, no logs in prod mode
      * 2: Animation errors in dev and prod mode
      * 5: Animation errors in dev and all scroll position values that get set; animation errors in prod mode
-     * @type {boolean}
-     * @private
+     * @type {number}
      */
-    PageScrollConfig._logLevel = 2;
+    PageScrollConfig._logLevel = 1;
     /**
      * The duration how long a scrollTo animation should last by default.
-     * May be overridden using the page-scroll-duration attribute on a single ng2PageScroll instance.
+     * May be overridden using the page-scroll-duration attribute on a single ngxPageScroll instance.
      * @type {number}
      */
     PageScrollConfig.defaultDuration = 1250;
@@ -78469,14 +82373,12 @@ var PageScrollConfig = (function () {
     /**
      * The events that are listened to on the body to decide whether a scroll animation has been interfered/interrupted by the user
      * @type {string[]}
-     * @private
      */
     PageScrollConfig._interruptEvents = ['mousedown', 'wheel', 'DOMMouseScroll', 'mousewheel', 'keyup', 'touchmove'];
     /**
      * The keys that are considered to interrupt a scroll animation (mainly the arrow keys). All other key presses will not stop the
      * scroll animation.
      * @type {number[]}
-     * @private
      */
     PageScrollConfig._interruptKeys = [33, 34, 35, 36, 38, 40];
     /**
@@ -78498,14 +82400,14 @@ var PageScrollConfig = (function () {
 
 /***/ }),
 
-/***/ "./node_modules/ng2-page-scroll/src/ng2-page-scroll-instance.js":
+/***/ "./node_modules/ngx-page-scroll/src/ngx-page-scroll-instance.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PageScrollInstance; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-config.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-util.service.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-config.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-util.service.js");
 
 
 
@@ -78526,19 +82428,19 @@ var PageScrollInstance = (function () {
          * These properties will be set during instance construction and default to their defaults from PageScrollConfig
          */
         /* A namespace to "group" scroll animations together and stopping some does not stop others */
-        this._namespace = __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._defaultNamespace;
+        this._namespace = __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._defaultNamespace;
         /* Whether we scroll vertically (true) or horizontally (false) */
-        this._verticalScrolling = __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultIsVerticalScrolling;
+        this._verticalScrolling = __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultIsVerticalScrolling;
         /* Offset in px that the animation should stop above that target element */
-        this._offset = __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultScrollOffset;
+        this._offset = __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultScrollOffset;
         /* Duration in milliseconds the scroll animation should last */
-        this._duration = __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultDuration;
+        this._duration = __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultDuration;
         /* Easing function to manipulate the scrollTop/scrollLeft value over time */
-        this._easingLogic = __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultEasingLogic;
+        this._easingLogic = __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultEasingLogic;
         /* Boolean whether the scroll animation should stop on user interruption or not */
-        this._interruptible = __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultInterruptible;
+        this._interruptible = __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultInterruptible;
         /* Whether the advanded offset calculation for inline scrolling should be used */
-        this._advancedInlineOffsetCalculation = __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultAdvancedInlineOffsetCalculation;
+        this._advancedInlineOffsetCalculation = __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultAdvancedInlineOffsetCalculation;
         /* Event emitter to notify the world about the scrolling */
         this._pageScrollFinish = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         /**
@@ -78565,11 +82467,11 @@ var PageScrollInstance = (function () {
         });
     };
     PageScrollInstance.newInstance = function (options) {
-        if (__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.namespace) || options.namespace.length <= 0) {
-            options.namespace = __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._defaultNamespace;
+        if (__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.namespace) || options.namespace.length <= 0) {
+            options.namespace = __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._defaultNamespace;
         }
         var pageScrollInstance = new PageScrollInstance(options.namespace, document);
-        if (__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.scrollingViews) || options.scrollingViews.length === 0) {
+        if (__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.scrollingViews) || options.scrollingViews.length === 0) {
             pageScrollInstance._isInlineScrolling = false;
             pageScrollInstance._scrollingViews = [document.documentElement, document.body, document.body.parentNode];
         }
@@ -78578,31 +82480,31 @@ var PageScrollInstance = (function () {
             pageScrollInstance._scrollingViews = options.scrollingViews;
         }
         pageScrollInstance._scrollTarget = options.scrollTarget;
-        if (!__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.verticalScrolling)) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.verticalScrolling)) {
             pageScrollInstance._verticalScrolling = options.verticalScrolling;
         }
-        if (!__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollOffset)) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollOffset)) {
             pageScrollInstance._offset = options.pageScrollOffset;
         }
-        if (!__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollEasingLogic)) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollEasingLogic)) {
             pageScrollInstance._easingLogic = options.pageScrollEasingLogic;
         }
-        if (__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollDuration) && !__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollSpeed)) {
+        if (__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollDuration) && !__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollSpeed)) {
             // No duration specified in the options, only in this case we use the speed option when present
             pageScrollInstance._speed = options.pageScrollSpeed;
             pageScrollInstance._duration = undefined;
         }
-        else if (!__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollDuration)) {
+        else if (!__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollDuration)) {
             pageScrollInstance._duration = options.pageScrollDuration;
         }
-        if (!__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollFinishListener)) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollFinishListener)) {
             pageScrollInstance._pageScrollFinish = options.pageScrollFinishListener;
         }
         pageScrollInstance._interruptible = options.pageScrollInterruptible ||
-            (__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollInterruptible) && __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultInterruptible);
+            (__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.pageScrollInterruptible) && __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultInterruptible);
         pageScrollInstance._advancedInlineOffsetCalculation = options.advancedInlineOffsetCalculation ||
-            (__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.advancedInlineOffsetCalculation) &&
-                __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultAdvancedInlineOffsetCalculation);
+            (__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(options.advancedInlineOffsetCalculation) &&
+                __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultAdvancedInlineOffsetCalculation);
         return pageScrollInstance;
     };
     PageScrollInstance.prototype.getScrollPropertyValue = function (scrollingView) {
@@ -78648,7 +82550,7 @@ var PageScrollInstance = (function () {
                 // Start parent is the immediate parent
                 var parent_1 = scrollTargetElement.parentElement;
                 // Iterate upwards all parents
-                while (!parentFound && !__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(parent_1)) {
+                while (!parentFound && !__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(parent_1)) {
                     if (theWindow.getComputedStyle(parent_1).getPropertyValue('position') === 'relative') {
                         accumulatedParentsPos.top += parent_1.offsetTop;
                         accumulatedParentsPos.left += parent_1.offsetLeft;
@@ -78663,14 +82565,14 @@ var PageScrollInstance = (function () {
                     position.left += accumulatedParentsPos.left;
                 }
                 else {
-                    if (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])())) {
+                    if (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])())) {
                         console.warn('Unable to find nested scrolling targets parent!');
                     }
                 }
             }
             return position;
         }
-        return __WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].extractElementPosition(this.document, scrollTargetElement);
+        return __WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].extractElementPosition(this.document, scrollTargetElement);
     };
     /**
      * Get the top offset of the scroll animation.
@@ -78691,20 +82593,20 @@ var PageScrollInstance = (function () {
      */
     PageScrollInstance.prototype.setScrollPosition = function (position) {
         var _this = this;
-        if (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 5 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])()) {
+        if (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 5 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])()) {
             console.warn('Scroll Position: ' + position);
         }
         // Set the new scrollTop/scrollLeft to all scrollingViews elements
         return this.scrollingViews.reduce(function (oneAlreadyWorked, scrollingView) {
             var startScrollPropertyValue = _this.getScrollPropertyValue(scrollingView);
-            if (scrollingView && !__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(startScrollPropertyValue)) {
+            if (scrollingView && !__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(startScrollPropertyValue)) {
                 var scrollDistance = Math.abs(startScrollPropertyValue - position);
                 // The movement we need to perform is less than 2px
                 // This we consider a small movement which some browser may not perform when
                 // changing the scrollTop/scrollLeft property
                 // Thus in this cases we do not stop the scroll animation, although setting the
                 // scrollTop/scrollLeft value "fails"
-                var isSmallMovement = scrollDistance < __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._minScrollDistance;
+                var isSmallMovement = scrollDistance < __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._minScrollDistance;
                 if (!_this.verticalScrolling) {
                     scrollingView.scrollLeft = position;
                 }
@@ -78748,7 +82650,7 @@ var PageScrollInstance = (function () {
         this._interruptListener = function (event) {
             interruptReporter.report(event, _this);
         };
-        __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._interruptEvents.forEach(function (event) { return _this.document.body.addEventListener(event, _this._interruptListener); });
+        __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._interruptEvents.forEach(function (event) { return _this.document.body.addEventListener(event, _this._interruptListener); });
         this._interruptListenersAttached = true;
     };
     /**
@@ -78757,7 +82659,7 @@ var PageScrollInstance = (function () {
      */
     PageScrollInstance.prototype.detachInterruptListeners = function () {
         var _this = this;
-        __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._interruptEvents.forEach(function (event) { return _this.document.body.removeEventListener(event, _this._interruptListener); });
+        __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._interruptEvents.forEach(function (event) { return _this.document.body.removeEventListener(event, _this._interruptListener); });
         this._interruptListenersAttached = false;
     };
     Object.defineProperty(PageScrollInstance.prototype, "namespace", {
@@ -78900,7 +82802,7 @@ var PageScrollInstance = (function () {
 
 /***/ }),
 
-/***/ "./node_modules/ng2-page-scroll/src/ng2-page-scroll-util.service.js":
+/***/ "./node_modules/ngx-page-scroll/src/ngx-page-scroll-util.service.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78941,7 +82843,7 @@ var PageScrollUtilService = (function () {
 
 /***/ }),
 
-/***/ "./node_modules/ng2-page-scroll/src/ng2-page-scroll.directive.js":
+/***/ "./node_modules/ngx-page-scroll/src/ngx-page-scroll.directive.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78949,9 +82851,9 @@ var PageScrollUtilService = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ng2_page_scroll_service__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll.service.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ng2_page_scroll_instance__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-instance.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ng2_page_scroll_util_service__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-util.service.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_page_scroll_service__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll.service.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngx_page_scroll_instance__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-instance.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngx_page_scroll_util_service__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-util.service.js");
 
 
 
@@ -78984,8 +82886,8 @@ var PageScroll = (function () {
         return undefined;
     };
     PageScroll.prototype.generatePageScrollInstance = function () {
-        if (__WEBPACK_IMPORTED_MODULE_5__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(this.pageScrollInstance)) {
-            this.pageScrollInstance = __WEBPACK_IMPORTED_MODULE_4__ng2_page_scroll_instance__["a" /* PageScrollInstance */].newInstance({
+        if (__WEBPACK_IMPORTED_MODULE_5__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(this.pageScrollInstance)) {
+            this.pageScrollInstance = __WEBPACK_IMPORTED_MODULE_4__ngx_page_scroll_instance__["a" /* PageScrollInstance */].newInstance({
                 document: this.document,
                 scrollTarget: this.pageScrollTarget || this.href,
                 scrollingViews: null,
@@ -79058,7 +82960,7 @@ var PageScroll = (function () {
     ];
     /** @nocollapse */
     PageScroll.ctorParameters = function () { return [
-        { type: __WEBPACK_IMPORTED_MODULE_3__ng2_page_scroll_service__["b" /* PageScrollService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_3__ngx_page_scroll_service__["b" /* PageScrollService */], },
         { type: __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */], decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Optional */] },] },
         { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */], args: [__WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* DOCUMENT */],] },] },
     ]; };
@@ -79083,58 +82985,49 @@ var PageScroll = (function () {
 
 /***/ }),
 
-/***/ "./node_modules/ng2-page-scroll/src/ng2-page-scroll.module.js":
+/***/ "./node_modules/ngx-page-scroll/src/ngx-page-scroll.module.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Ng2PageScrollModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NgxPageScrollModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_service__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll.service.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ng2_page_scroll_directive__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll.directive.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_service__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll.service.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_page_scroll_directive__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll.directive.js");
 
 
 
 
-var Ng2PageScrollModule = (function () {
-    function Ng2PageScrollModule() {
+var NgxPageScrollModule = (function () {
+    function NgxPageScrollModule() {
     }
-    /** @deprecated since v4.0.0-beta.10 (https://github.com/Nolanus/ng2-page-scroll/pull/190) */
-    Ng2PageScrollModule.forRoot = function () {
-        return {
-            ngModule: Ng2PageScrollModule,
-            providers: [
-                { provide: __WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_service__["b" /* PageScrollService */], useClass: __WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_service__["b" /* PageScrollService */] }
-            ]
-        };
-    };
-    Ng2PageScrollModule.decorators = [
+    NgxPageScrollModule.decorators = [
         { type: __WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */], args: [{
                     imports: [__WEBPACK_IMPORTED_MODULE_0__angular_common__["b" /* CommonModule */]],
-                    declarations: [__WEBPACK_IMPORTED_MODULE_3__ng2_page_scroll_directive__["a" /* PageScroll */]],
-                    exports: [__WEBPACK_IMPORTED_MODULE_3__ng2_page_scroll_directive__["a" /* PageScroll */]],
-                    providers: [__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_service__["a" /* NG2PAGESCROLL_SERVICE_PROVIDER */]]
+                    declarations: [__WEBPACK_IMPORTED_MODULE_3__ngx_page_scroll_directive__["a" /* PageScroll */]],
+                    exports: [__WEBPACK_IMPORTED_MODULE_3__ngx_page_scroll_directive__["a" /* PageScroll */]],
+                    providers: [__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_service__["a" /* NgxPageScrollServiceProvider */]]
                 },] },
     ];
     /** @nocollapse */
-    Ng2PageScrollModule.ctorParameters = function () { return []; };
-    return Ng2PageScrollModule;
+    NgxPageScrollModule.ctorParameters = function () { return []; };
+    return NgxPageScrollModule;
 }());
 
 
 
 /***/ }),
 
-/***/ "./node_modules/ng2-page-scroll/src/ng2-page-scroll.service.js":
+/***/ "./node_modules/ngx-page-scroll/src/ngx-page-scroll.service.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return PageScrollService; });
-/* unused harmony export NG2PAGESCROLL_SERVICE_PROVIDER_FACTORY */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NG2PAGESCROLL_SERVICE_PROVIDER; });
+/* unused harmony export NgxPageScrollServiceProviderFactory */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NgxPageScrollServiceProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-config.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__ = __webpack_require__("./node_modules/ng2-page-scroll/src/ng2-page-scroll-util.service.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-config.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__ = __webpack_require__("./node_modules/ngx-page-scroll/src/ngx-page-scroll-util.service.js");
 
 
 
@@ -79151,7 +83044,7 @@ var PageScrollService = (function () {
                 var shouldStop = true;
                 if (event.type === 'keyup') {
                     // Only stop if specific keys have been pressed, for all others don't stop anything
-                    if (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._interruptKeys.indexOf(event.keyCode) === -1) {
+                    if (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._interruptKeys.indexOf(event.keyCode) === -1) {
                         // The pressed key is not in the list of interrupting keys
                         shouldStop = false;
                     }
@@ -79170,7 +83063,7 @@ var PageScrollService = (function () {
             }
         };
         if (PageScrollService.instanceCounter > 0 &&
-            (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])()))) {
+            (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])()))) {
             console.warn('An instance of PageScrollService already exists, usually ' +
                 'including one provider should be enough, so double check.');
         }
@@ -79207,8 +83100,8 @@ var PageScrollService = (function () {
         this.stopAll(pageScrollInstance.namespace);
         if (pageScrollInstance.scrollingViews === null || pageScrollInstance.scrollingViews.length === 0) {
             // No scrollingViews specified, thus we can't animate anything
-            if (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])())) {
-                console.warn('No scrollingViews specified, this ng2-page-scroll does not know which DOM elements to scroll');
+            if (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])())) {
+                console.warn('No scrollingViews specified, this ngx-page-scroll does not know which DOM elements to scroll');
             }
             return;
         }
@@ -79217,7 +83110,7 @@ var PageScrollService = (function () {
         pageScrollInstance.startScrollPosition = 0;
         // Get the start scroll position from the scrollingViews (e.g. if the user already scrolled down the content)
         pageScrollInstance.scrollingViews.forEach(function (scrollingView) {
-            if (__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(scrollingView)) {
+            if (__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(scrollingView)) {
                 return;
             }
             // Get the scrollTop or scrollLeft value of the first scrollingView that returns a value for its "scrollTop"
@@ -79238,7 +83131,7 @@ var PageScrollService = (function () {
         pageScrollInstance.distanceToScroll = pageScrollInstance.targetScrollPosition - pageScrollInstance.startScrollPosition;
         if (isNaN(pageScrollInstance.distanceToScroll)) {
             // We weren't able to find the target position, maybe the element does not exist?
-            if (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])())) {
+            if (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])())) {
                 console.log('Scrolling not possible, as we can\'t find the specified target');
             }
             pageScrollInstance.fireEvent(false);
@@ -79247,20 +83140,20 @@ var PageScrollService = (function () {
         // We're at the final destination already
         // OR we need to scroll down but are already at the end
         // OR we need to scroll up but are at the top already
-        var allReadyAtDestination = Math.abs(pageScrollInstance.distanceToScroll) < __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._minScrollDistance;
+        var allReadyAtDestination = Math.abs(pageScrollInstance.distanceToScroll) < __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._minScrollDistance;
         // Check how long we need to scroll if a speed option is given
         // Default executionDuration is the specified duration
         pageScrollInstance.executionDuration = pageScrollInstance.duration;
         // Maybe we need to pay attention to the speed option?
-        if (!__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(pageScrollInstance.speed) && __WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(pageScrollInstance.duration)) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(pageScrollInstance.speed) && __WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(pageScrollInstance.duration)) {
             // Speed option is set and no duration => calculate duration based on speed and scroll distance
             pageScrollInstance.executionDuration = Math.abs(pageScrollInstance.distanceToScroll) / pageScrollInstance.speed * 1000;
         }
         // We should go there directly, as our "animation" would have one big step
         // only anyway and this way we save the interval stuff
-        var tooShortInterval = pageScrollInstance.executionDuration <= __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._interval;
+        var tooShortInterval = pageScrollInstance.executionDuration <= __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._interval;
         if (allReadyAtDestination || tooShortInterval) {
-            if (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])())) {
+            if (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 2 || (__WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._logLevel >= 1 && Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* isDevMode */])())) {
                 if (allReadyAtDestination) {
                     console.log('Scrolling not possible, as we can\'t get any closer to the destination');
                 }
@@ -79274,7 +83167,7 @@ var PageScrollService = (function () {
         }
         // Register the interrupt listeners if we want an interruptible scroll animation
         if (pageScrollInstance.interruptible ||
-            (__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(pageScrollInstance.interruptible) && __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */].defaultInterruptible)) {
+            (__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(pageScrollInstance.interruptible) && __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */].defaultInterruptible)) {
             pageScrollInstance.attachInterruptListeners(this.onInterrupted);
         }
         // Let's get started, get the start time...
@@ -79307,7 +83200,7 @@ var PageScrollService = (function () {
             if (stopNow) {
                 _this.stopInternal(false, _pageScrollInstance);
             }
-        }, __WEBPACK_IMPORTED_MODULE_1__ng2_page_scroll_config__["a" /* PageScrollConfig */]._interval, pageScrollInstance);
+        }, __WEBPACK_IMPORTED_MODULE_1__ngx_page_scroll_config__["a" /* PageScrollConfig */]._interval, pageScrollInstance);
         // Register the instance as running one
         this.runningInstances.push(pageScrollInstance);
     };
@@ -79322,7 +83215,7 @@ var PageScrollService = (function () {
             var stoppedSome = false;
             for (var i = 0; i < this.runningInstances.length; ++i) {
                 var pageScrollInstance = this.runningInstances[i];
-                if (__WEBPACK_IMPORTED_MODULE_2__ng2_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(namespace) || namespace.length === 0 ||
+                if (__WEBPACK_IMPORTED_MODULE_2__ngx_page_scroll_util_service__["a" /* PageScrollUtilService */].isUndefinedOrNull(namespace) || namespace.length === 0 ||
                     pageScrollInstance.namespace === namespace) {
                     stoppedSome = true;
                     this.stopInternal(true, pageScrollInstance);
@@ -79347,952 +83240,14 @@ var PageScrollService = (function () {
 }());
 
 /* singleton pattern taken from https://github.com/angular/angular/issues/13854 */
-function NG2PAGESCROLL_SERVICE_PROVIDER_FACTORY(parentDispatcher) {
+function NgxPageScrollServiceProviderFactory(parentDispatcher) {
     return parentDispatcher || new PageScrollService();
 }
-var NG2PAGESCROLL_SERVICE_PROVIDER = {
+var NgxPageScrollServiceProvider = {
     provide: PageScrollService,
     deps: [[new __WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Optional */](), new __WEBPACK_IMPORTED_MODULE_0__angular_core__["_1" /* SkipSelf */](), PageScrollService]],
-    useFactory: NG2PAGESCROLL_SERVICE_PROVIDER_FACTORY
+    useFactory: NgxPageScrollServiceProviderFactory
 };
-
-
-/***/ }),
-
-/***/ "./node_modules/ng2-translate/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export translateLoaderFactory */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TranslateModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_translate_pipe__ = __webpack_require__("./node_modules/ng2-translate/src/translate.pipe.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_translate_parser__ = __webpack_require__("./node_modules/ng2-translate/src/translate.parser.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_translate_service__ = __webpack_require__("./node_modules/ng2-translate/src/translate.service.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_translate_directive__ = __webpack_require__("./node_modules/ng2-translate/src/translate.directive.js");
-/* unused harmony namespace reexport */
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_4__src_translate_service__["b"]; });
-/* unused harmony namespace reexport */
-/* unused harmony namespace reexport */
-
-
-
-
-
-
-
-
-
-
-function translateLoaderFactory(http) {
-    return new __WEBPACK_IMPORTED_MODULE_4__src_translate_service__["c" /* TranslateStaticLoader */](http);
-}
-var TranslateModule = (function () {
-    function TranslateModule() {
-    }
-    TranslateModule.forRoot = function (providedLoader) {
-        if (providedLoader === void 0) { providedLoader = {
-            provide: __WEBPACK_IMPORTED_MODULE_4__src_translate_service__["a" /* TranslateLoader */],
-            useFactory: translateLoaderFactory,
-            deps: [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]]
-        }; }
-        return {
-            ngModule: TranslateModule,
-            providers: [
-                providedLoader,
-                __WEBPACK_IMPORTED_MODULE_4__src_translate_service__["b" /* TranslateService */],
-                { provide: __WEBPACK_IMPORTED_MODULE_3__src_translate_parser__["b" /* TranslateParser */], useClass: __WEBPACK_IMPORTED_MODULE_3__src_translate_parser__["a" /* DefaultTranslateParser */] }
-            ]
-        };
-    };
-    TranslateModule.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */], args: [{
-                    imports: [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* HttpModule */]],
-                    declarations: [
-                        __WEBPACK_IMPORTED_MODULE_2__src_translate_pipe__["a" /* TranslatePipe */],
-                        __WEBPACK_IMPORTED_MODULE_5__src_translate_directive__["a" /* TranslateDirective */]
-                    ],
-                    exports: [
-                        __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* HttpModule */],
-                        __WEBPACK_IMPORTED_MODULE_2__src_translate_pipe__["a" /* TranslatePipe */],
-                        __WEBPACK_IMPORTED_MODULE_5__src_translate_directive__["a" /* TranslateDirective */]
-                    ]
-                },] },
-    ];
-    /** @nocollapse */
-    TranslateModule.ctorParameters = function () { return []; };
-    return TranslateModule;
-}());
-
-
-/***/ }),
-
-/***/ "./node_modules/ng2-translate/src/translate.directive.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TranslateDirective; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__("./node_modules/ng2-translate/src/util.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__translate_service__ = __webpack_require__("./node_modules/ng2-translate/src/translate.service.js");
-
-
-
-var TranslateDirective = (function () {
-    function TranslateDirective(translateService, element) {
-        var _this = this;
-        this.translateService = translateService;
-        this.element = element;
-        // subscribe to onTranslationChange event, in case the translations of the current lang change
-        if (!this.onTranslationChangeSub) {
-            this.onTranslationChangeSub = this.translateService.onTranslationChange.subscribe(function (event) {
-                if (event.lang === _this.translateService.currentLang) {
-                    _this.checkNodes(true, event.translations);
-                }
-            });
-        }
-        // subscribe to onLangChange event, in case the language changes
-        if (!this.onLangChangeSub) {
-            this.onLangChangeSub = this.translateService.onLangChange.subscribe(function (event) {
-                _this.checkNodes(true, event.translations);
-            });
-        }
-        // subscribe to onDefaultLangChange event, in case the default language changes
-        if (!this.onDefaultLangChangeSub) {
-            this.onDefaultLangChangeSub = this.translateService.onDefaultLangChange.subscribe(function (event) {
-                _this.checkNodes(true);
-            });
-        }
-    }
-    Object.defineProperty(TranslateDirective.prototype, "translate", {
-        set: function (key) {
-            if (key) {
-                this.key = key;
-                this.checkNodes();
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    TranslateDirective.prototype.ngAfterViewChecked = function () {
-        this.checkNodes();
-    };
-    TranslateDirective.prototype.checkNodes = function (forceUpdate, translations) {
-        if (forceUpdate === void 0) { forceUpdate = false; }
-        var nodes = this.element.nativeElement.childNodes;
-        for (var i = 0; i < nodes.length; ++i) {
-            var node = nodes[i];
-            if (node.nodeType === 3) {
-                var key = void 0;
-                if (this.key) {
-                    key = this.key;
-                }
-                else {
-                    var content = node.textContent.trim();
-                    if (content.length) {
-                        // we want to use the content as a key, not the translation value
-                        if (content !== node.currentValue) {
-                            key = content;
-                            // the content was changed from the user, we'll use it as a reference if needed
-                            node.originalContent = node.textContent;
-                        }
-                        else if (node.originalContent && forceUpdate) {
-                            node.lastKey = null;
-                            // the current content is the translation, not the key, use the last real content as key
-                            key = node.originalContent.trim();
-                        }
-                    }
-                }
-                this.updateValue(key, node, translations);
-            }
-        }
-    };
-    TranslateDirective.prototype.updateValue = function (key, node, translations) {
-        var _this = this;
-        if (key) {
-            var interpolateParams = this.translateParams;
-            if (node.lastKey === key && this.lastParams === interpolateParams) {
-                return;
-            }
-            this.lastParams = interpolateParams;
-            var onTranslation = function (res) {
-                if (res !== key) {
-                    node.lastKey = key;
-                }
-                if (!node.originalContent) {
-                    node.originalContent = node.textContent;
-                }
-                node.currentValue = Object(__WEBPACK_IMPORTED_MODULE_1__util__["b" /* isDefined */])(res) ? res : (node.originalContent || key);
-                // we replace in the original content to preserve spaces that we might have trimmed
-                node.textContent = _this.key ? node.currentValue : node.originalContent.replace(key, node.currentValue);
-            };
-            if (Object(__WEBPACK_IMPORTED_MODULE_1__util__["b" /* isDefined */])(translations)) {
-                var res = this.translateService.getParsedResult(translations, key, interpolateParams);
-                if (typeof res.subscribe === "function") {
-                    res.subscribe(onTranslation);
-                }
-                else {
-                    onTranslation(res);
-                }
-            }
-            else {
-                this.translateService.get(key, interpolateParams).subscribe(onTranslation);
-            }
-        }
-    };
-    TranslateDirective.prototype.ngOnDestroy = function () {
-        if (this.onLangChangeSub) {
-            this.onLangChangeSub.unsubscribe();
-        }
-        if (this.onDefaultLangChangeSub) {
-            this.onDefaultLangChangeSub.unsubscribe();
-        }
-        if (this.onTranslationChangeSub) {
-            this.onTranslationChangeSub.unsubscribe();
-        }
-    };
-    TranslateDirective.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* Directive */], args: [{
-                    selector: '[translate],[ng2-translate]'
-                },] },
-    ];
-    /** @nocollapse */
-    TranslateDirective.ctorParameters = function () { return [
-        { type: __WEBPACK_IMPORTED_MODULE_2__translate_service__["b" /* TranslateService */], },
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */], },
-    ]; };
-    TranslateDirective.propDecorators = {
-        'translate': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
-        'translateParams': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
-    };
-    return TranslateDirective;
-}());
-
-
-/***/ }),
-
-/***/ "./node_modules/ng2-translate/src/translate.parser.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return TranslateParser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DefaultTranslateParser; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__("./node_modules/ng2-translate/src/util.js");
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-
-
-var TranslateParser = (function () {
-    function TranslateParser() {
-    }
-    return TranslateParser;
-}());
-var DefaultTranslateParser = (function (_super) {
-    __extends(DefaultTranslateParser, _super);
-    function DefaultTranslateParser() {
-        _super.apply(this, arguments);
-        this.templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
-    }
-    DefaultTranslateParser.prototype.interpolate = function (expr, params) {
-        var _this = this;
-        if (typeof expr !== 'string' || !params) {
-            return expr;
-        }
-        return expr.replace(this.templateMatcher, function (substring, b) {
-            var r = _this.getValue(params, b);
-            return Object(__WEBPACK_IMPORTED_MODULE_1__util__["b" /* isDefined */])(r) ? r : substring;
-        });
-    };
-    DefaultTranslateParser.prototype.getValue = function (target, key) {
-        var keys = key.split('.');
-        key = '';
-        do {
-            key += keys.shift();
-            if (Object(__WEBPACK_IMPORTED_MODULE_1__util__["b" /* isDefined */])(target) && Object(__WEBPACK_IMPORTED_MODULE_1__util__["b" /* isDefined */])(target[key]) && (typeof target[key] === 'object' || !keys.length)) {
-                target = target[key];
-                key = '';
-            }
-            else if (!keys.length) {
-                target = undefined;
-            }
-            else {
-                key += '.';
-            }
-        } while (keys.length);
-        return target;
-    };
-    DefaultTranslateParser.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    DefaultTranslateParser.ctorParameters = function () { return []; };
-    return DefaultTranslateParser;
-}(TranslateParser));
-
-
-/***/ }),
-
-/***/ "./node_modules/ng2-translate/src/translate.pipe.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TranslatePipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__translate_service__ = __webpack_require__("./node_modules/ng2-translate/src/translate.service.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__("./node_modules/ng2-translate/src/util.js");
-
-
-
-var TranslatePipe = (function () {
-    function TranslatePipe(translate, _ref) {
-        this.translate = translate;
-        this._ref = _ref;
-        this.value = '';
-    }
-    TranslatePipe.prototype.updateValue = function (key, interpolateParams, translations) {
-        var _this = this;
-        var onTranslation = function (res) {
-            _this.value = res !== undefined ? res : key;
-            _this.lastKey = key;
-            _this._ref.markForCheck();
-        };
-        if (translations) {
-            var res = this.translate.getParsedResult(translations, key, interpolateParams);
-            if (typeof res.subscribe === 'function') {
-                res.subscribe(onTranslation);
-            }
-            else {
-                onTranslation(res);
-            }
-        }
-        this.translate.get(key, interpolateParams).subscribe(onTranslation);
-    };
-    TranslatePipe.prototype.transform = function (query) {
-        var _this = this;
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        if (!query || query.length === 0) {
-            return query;
-        }
-        // if we ask another time for the same key, return the last value
-        if (Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* equals */])(query, this.lastKey) && Object(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* equals */])(args, this.lastParams)) {
-            return this.value;
-        }
-        var interpolateParams;
-        if (Object(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* isDefined */])(args[0]) && args.length) {
-            if (typeof args[0] === 'string' && args[0].length) {
-                // we accept objects written in the template such as {n:1}, {'n':1}, {n:'v'}
-                // which is why we might need to change it to real JSON objects such as {"n":1} or {"n":"v"}
-                var validArgs = args[0]
-                    .replace(/(\')?([a-zA-Z0-9_]+)(\')?(\s)?:/g, '"$2":')
-                    .replace(/:(\s)?(\')(.*?)(\')/g, ':"$3"');
-                try {
-                    interpolateParams = JSON.parse(validArgs);
-                }
-                catch (e) {
-                    throw new SyntaxError("Wrong parameter in TranslatePipe. Expected a valid Object, received: " + args[0]);
-                }
-            }
-            else if (typeof args[0] === 'object' && !Array.isArray(args[0])) {
-                interpolateParams = args[0];
-            }
-        }
-        // store the query, in case it changes
-        this.lastKey = query;
-        // store the params, in case they change
-        this.lastParams = args;
-        // set the value
-        this.updateValue(query, interpolateParams);
-        // if there is a subscription to onLangChange, clean it
-        this._dispose();
-        // subscribe to onTranslationChange event, in case the translations change
-        if (!this.onTranslationChange) {
-            this.onTranslationChange = this.translate.onTranslationChange.subscribe(function (event) {
-                if (_this.lastKey && event.lang === _this.translate.currentLang) {
-                    _this.lastKey = null;
-                    _this.updateValue(query, interpolateParams, event.translations);
-                }
-            });
-        }
-        // subscribe to onLangChange event, in case the language changes
-        if (!this.onLangChange) {
-            this.onLangChange = this.translate.onLangChange.subscribe(function (event) {
-                if (_this.lastKey) {
-                    _this.lastKey = null; // we want to make sure it doesn't return the same value until it's been updated
-                    _this.updateValue(query, interpolateParams, event.translations);
-                }
-            });
-        }
-        // subscribe to onDefaultLangChange event, in case the default language changes
-        if (!this.onDefaultLangChange) {
-            this.onDefaultLangChange = this.translate.onDefaultLangChange.subscribe(function () {
-                if (_this.lastKey) {
-                    _this.lastKey = null; // we want to make sure it doesn't return the same value until it's been updated
-                    _this.updateValue(query, interpolateParams);
-                }
-            });
-        }
-        return this.value;
-    };
-    /**
-     * Clean any existing subscription to change events
-     * @private
-     */
-    TranslatePipe.prototype._dispose = function () {
-        if (typeof this.onTranslationChange !== 'undefined') {
-            this.onTranslationChange.unsubscribe();
-            this.onTranslationChange = undefined;
-        }
-        if (typeof this.onLangChange !== 'undefined') {
-            this.onLangChange.unsubscribe();
-            this.onLangChange = undefined;
-        }
-        if (typeof this.onDefaultLangChange !== 'undefined') {
-            this.onDefaultLangChange.unsubscribe();
-            this.onDefaultLangChange = undefined;
-        }
-    };
-    TranslatePipe.prototype.ngOnDestroy = function () {
-        this._dispose();
-    };
-    TranslatePipe.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["T" /* Pipe */], args: [{
-                    name: 'translate',
-                    pure: false // required to update the value when the promise is resolved
-                },] },
-    ];
-    /** @nocollapse */
-    TranslatePipe.ctorParameters = function () { return [
-        { type: __WEBPACK_IMPORTED_MODULE_1__translate_service__["b" /* TranslateService */], },
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */], },
-    ]; };
-    return TranslatePipe;
-}());
-
-
-/***/ }),
-
-/***/ "./node_modules/ng2-translate/src/translate.service.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export MissingTranslationHandler */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TranslateLoader; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return TranslateStaticLoader; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return TranslateService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/add/observable/of.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_share__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/share.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_merge__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/merge.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_toArray__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/toArray.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_take__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/take.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__translate_parser__ = __webpack_require__("./node_modules/ng2-translate/src/translate.parser.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util__ = __webpack_require__("./node_modules/ng2-translate/src/util.js");
-
-
-
-
-
-
-
-
-
-
-var MissingTranslationHandler = (function () {
-    function MissingTranslationHandler() {
-    }
-    return MissingTranslationHandler;
-}());
-var TranslateLoader = (function () {
-    function TranslateLoader() {
-    }
-    return TranslateLoader;
-}());
-var TranslateStaticLoader = (function () {
-    function TranslateStaticLoader(http, prefix, suffix) {
-        if (prefix === void 0) { prefix = "i18n"; }
-        if (suffix === void 0) { suffix = ".json"; }
-        this.http = http;
-        this.prefix = prefix;
-        this.suffix = suffix;
-    }
-    /**
-     * Gets the translations from the server
-     * @param lang
-     * @returns {any}
-     */
-    TranslateStaticLoader.prototype.getTranslation = function (lang) {
-        return this.http.get(this.prefix + "/" + lang + this.suffix)
-            .map(function (res) { return res.json(); });
-    };
-    return TranslateStaticLoader;
-}());
-var TranslateService = (function () {
-    /**
-     *
-     * @param currentLoader An instance of the loader currently used
-     * @param parser An instance of the parser currently used
-     * @param missingTranslationHandler A handler for missing translations.
-     */
-    function TranslateService(currentLoader, parser, missingTranslationHandler) {
-        this.currentLoader = currentLoader;
-        this.parser = parser;
-        this.missingTranslationHandler = missingTranslationHandler;
-        /**
-         * The lang currently used
-         */
-        this.currentLang = this.defaultLang;
-        /**
-         * An EventEmitter to listen to translation change events
-         * onTranslationChange.subscribe((params: TranslationChangeEvent) => {
-         *     // do something
-         * });
-         * @type {EventEmitter<TranslationChangeEvent>}
-         */
-        this.onTranslationChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
-        /**
-         * An EventEmitter to listen to lang change events
-         * onLangChange.subscribe((params: LangChangeEvent) => {
-         *     // do something
-         * });
-         * @type {EventEmitter<LangChangeEvent>}
-         */
-        this.onLangChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
-        /**
-         * An EventEmitter to listen to default lang change events
-         * onDefaultLangChange.subscribe((params: DefaultLangChangeEvent) => {
-         *     // do something
-         * });
-         * @type {EventEmitter<DefaultLangChangeEvent>}
-         */
-        this.onDefaultLangChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
-        this.translations = {};
-        this.langs = [];
-    }
-    /**
-     * Sets the default language to use as a fallback
-     * @param lang
-     */
-    TranslateService.prototype.setDefaultLang = function (lang) {
-        var _this = this;
-        if (lang === this.defaultLang) {
-            return;
-        }
-        var pending = this.retrieveTranslations(lang);
-        if (typeof pending !== "undefined") {
-            // on init set the defaultLang immediately
-            if (!this.defaultLang) {
-                this.defaultLang = lang;
-            }
-            pending.take(1)
-                .subscribe(function (res) {
-                _this.changeDefaultLang(lang);
-            });
-        }
-        else {
-            this.changeDefaultLang(lang);
-        }
-    };
-    /**
-     * Gets the default language used
-     * @returns string
-     */
-    TranslateService.prototype.getDefaultLang = function () {
-        return this.defaultLang;
-    };
-    /**
-     * Changes the lang currently used
-     * @param lang
-     * @returns {Observable<*>}
-     */
-    TranslateService.prototype.use = function (lang) {
-        var _this = this;
-        var pending = this.retrieveTranslations(lang);
-        if (typeof pending !== "undefined") {
-            // on init set the currentLang immediately
-            if (!this.currentLang) {
-                this.currentLang = lang;
-            }
-            pending.take(1)
-                .subscribe(function (res) {
-                _this.changeLang(lang);
-            });
-            return pending;
-        }
-        else {
-            this.changeLang(lang);
-            return __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["a" /* Observable */].of(this.translations[lang]);
-        }
-    };
-    /**
-     * Retrieves the given translations
-     * @param lang
-     * @returns {Observable<*>}
-     */
-    TranslateService.prototype.retrieveTranslations = function (lang) {
-        var pending;
-        // if this language is unavailable, ask for it
-        if (typeof this.translations[lang] === "undefined") {
-            pending = this.getTranslation(lang);
-        }
-        return pending;
-    };
-    /**
-     * Gets an object of translations for a given language with the current loader
-     * @param lang
-     * @returns {Observable<*>}
-     */
-    TranslateService.prototype.getTranslation = function (lang) {
-        var _this = this;
-        this.pending = this.currentLoader.getTranslation(lang).share();
-        this.pending.take(1)
-            .subscribe(function (res) {
-            _this.translations[lang] = res;
-            _this.updateLangs();
-            _this.pending = undefined;
-        }, function (err) {
-            _this.pending = undefined;
-        });
-        return this.pending;
-    };
-    /**
-     * Manually sets an object of translations for a given language
-     * @param lang
-     * @param translations
-     * @param shouldMerge
-     */
-    TranslateService.prototype.setTranslation = function (lang, translations, shouldMerge) {
-        if (shouldMerge === void 0) { shouldMerge = false; }
-        if (shouldMerge && this.translations[lang]) {
-            Object.assign(this.translations[lang], translations);
-        }
-        else {
-            this.translations[lang] = translations;
-        }
-        this.updateLangs();
-        this.onTranslationChange.emit({ lang: lang, translations: this.translations[lang] });
-    };
-    /**
-     * Returns an array of currently available langs
-     * @returns {any}
-     */
-    TranslateService.prototype.getLangs = function () {
-        return this.langs;
-    };
-    /**
-     * @param langs
-     * Add available langs
-     */
-    TranslateService.prototype.addLangs = function (langs) {
-        var _this = this;
-        langs.forEach(function (lang) {
-            if (_this.langs.indexOf(lang) === -1) {
-                _this.langs.push(lang);
-            }
-        });
-    };
-    /**
-     * Update the list of available langs
-     */
-    TranslateService.prototype.updateLangs = function () {
-        this.addLangs(Object.keys(this.translations));
-    };
-    /**
-     * Returns the parsed result of the translations
-     * @param translations
-     * @param key
-     * @param interpolateParams
-     * @returns {any}
-     */
-    TranslateService.prototype.getParsedResult = function (translations, key, interpolateParams) {
-        var res;
-        if (key instanceof Array) {
-            var result = {}, observables = false;
-            for (var _i = 0, key_1 = key; _i < key_1.length; _i++) {
-                var k = key_1[_i];
-                result[k] = this.getParsedResult(translations, k, interpolateParams);
-                if (typeof result[k].subscribe === "function") {
-                    observables = true;
-                }
-            }
-            if (observables) {
-                var mergedObs = void 0;
-                for (var _a = 0, key_2 = key; _a < key_2.length; _a++) {
-                    var k = key_2[_a];
-                    var obs = typeof result[k].subscribe === "function" ? result[k] : __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["a" /* Observable */].of(result[k]);
-                    if (typeof mergedObs === "undefined") {
-                        mergedObs = obs;
-                    }
-                    else {
-                        mergedObs = mergedObs.merge(obs);
-                    }
-                }
-                return mergedObs.toArray().map(function (arr) {
-                    var obj = {};
-                    arr.forEach(function (value, index) {
-                        obj[key[index]] = value;
-                    });
-                    return obj;
-                });
-            }
-            return result;
-        }
-        if (translations) {
-            res = this.parser.interpolate(this.parser.getValue(translations, key), interpolateParams);
-        }
-        if (typeof res === "undefined" && this.defaultLang && this.defaultLang !== this.currentLang) {
-            res = this.parser.interpolate(this.parser.getValue(this.translations[this.defaultLang], key), interpolateParams);
-        }
-        if (!res && this.missingTranslationHandler) {
-            var params = { key: key, translateService: this };
-            if (typeof interpolateParams !== 'undefined') {
-                params.interpolateParams = interpolateParams;
-            }
-            res = this.missingTranslationHandler.handle(params);
-        }
-        return typeof res !== "undefined" ? res : key;
-    };
-    /**
-     * Gets the translated value of a key (or an array of keys)
-     * @param key
-     * @param interpolateParams
-     * @returns {any} the translated key, or an object of translated keys
-     */
-    TranslateService.prototype.get = function (key, interpolateParams) {
-        var _this = this;
-        if (!Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* isDefined */])(key) || !key.length) {
-            throw new Error("Parameter \"key\" required");
-        }
-        // check if we are loading a new translation to use
-        if (this.pending) {
-            return __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["a" /* Observable */].create(function (observer) {
-                var onComplete = function (res) {
-                    observer.next(res);
-                    observer.complete();
-                };
-                var onError = function (err) {
-                    observer.error(err);
-                };
-                _this.pending.subscribe(function (res) {
-                    res = _this.getParsedResult(res, key, interpolateParams);
-                    if (typeof res.subscribe === "function") {
-                        res.subscribe(onComplete, onError);
-                    }
-                    else {
-                        onComplete(res);
-                    }
-                }, onError);
-            });
-        }
-        else {
-            var res = this.getParsedResult(this.translations[this.currentLang], key, interpolateParams);
-            if (typeof res.subscribe === "function") {
-                return res;
-            }
-            else {
-                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["a" /* Observable */].of(res);
-            }
-        }
-    };
-    /**
-     * Returns a translation instantly from the internal state of loaded translation.
-     * All rules regarding the current language, the preferred language of even fallback languages will be used except any promise handling.
-     * @param key
-     * @param interpolateParams
-     * @returns {string}
-     */
-    TranslateService.prototype.instant = function (key, interpolateParams) {
-        if (!Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* isDefined */])(key) || !key.length) {
-            throw new Error("Parameter \"key\" required");
-        }
-        var res = this.getParsedResult(this.translations[this.currentLang], key, interpolateParams);
-        if (typeof res.subscribe !== "undefined") {
-            if (key instanceof Array) {
-                var obj_1 = {};
-                key.forEach(function (value, index) {
-                    obj_1[key[index]] = key[index];
-                });
-                return obj_1;
-            }
-            return key;
-        }
-        else {
-            return res;
-        }
-    };
-    /**
-     * Sets the translated value of a key
-     * @param key
-     * @param value
-     * @param lang
-     */
-    TranslateService.prototype.set = function (key, value, lang) {
-        if (lang === void 0) { lang = this.currentLang; }
-        this.translations[lang][key] = value;
-        this.updateLangs();
-        this.onTranslationChange.emit({ lang: lang, translations: this.translations[lang] });
-    };
-    /**
-     * Changes the current lang
-     * @param lang
-     */
-    TranslateService.prototype.changeLang = function (lang) {
-        this.currentLang = lang;
-        this.onLangChange.emit({ lang: lang, translations: this.translations[lang] });
-        // if there is no default lang, use the one that we just set
-        if (!this.defaultLang) {
-            this.changeDefaultLang(lang);
-        }
-    };
-    /**
-     * Changes the default lang
-     * @param lang
-     */
-    TranslateService.prototype.changeDefaultLang = function (lang) {
-        this.defaultLang = lang;
-        this.onDefaultLangChange.emit({ lang: lang, translations: this.translations[lang] });
-    };
-    /**
-     * Allows to reload the lang file from the file
-     * @param lang
-     * @returns {Observable<any>}
-     */
-    TranslateService.prototype.reloadLang = function (lang) {
-        this.resetLang(lang);
-        return this.getTranslation(lang);
-    };
-    /**
-     * Deletes inner translation
-     * @param lang
-     */
-    TranslateService.prototype.resetLang = function (lang) {
-        this.translations[lang] = undefined;
-    };
-    /**
-     * Returns the language code name from the browser, e.g. "de"
-     *
-     * @returns string
-     */
-    TranslateService.prototype.getBrowserLang = function () {
-        if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
-            return undefined;
-        }
-        var browserLang = window.navigator.languages ? window.navigator.languages[0] : null;
-        browserLang = browserLang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
-        if (browserLang.indexOf('-') !== -1) {
-            browserLang = browserLang.split('-')[0];
-        }
-        if (browserLang.indexOf('_') !== -1) {
-            browserLang = browserLang.split('_')[0];
-        }
-        return browserLang;
-    };
-    /**
-     * Returns the culture language code name from the browser, e.g. "de-DE"
-     *
-     * @returns string
-     */
-    TranslateService.prototype.getBrowserCultureLang = function () {
-        if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
-            return undefined;
-        }
-        var browserCultureLang = window.navigator.languages ? window.navigator.languages[0] : null;
-        browserCultureLang = browserCultureLang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
-        return browserCultureLang;
-    };
-    TranslateService.decorators = [
-        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */] },
-    ];
-    /** @nocollapse */
-    TranslateService.ctorParameters = function () { return [
-        { type: TranslateLoader, },
-        { type: __WEBPACK_IMPORTED_MODULE_8__translate_parser__["b" /* TranslateParser */], },
-        { type: MissingTranslationHandler, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Optional */] },] },
-    ]; };
-    return TranslateService;
-}());
-
-
-/***/ }),
-
-/***/ "./node_modules/ng2-translate/src/util.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = equals;
-/* harmony export (immutable) */ __webpack_exports__["b"] = isDefined;
-/* tslint:disable */
-/**
- * @name equals
- *
- * @description
- * Determines if two objects or two values are equivalent.
- *
- * Two objects or values are considered equivalent if at least one of the following is true:
- *
- * * Both objects or values pass `===` comparison.
- * * Both objects or values are of the same type and all of their properties are equal by
- *   comparing them with `equals`.
- *
- * @param {*} o1 Object or value to compare.
- * @param {*} o2 Object or value to compare.
- * @returns {boolean} True if arguments are equal.
- */
-function equals(o1, o2) {
-    if (o1 === o2)
-        return true;
-    if (o1 === null || o2 === null)
-        return false;
-    if (o1 !== o1 && o2 !== o2)
-        return true; // NaN === NaN
-    var t1 = typeof o1, t2 = typeof o2, length, key, keySet;
-    if (t1 == t2 && t1 == 'object') {
-        if (Array.isArray(o1)) {
-            if (!Array.isArray(o2))
-                return false;
-            if ((length = o1.length) == o2.length) {
-                for (key = 0; key < length; key++) {
-                    if (!equals(o1[key], o2[key]))
-                        return false;
-                }
-                return true;
-            }
-        }
-        else {
-            if (Array.isArray(o2)) {
-                return false;
-            }
-            keySet = Object.create(null);
-            for (key in o1) {
-                if (!equals(o1[key], o2[key])) {
-                    return false;
-                }
-                keySet[key] = true;
-            }
-            for (key in o2) {
-                if (!(key in keySet) && typeof o2[key] !== 'undefined') {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-    return false;
-}
-/* tslint:enable */
-function isDefined(value) {
-    return typeof value !== 'undefined' && value !== null;
-}
 
 
 /***/ }),
@@ -81639,96 +84594,6 @@ function flattenUnsubscriptionErrors(errors) {
     return errors.reduce(function (errs, err) { return errs.concat((err instanceof __WEBPACK_IMPORTED_MODULE_5__util_UnsubscriptionError__["a" /* UnsubscriptionError */]) ? err.errors : err); }, []);
 }
 //# sourceMappingURL=Subscription.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/_esm5/add/observable/of.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
-/** PURE_IMPORTS_START .._.._Observable,.._.._observable_of PURE_IMPORTS_END */
-
-
-__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].of = __WEBPACK_IMPORTED_MODULE_1__observable_of__["a" /* of */];
-//# sourceMappingURL=of.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/_esm5/add/operator/map.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/map.js");
-/** PURE_IMPORTS_START .._.._Observable,.._.._operator_map PURE_IMPORTS_END */
-
-
-__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.map = __WEBPACK_IMPORTED_MODULE_1__operator_map__["a" /* map */];
-//# sourceMappingURL=map.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/_esm5/add/operator/merge.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operator_merge__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/merge.js");
-/** PURE_IMPORTS_START .._.._Observable,.._.._operator_merge PURE_IMPORTS_END */
-
-
-__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.merge = __WEBPACK_IMPORTED_MODULE_1__operator_merge__["a" /* merge */];
-//# sourceMappingURL=merge.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/_esm5/add/operator/share.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operator_share__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/share.js");
-/** PURE_IMPORTS_START .._.._Observable,.._.._operator_share PURE_IMPORTS_END */
-
-
-__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.share = __WEBPACK_IMPORTED_MODULE_1__operator_share__["a" /* share */];
-//# sourceMappingURL=share.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/_esm5/add/operator/take.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operator_take__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/take.js");
-/** PURE_IMPORTS_START .._.._Observable,.._.._operator_take PURE_IMPORTS_END */
-
-
-__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.take = __WEBPACK_IMPORTED_MODULE_1__operator_take__["a" /* take */];
-//# sourceMappingURL=take.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/_esm5/add/operator/toArray.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operator_toArray__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/toArray.js");
-/** PURE_IMPORTS_START .._.._Observable,.._.._operator_toArray PURE_IMPORTS_END */
-
-
-__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.toArray = __WEBPACK_IMPORTED_MODULE_1__operator_toArray__["a" /* toArray */];
-//# sourceMappingURL=toArray.js.map
 
 
 /***/ }),
@@ -83354,76 +86219,6 @@ function map(project, thisArg) {
 
 /***/ }),
 
-/***/ "./node_modules/rxjs/_esm5/operator/merge.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = merge;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__operators_merge__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/merge.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__observable_merge__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/merge.js");
-/* unused harmony reexport mergeStatic */
-/** PURE_IMPORTS_START .._operators_merge PURE_IMPORTS_END */
-
-
-/* tslint:enable:max-line-length */
-/**
- * Creates an output Observable which concurrently emits all values from every
- * given input Observable.
- *
- * <span class="informal">Flattens multiple Observables together by blending
- * their values into one Observable.</span>
- *
- * <img src="./img/merge.png" width="100%">
- *
- * `merge` subscribes to each given input Observable (either the source or an
- * Observable given as argument), and simply forwards (without doing any
- * transformation) all the values from all the input Observables to the output
- * Observable. The output Observable only completes once all input Observables
- * have completed. Any error delivered by an input Observable will be immediately
- * emitted on the output Observable.
- *
- * @example <caption>Merge together two Observables: 1s interval and clicks</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var timer = Rx.Observable.interval(1000);
- * var clicksOrTimer = clicks.merge(timer);
- * clicksOrTimer.subscribe(x => console.log(x));
- *
- * @example <caption>Merge together 3 Observables, but only 2 run concurrently</caption>
- * var timer1 = Rx.Observable.interval(1000).take(10);
- * var timer2 = Rx.Observable.interval(2000).take(6);
- * var timer3 = Rx.Observable.interval(500).take(10);
- * var concurrent = 2; // the argument
- * var merged = timer1.merge(timer2, timer3, concurrent);
- * merged.subscribe(x => console.log(x));
- *
- * @see {@link mergeAll}
- * @see {@link mergeMap}
- * @see {@link mergeMapTo}
- * @see {@link mergeScan}
- *
- * @param {ObservableInput} other An input Observable to merge with the source
- * Observable. More than one input Observables may be given as argument.
- * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
- * Observables being subscribed to concurrently.
- * @param {Scheduler} [scheduler=null] The IScheduler to use for managing
- * concurrency of input Observables.
- * @return {Observable} An Observable that emits items that are the result of
- * every input Observable.
- * @method merge
- * @owner Observable
- */
-function merge() {
-    var observables = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        observables[_i - 0] = arguments[_i];
-    }
-    return __WEBPACK_IMPORTED_MODULE_0__operators_merge__["a" /* merge */].apply(void 0, observables)(this);
-}
-//# sourceMappingURL=merge.js.map
-
-
-/***/ }),
-
 /***/ "./node_modules/rxjs/_esm5/operator/mergeAll.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -83663,94 +86458,6 @@ function share() {
 }
 ;
 //# sourceMappingURL=share.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/_esm5/operator/take.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = take;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__operators_take__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/take.js");
-/** PURE_IMPORTS_START .._operators_take PURE_IMPORTS_END */
-
-/**
- * Emits only the first `count` values emitted by the source Observable.
- *
- * <span class="informal">Takes the first `count` values from the source, then
- * completes.</span>
- *
- * <img src="./img/take.png" width="100%">
- *
- * `take` returns an Observable that emits only the first `count` values emitted
- * by the source Observable. If the source emits fewer than `count` values then
- * all of its values are emitted. After that, it completes, regardless if the
- * source completes.
- *
- * @example <caption>Take the first 5 seconds of an infinite 1-second interval Observable</caption>
- * var interval = Rx.Observable.interval(1000);
- * var five = interval.take(5);
- * five.subscribe(x => console.log(x));
- *
- * @see {@link takeLast}
- * @see {@link takeUntil}
- * @see {@link takeWhile}
- * @see {@link skip}
- *
- * @throws {ArgumentOutOfRangeError} When using `take(i)`, it delivers an
- * ArgumentOutOrRangeError to the Observer's `error` callback if `i < 0`.
- *
- * @param {number} count The maximum number of `next` values to emit.
- * @return {Observable<T>} An Observable that emits only the first `count`
- * values emitted by the source Observable, or all of the values from the source
- * if the source emits fewer than `count` values.
- * @method take
- * @owner Observable
- */
-function take(count) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__operators_take__["a" /* take */])(count)(this);
-}
-//# sourceMappingURL=take.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/_esm5/operator/toArray.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = toArray;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__operators_toArray__ = __webpack_require__("./node_modules/rxjs/_esm5/operators/toArray.js");
-/** PURE_IMPORTS_START .._operators_toArray PURE_IMPORTS_END */
-
-/**
- * Collects all source emissions and emits them as an array when the source completes.
- *
- * <span class="informal">Get all values inside an array when the source completes</span>
- *
- * <img src="./img/toArray.png" width="100%">
- *
- * `toArray` will wait until the source Observable completes
- * before emitting the array containing all emissions.
- * When the source Observable errors no array will be emitted.
- *
- * @example <caption>Create array from input</caption>
- * const input = Rx.Observable.interval(100).take(4);
- *
- * input.toArray()
- *   .subscribe(arr => console.log(arr)); // [0,1,2,3]
- *
- * @see {@link buffer}
- *
- * @return {Observable<any[]>|WebSocketSubject<T>|Observable<T>}
- * @method toArray
- * @owner Observable
- */
-function toArray() {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__operators_toArray__["a" /* toArray */])()(this);
-}
-//# sourceMappingURL=toArray.js.map
 
 
 /***/ }),
@@ -85567,6 +88274,160 @@ function share() {
 }
 ;
 //# sourceMappingURL=share.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/_esm5/operators/switchMap.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = switchMap;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__OuterSubscriber__ = __webpack_require__("./node_modules/rxjs/_esm5/OuterSubscriber.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_subscribeToResult__ = __webpack_require__("./node_modules/rxjs/_esm5/util/subscribeToResult.js");
+/** PURE_IMPORTS_START .._OuterSubscriber,.._util_subscribeToResult PURE_IMPORTS_END */
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+
+/* tslint:enable:max-line-length */
+/**
+ * Projects each source value to an Observable which is merged in the output
+ * Observable, emitting values only from the most recently projected Observable.
+ *
+ * <span class="informal">Maps each value to an Observable, then flattens all of
+ * these inner Observables using {@link switch}.</span>
+ *
+ * <img src="./img/switchMap.png" width="100%">
+ *
+ * Returns an Observable that emits items based on applying a function that you
+ * supply to each item emitted by the source Observable, where that function
+ * returns an (so-called "inner") Observable. Each time it observes one of these
+ * inner Observables, the output Observable begins emitting the items emitted by
+ * that inner Observable. When a new inner Observable is emitted, `switchMap`
+ * stops emitting items from the earlier-emitted inner Observable and begins
+ * emitting items from the new one. It continues to behave like this for
+ * subsequent inner Observables.
+ *
+ * @example <caption>Rerun an interval Observable on every click event</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var result = clicks.switchMap((ev) => Rx.Observable.interval(1000));
+ * result.subscribe(x => console.log(x));
+ *
+ * @see {@link concatMap}
+ * @see {@link exhaustMap}
+ * @see {@link mergeMap}
+ * @see {@link switch}
+ * @see {@link switchMapTo}
+ *
+ * @param {function(value: T, ?index: number): ObservableInput} project A function
+ * that, when applied to an item emitted by the source Observable, returns an
+ * Observable.
+ * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
+ * A function to produce the value on the output Observable based on the values
+ * and the indices of the source (outer) emission and the inner Observable
+ * emission. The arguments passed to this function are:
+ * - `outerValue`: the value that came from the source
+ * - `innerValue`: the value that came from the projected Observable
+ * - `outerIndex`: the "index" of the value that came from the source
+ * - `innerIndex`: the "index" of the value from the projected Observable
+ * @return {Observable} An Observable that emits the result of applying the
+ * projection function (and the optional `resultSelector`) to each item emitted
+ * by the source Observable and taking only the values from the most recently
+ * projected inner Observable.
+ * @method switchMap
+ * @owner Observable
+ */
+function switchMap(project, resultSelector) {
+    return function switchMapOperatorFunction(source) {
+        return source.lift(new SwitchMapOperator(project, resultSelector));
+    };
+}
+var SwitchMapOperator = /*@__PURE__*/ (/*@__PURE__*/ function () {
+    function SwitchMapOperator(project, resultSelector) {
+        this.project = project;
+        this.resultSelector = resultSelector;
+    }
+    SwitchMapOperator.prototype.call = function (subscriber, source) {
+        return source.subscribe(new SwitchMapSubscriber(subscriber, this.project, this.resultSelector));
+    };
+    return SwitchMapOperator;
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var SwitchMapSubscriber = /*@__PURE__*/ (/*@__PURE__*/ function (_super) {
+    __extends(SwitchMapSubscriber, _super);
+    function SwitchMapSubscriber(destination, project, resultSelector) {
+        _super.call(this, destination);
+        this.project = project;
+        this.resultSelector = resultSelector;
+        this.index = 0;
+    }
+    SwitchMapSubscriber.prototype._next = function (value) {
+        var result;
+        var index = this.index++;
+        try {
+            result = this.project(value, index);
+        }
+        catch (error) {
+            this.destination.error(error);
+            return;
+        }
+        this._innerSub(result, value, index);
+    };
+    SwitchMapSubscriber.prototype._innerSub = function (result, value, index) {
+        var innerSubscription = this.innerSubscription;
+        if (innerSubscription) {
+            innerSubscription.unsubscribe();
+        }
+        this.add(this.innerSubscription = Object(__WEBPACK_IMPORTED_MODULE_1__util_subscribeToResult__["a" /* subscribeToResult */])(this, result, value, index));
+    };
+    SwitchMapSubscriber.prototype._complete = function () {
+        var innerSubscription = this.innerSubscription;
+        if (!innerSubscription || innerSubscription.closed) {
+            _super.prototype._complete.call(this);
+        }
+    };
+    /** @deprecated internal use only */ SwitchMapSubscriber.prototype._unsubscribe = function () {
+        this.innerSubscription = null;
+    };
+    SwitchMapSubscriber.prototype.notifyComplete = function (innerSub) {
+        this.remove(innerSub);
+        this.innerSubscription = null;
+        if (this.isStopped) {
+            _super.prototype._complete.call(this);
+        }
+    };
+    SwitchMapSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        if (this.resultSelector) {
+            this._tryNotifyNext(outerValue, innerValue, outerIndex, innerIndex);
+        }
+        else {
+            this.destination.next(innerValue);
+        }
+    };
+    SwitchMapSubscriber.prototype._tryNotifyNext = function (outerValue, innerValue, outerIndex, innerIndex) {
+        var result;
+        try {
+            result = this.resultSelector(outerValue, innerValue, outerIndex, innerIndex);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.destination.next(result);
+    };
+    return SwitchMapSubscriber;
+}(__WEBPACK_IMPORTED_MODULE_0__OuterSubscriber__["a" /* OuterSubscriber */]));
+//# sourceMappingURL=switchMap.js.map
 
 
 /***/ }),
