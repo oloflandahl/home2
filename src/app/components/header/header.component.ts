@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ScrollService } from '../../services/scroll.service';
@@ -23,8 +23,7 @@ export class HeaderComponent implements OnInit {
   public currentLang: string;
   public items: MenuItem[];
 
-  constructor(@Inject(Window) private _window: Window,
-    private translate: TranslateService,
+  constructor(private translate: TranslateService,
     private scrollService: ScrollService,
     private scrollSectionService: ScrollSectionService) {
     this.currentLang = this.translate.currentLang;
@@ -33,7 +32,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     const self = this;
-    this._window.setTimeout(function() {
+    window.setTimeout(function() {
       self.isInit = true;
     }, 0);
   }

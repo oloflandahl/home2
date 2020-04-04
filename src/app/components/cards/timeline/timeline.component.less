@@ -72,6 +72,7 @@
           filter: grayscale(100%);
           .transition(all);
 
+          .logo-helper(fis);
           .logo-helper(pbolaget);
           .logo-helper(securitas);
           .logo-helper(tunstall);
@@ -288,6 +289,9 @@
     &.timeline-card__logo--@{logo} {
       @logoFilename: "./img/@{logo}.png";
       background-image: url(@logoFilename);
+      background-position: left;
+      background-size: contain;
+      background-repeat: no-repeat;
     }
   }
   

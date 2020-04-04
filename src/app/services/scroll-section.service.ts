@@ -1,4 +1,4 @@
-import { Inject, Injectable, ElementRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { ScrollService } from '../services/scroll.service';
 
@@ -17,7 +17,7 @@ export class ScrollSectionService {
 
   readonly NotActivatedClass = 'not-activated';
 
-  constructor(private scrollService: ScrollService, @Inject(Window) private _window: Window) {
+  constructor(private scrollService: ScrollService) {
     this.sections = [];
   }
 
@@ -46,10 +46,10 @@ export class ScrollSectionService {
 
   onWindowScroll() {
     if (this.scrollTimeout) {
-      this._window.clearTimeout(this.scrollTimeout);
+      window.clearTimeout(this.scrollTimeout);
     }
 
-    this.scrollTimeout = this._window.setTimeout(this.onWindowScrollDelay.bind(this), 100);
+    this.scrollTimeout = window.setTimeout(this.onWindowScrollDelay.bind(this), 100);
   }
 
   onWindowScrollDelay() {

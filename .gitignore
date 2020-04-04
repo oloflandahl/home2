@@ -5,3 +5,5 @@ typings
 .DS_Store
 .tscache
 *.log
+
+.npmrc

@@ -46,7 +46,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     ScrollService,
     ScrollSectionService,
-    { provide: Window, useValue: window }
   ],
   declarations: [
     ClickOutsideDirective,

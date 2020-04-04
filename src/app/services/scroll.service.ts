@@ -7,7 +7,7 @@ import { Line } from '../models/line.model';
 @Injectable()
 export class ScrollService {
 
-  constructor(@Inject(DOCUMENT) private _document: Document, @Inject(Window) private _window: Window) {
+  constructor(@Inject(DOCUMENT) private _document: Document) {
   }
 
   getScrollTop(): number {
@@ -18,7 +18,7 @@ export class ScrollService {
     const scrollTop = this.getScrollTop();
     return new Line({
       start: scrollTop,
-      length: this._window.innerHeight,
+      length: window.innerHeight,
     });
   }
 
