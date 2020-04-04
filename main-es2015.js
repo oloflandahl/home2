@@ -1868,3 +1868,4 @@ module.exports = __webpack_require__(/*! /Users/oloflandahl/home2/src/main.ts */
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
+//# sourceMappingURL=main-es2015.js.map
