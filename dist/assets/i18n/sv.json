@@ -8,6 +8,7 @@
    "Lang_English": "Engelska",
    "Lang_Swedish": "Svenska",
    "SwitchLanguage_Tooltip": "Switch to English",
+   "Share": "Dela",
 
    "PersonInfo_Hello": "Hej",
    "PersonInfo_IAm": "Jag heter",
@@ -36,7 +37,7 @@
    "Experience_Tunstall": "Moderniserade och förbättrade en webb-applikation för ruttplanering inom hemtjänsten.",
    "Experience_Securitas": "Utvecklade interna webb-applikationer för fakturering, affärskalkyler, lönekorrigering, m.m.",
    "Experience_PBolaget": "Skapade en webbportal for företagskunder där man administrerar digitala parkeringstillstånd. Applikationen är avgörande för digitaliseringen av parkeringar i Göteborg",
-   "Experience_FIS": "Utvecklade en PWA för råvarumarknaden. Med funktioner som historiska grafer, live-prisuppdateringar och web push prisnotiser är det en viktig app för VIP-kunder. Freight Investor Services är ett företag baserat i London, men aktiva i Amerika, Europa och Asien.",
+   "Experience_FIS": "Utvecklade en PWA för handelsderivatmarknaden. Med interaktiva grafer, omderlbara prisuppdateringar och web push notifikationer är det en mycket värdefull app för VIP-kunder.",
 
    "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
    "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",
@@ -57,5 +58,5 @@
    "Interest_Music_Description": "Jag växte upp med mycket musik och instrument omkring mig. Mitt musikintresse exploderade på gymnasiet och det var även då jag började spela gitarr. Hårdrocken har alltid legat mig närmast om hjärtat och Metallicas musik har betytt extra mycket.",
    "Interest_Nature_Description": "På senare år har jag börjat uppskatta naturen mer och mer. Jag och min sambo är ibland ute och tältar och vandrar. Några av mina största upplevelser har varit under våra resor till Nya Zeeland och Island där naturen är så storslagen och vacker att man inte tror det är sant.",
 
-   "AboutPage_Description": "Tanken med denna sidan är att presentera mig och mitt CV men kanske framför allt att prova på olika teknologier inom frontend-utveckling. Jag jobbade med AngularJS i ett par år, gillade ramverket, och ville prova på uppföljaren när den släpptes 2016. När så småningom Angular 4 släpptes kände jag att ramverket var moget för att bygga något på riktigt. Denna sidan är byggd med Angular, Typescript, Less och Webpack."
+   "AboutPage_Description": "Tanken med denna sidan är att presentera mig och mitt CV men kanske framför allt att prova på olika teknologier inom frontend-utveckling. Jag jobbade med AngularJS i ett par år, gillade ramverket, och ville prova på uppföljaren när den släpptes 2016. När så småningom Angular 4 släpptes kände jag att ramverket var moget för att bygga något på riktigt. Denna sidan är byggd med Angular 8, Typescript 3.5, Less och Webpack (Angular CLI)"
 }
