@@ -1,4 +1,5 @@
 
 export interface LinkItem {
-  url: string;
+  url?: string;
+  onClick?: Function;
 }

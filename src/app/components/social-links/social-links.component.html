@@ -1,6 +1,6 @@
 <ul class="social-links social-links--{{theme}}">
   <li *ngFor="let item of socialLinkItems;" class="social-links__link">
-    <a href="{{item.url}}" [target]="item.openOnPage ? '_self' : '_blank'" title="{{item.title}}">
+    <a href="{{item.url}}" (click)="item.onClick($event)" [target]="item.openOnPage ? '_self' : '_blank'" title="{{ item.title | translate }}">
       <i class="fa fa-{{item.iconName}}"></i>
     </a>
   </li>

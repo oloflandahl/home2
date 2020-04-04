@@ -8,6 +8,7 @@
    "Lang_English": "Engelska",
    "Lang_Swedish": "Svenska",
    "SwitchLanguage_Tooltip": "Switch to English",
+   "Share": "Dela",
 
    "PersonInfo_Hello": "Hej",
    "PersonInfo_IAm": "Jag heter",
@@ -36,6 +37,7 @@
    "Experience_Tunstall": "Moderniserade och förbättrade en webb-applikation för ruttplanering inom hemtjänsten.",
    "Experience_Securitas": "Utvecklade interna webb-applikationer för fakturering, affärskalkyler, lönekorrigering, m.m.",
    "Experience_PBolaget": "Skapade en webbportal for företagskunder där man administrerar digitala parkeringstillstånd. Applikationen är avgörande för digitaliseringen av parkeringar i Göteborg",
+   "Experience_FIS": "Utvecklade en PWA för handelsderivatmarknaden. Med interaktiva grafer, omderlbara prisuppdateringar och web push notifikationer är det en mycket värdefull app för VIP-kunder.",
 
    "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
    "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",
