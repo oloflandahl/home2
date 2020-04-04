@@ -1,5 +1,5 @@
 
 export interface LinkItem {
   url?: string;
-  onClick?: Function;
+  onClick?: (event: MouseEvent) => void;
 }
