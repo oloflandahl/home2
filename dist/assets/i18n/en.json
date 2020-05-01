@@ -38,6 +38,7 @@
    "Experience_Securitas": "Developed internal web applications for invoicing, quote calculation, payroll correction, and more.",
    "Experience_PBolaget": "Created a web portal for business customers where digital parking permits are administered. The application is vital for the digitalisation of parkings in Göteborg.",
    "Experience_FIS": "Developed a PWA for the commodity derivatives market. With interactive charts, instant live price updates and web push alerts it's a very valuable app for VIP customers.",
+   "Experience_White": "I implemented a global menu used across their 4 internal sites.",
    
    "Demo_Memory": "A memory game developed in ReactJS, Redux and CSS Grid",
    "Demo_Photos": "Lazy loading responsive images using IntersectionObserver",
