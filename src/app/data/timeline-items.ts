@@ -4,6 +4,17 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     startYear: 2020,
     endYear: 2020,
+    logo: 'whitearkitekter',
+    city: 'Göteborg',
+    title: 'HiQ - White Arkitekter',
+    subTitleTranslationKey: 'Role_WebDeveloper',
+    descriptionTranslationKey: 'Experience_White',
+    url: 'https://whitearkitekter.com/',
+    technologies: ['Vue', 'Angular', 'TypeScript', 'Jest', 'Octopus Deploy']
+  },
+  {
+    startYear: 2020,
+    endYear: 2020,
     logo: 'fis',
     city: 'Göteborg',
     title: 'HiQ - Freight Investor Services',
@@ -21,7 +32,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     subTitleTranslationKey: 'Role_WebDeveloper',
     descriptionTranslationKey: 'Experience_PBolaget',
     url: 'https://foretag.parkeringgoteborg.se/',
-    technologies: ['Angular 8', 'TypeScript', 'Jasmine', 'Git']
+    technologies: ['Angular', 'TypeScript', 'Jasmine', 'Git']
   },
   {
     startYear: 2016,
