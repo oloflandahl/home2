@@ -3,6 +3,17 @@ import { TimelineItem } from '../models/timeline-item';
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     startYear: 2020,
+    endYear: 2021,
+    logo: 'skf',
+    city: 'Göteborg',
+    title: 'HiQ - SKF',
+    subTitleTranslationKey: 'Role_WebDeveloper',
+    descriptionTranslationKey: 'Experience_SKF',
+    url: 'https://www.skf.com/se',
+    technologies: ['React', 'Redux', 'Redux Toolkit', 'TypeScript', 'Jest', 'Cypress']
+  },
+  {
+    startYear: 2020,
     endYear: 2020,
     logo: 'whitearkitekter',
     city: 'Göteborg',
