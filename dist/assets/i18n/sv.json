@@ -39,6 +39,7 @@
    "Experience_PBolaget": "Skapade en webbportal for företagskunder där man administrerar digitala parkeringstillstånd. Applikationen är avgörande för digitaliseringen av parkeringar i Göteborg",
    "Experience_FIS": "Utvecklade en PWA för handelsderivatmarknaden. Med interaktiva grafer, omedelbara prisuppdateringar och web push notifikationer är det en mycket värdefull app för VIP-kunder.",
    "Experience_White": "Jag implementerade en global meny som används på företagets fyra interna sajter.",
+   "Experience_SKF": "Lade till nya funktioner till analyssidor i Enlight Centre som används för att monitorera status för maskiner med mätdata och AI. Detta hjälper analytikern att agera innan maskinen går sönder eller kräver underhåll.",
 
    "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
    "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",
