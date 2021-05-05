@@ -8,7 +8,6 @@
     "build": "ng build",
     "publish": "ng build --configuration=production",
     "postpublish": "git add dist/* && git commit -m \"Publish\" && git push && git subtree push --prefix dist origin gh-pages",
-    "dist": "lite-server",
     "lint": "ng lint"
   },
   "private": false,
@@ -48,7 +47,6 @@
     "@types/node": "~6.0.60",
     "codelyzer": "^5.0.1",
     "concurrently": "^3.4.0",
-    "lite-server": "^2.6.1",
     "ts-node": "~3.0.4",
     "tslint": "^5.20.1"
   }
