@@ -2,7 +2,7 @@
 @import '../../../less-library/mixins';
 
 @timelineWidth: @lineWidth-thick;
-@timelineOffsetX: floor(@timelineWidth / 2);
+@timelineOffsetX: floor((@timelineWidth / 2));
 @timelinePosX: ~"calc( 50% - " @timelineOffsetX ~")";
 
 @cardMinHeight: 200px;
@@ -14,7 +14,7 @@
 @dotSize: 2 * @timelineWidth + 1;
 @dotOffsetY: @arrowOffset + @arrowHeight + @card-container-half-spacing-v;
 @outerDotSize: 4 * @timelineWidth + 1;
-@outerDotRelOffset: (@dotSize - @outerDotSize) / 2;
+@outerDotRelOffset: ((@dotSize - @outerDotSize) / 2);
 
 @timelinePosY: @dotOffsetY;
 

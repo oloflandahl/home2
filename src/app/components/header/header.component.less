@@ -11,9 +11,9 @@
 
 @this-itemLink-unknownSpace:  2px;
 
-@this-inner-height: 2 * (@this-item-pad) + @textSize-small + @this-activeLink-border + @this-itemLink-unknownSpace;
+@this-inner-height: (2 * @this-item-pad) + @textSize-small + @this-activeLink-border + @this-itemLink-unknownSpace;
 @this-height: 2 * @this-pad + @this-inner-height;
-@this-sticky-height: 2 * @this-sticky-pad-v + @this-inner-height;
+@this-sticky-height: (2 * @this-sticky-pad-v) + @this-inner-height;
 
 .active-item() {
   @media (max-width: @mq-xs-max) {
