@@ -1,4 +1,4 @@
-import { Directive, OnInit, Input, Renderer, ElementRef } from '@angular/core';
+import { Directive, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
 
 import { ScrollSectionService } from '../services/scroll-section.service';
 
@@ -13,7 +13,7 @@ export class ScrollSectionDirective implements OnInit {
 
   @Input('appScrollSection') id: string;
 
-  constructor(private scrollService: ScrollSectionService, private renderer: Renderer, private element: ElementRef) {
+  constructor(private scrollService: ScrollSectionService, private renderer: Renderer2, private element: ElementRef) {
 
   }
 
