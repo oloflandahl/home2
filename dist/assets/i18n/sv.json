@@ -40,6 +40,8 @@
    "Experience_FIS": "Utvecklade en PWA för handelsderivatmarknaden. Med interaktiva grafer, omedelbara prisuppdateringar och web push notifikationer är det en mycket värdefull app för VIP-kunder.",
    "Experience_White": "Jag implementerade en global meny som används på företagets fyra interna sajter.",
    "Experience_SKF": "Lade till nya funktioner till analyssidor i Enlight Centre som används för att monitorera status för maskiner med mätdata och AI. Detta hjälper analytikern att agera innan maskinen går sönder eller kräver underhåll.",
+   "Experience_DrakenFilm": "Implementerade ny betallösning på sajten med Adyen.",
+   "Experience_Essity": "Skapade en webb-applikation för att monitorera besöksräknare och informera potentiella kunder om den mer avancerade applikationen Tork Vision Cleaning.",
 
    "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
    "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",
