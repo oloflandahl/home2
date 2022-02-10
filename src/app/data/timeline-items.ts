@@ -2,6 +2,28 @@ import { TimelineItem } from '../models/timeline-item';
 
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
+    startYear: 2021,
+    endYear: 2021,
+    logo: 'essity',
+    city: 'Göteborg',
+    title: 'HiQ - Essity',
+    subTitleTranslationKey: 'Role_WebDeveloper',
+    descriptionTranslationKey: 'Experience_Essity',
+    url: 'https://www.tork.co.uk/services/solutions/vision-cleaning',
+    technologies: ['React Native for Web', 'TypeScript']
+  },
+  {
+    startYear: 2021,
+    endYear: 2021,
+    logo: 'drakenfilm',
+    city: 'Göteborg',
+    title: 'HiQ - Draken Film',
+    subTitleTranslationKey: 'Role_WebDeveloper',
+    descriptionTranslationKey: 'Experience_DrakenFilm',
+    url: 'https://drakenfilm.se/',
+    technologies: ['NextJS', 'React', 'Adyen']
+  },
+  {
     startYear: 2020,
     endYear: 2021,
     logo: 'skf',
