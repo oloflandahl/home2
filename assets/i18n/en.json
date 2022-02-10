@@ -40,6 +40,8 @@
    "Experience_FIS": "Developed a PWA for the commodity derivatives market. With interactive charts, instant live price updates and web push alerts it's a very valuable app for VIP customers.",
    "Experience_White": "I implemented a global menu used across their 4 internal sites.",
    "Experience_SKF": "Added features to the analytics pages of Enlight Centre used to monitor the health of machine assets with measured data and AI. This helps the analyst to take action before the machine breaks down or needs maintenance.",
+   "Experience_DrakenFilm": "Integrated payments on the site with Adyen.",
+   "Experience_Essity": "Created a mobile web application for monitoring people counter sensors and inform potential customers of the more advanced application Tork Vision Cleaning.",
    
    "Demo_Memory": "A memory game developed in ReactJS, Redux and CSS Grid",
    "Demo_Photos": "Lazy loading responsive images using IntersectionObserver",
