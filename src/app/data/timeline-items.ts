@@ -2,6 +2,50 @@ import { TimelineItem } from '../models/timeline-item';
 
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
+    startYear: 2022,
+    endYear: 2023,
+    logo: 'hiq',
+    city: 'Göteborg',
+    title: 'HiQ',
+    subTitleTranslationKey: 'Role_Architect',
+    descriptionTranslationKey: 'Experience_HiQArchitect',
+    url: 'https://www.hiq.com/',
+    technologies: []
+  },
+  {
+    startYear: 2022,
+    endYear: 2023,
+    logo: 'schakttransport',
+    city: 'Göteborg',
+    title: 'HiQ - Schakt och Transport',
+    subTitleTranslationKey: 'Role_WebDeveloper',
+    descriptionTranslationKey: 'Experience_SchaktTransport',
+    url: 'https://www.schakt-transport.se/',
+    technologies: ['React', '.NET', 'Vite']
+  },
+  {
+    startYear: 2022,
+    endYear: 2023,
+    logo: 'vcc',
+    city: 'Göteborg',
+    title: 'HiQ - Volvo Cars',
+    subTitleTranslationKey: 'Role_Architect',
+    descriptionTranslationKey: 'Experience_VolvoCars',
+    url: 'https://www.volvocars.com/',
+    technologies: ['React', 'TypeScript', 'Azure', 'Jest', 'Testing Library']
+  },
+  {
+    startYear: 2022,
+    endYear: 2022,
+    logo: 'skanska',
+    city: 'Göteborg',
+    title: 'HiQ - Skanska',
+    subTitleTranslationKey: 'Role_Architect',
+    descriptionTranslationKey: 'Experience_Skanska',
+    url: 'https://forskolebyggaren.skanska.se/',
+    technologies: ['React', 'Azure']
+  },
+  {
     startYear: 2021,
     endYear: 2021,
     logo: 'essity',
