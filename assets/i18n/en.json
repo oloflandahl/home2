@@ -23,6 +23,7 @@
    "ResumeSummary_ButtonLabel": "Download Resume",
    "ResumeSummary_Text": "I'm a positive, calm and meticulous person that constantly look for challenges, both personal and professional. As a full stack developer I'm versatile and my strongest skills are in web front end development.",
 
+   "Role_Architect": "Architect",
    "Role_WebDeveloper": "Web Developer",
    "Role_SoftwareDeveloper": "Software Developer",
    "Role_CodeTestVerifier": "Code test reviewer",
@@ -42,7 +43,11 @@
    "Experience_SKF": "Added features to the analytics pages of Enlight Centre used to monitor the health of machine assets with measured data and AI. This helps the analyst to take action before the machine breaks down or needs maintenance.",
    "Experience_DrakenFilm": "Integrated payments on the site with Adyen.",
    "Experience_Essity": "Created a mobile web application for monitoring people counter sensors and inform potential customers of the more advanced application Tork Vision Cleaning.",
-   
+   "Experience_Skanska": "Prestudy for Skanska where we developed a concept for a kindergarten builder.",
+   "Experience_VolvoCars": "Architect and developer of a web app for leaving feeback on Volvo cars. The app works standalone in a web browser and as part of the Volvo Cars app (inside a web view). There were some challenges around security, communication between web app and native app as well as offline functionality",
+   "Experience_SchaktTransport": "Implemented a web app for Skanska Schakt & Transport used to plan bookings of machines and drivers.",
+   "Experience_HiQArchitect": "Part of an architect team setting up ways of working and technical requirements for internal customer projects",
+
    "Demo_Memory": "A memory game developed in ReactJS, Redux and CSS Grid",
    "Demo_Photos": "Lazy loading responsive images using IntersectionObserver",
 
