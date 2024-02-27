@@ -2,6 +2,28 @@ import { TimelineItem } from '../models/timeline-item';
 
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
+    startYear: 2023,
+    endYear: 2024,
+    logo: 'wirelesscar',
+    city: 'Göteborg',
+    title: 'HiQ - Wireless Car - Renault Trucks',
+    subTitleTranslationKey: 'Role_MobileDeveloper',
+    descriptionTranslationKey: 'Experience_WirelessCar',
+    url: 'https://www.renault-trucks.com/en/newsroom/press-releases/new-generation-renault-trucks-master-red-edition-efficient-and-versatile',
+    technologies: ['React Native', 'TypeScript', 'Firebase', 'Jest', 'Testing Library']
+  },
+  {
+    startYear: 2023,
+    endYear: 2024,
+    logo: 'vcc',
+    city: 'Göteborg',
+    title: 'HiQ - Brandworks - World of Volvo',
+    subTitleTranslationKey: 'Role_WebDeveloper',
+    descriptionTranslationKey: 'Experience_WorldOfVolvo',
+    url: 'https://www.worldofvolvo.com/',
+    technologies: ['React', 'TypeScript']
+  },
+  {
     startYear: 2022,
     endYear: 2023,
     logo: 'hiq',

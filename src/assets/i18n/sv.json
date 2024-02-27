@@ -24,6 +24,7 @@
    "ResumeSummary_Text": "Jag är en positiv, lugn och noggrann person som alltid söker utmaningar, både personliga och professionella. Som full-stack-utvecklare är jag mångsidig och mina starkaste färdigheter finns i front-end webbutveckling.",
 
    "Role_Architect": "Arkitekt",
+   "Role_MobileDeveloper": "Mobilutvecklare",
    "Role_WebDeveloper": "Webbutvecklare",
    "Role_SoftwareDeveloper": "Mjukvaruutvecklare",
    "Role_CodeTestVerifier": "Granskare av arbetsprov",
@@ -47,6 +48,8 @@
    "Experience_VolvoCars": "Arkitekt och utvecklare av en webb-app för feedback på Volvobilar. Appen fungerade dels som fristående i en webbläsare och som en del av Volvo Cars-appen (inuti en web view). Det fanns en del utmaningar vad gäller säkerhet, kommunikation mellan web-app och native-app samt offlinefunktionalitet",
    "Experience_SchaktTransport": "Implementerade en webb-applikation för Skanska Schakt och Transport för att planera bokningar av maskiner och förare.",
    "Experience_HiQArchitect": "Del av ett arkitekt-team som satte upp arbetssätt och teknikkrav för interna kundprojekt.",
+   "Experience_WirelessCar": "Utvecklade en native \"companion app\" for arbetsfordon.",
+   "Experience_WorldOfVolvo": "Levererade webb-gränssnitt till en vintunnel/upplevelse på World of Volvo.",
 
    "Demo_Memory": "Ett memory-spel utvecklat i ReactJS, Redux och CSS Grid",
    "Demo_Photos": "Responsiva bilder som 'lazy'-laddas med IntersectionObserver",
