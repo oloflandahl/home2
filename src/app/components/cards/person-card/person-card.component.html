@@ -10,21 +10,22 @@
           <div class="person-card__greeting">{{ 'PersonInfo_Hello' | translate }}!</div>
           <div class="person-card__name">
             <span class="light">{{ 'PersonInfo_IAm' | translate }}</span>
-            <strong class="stronger">Olof Landahl</strong></div>
-            <div class="person-card__title">{{ 'PersonInfo_Developer' | translate }}</div>
+            <strong class="stronger">Olof Landahl</strong>
           </div>
-          <ul class="person-card__info-items">
-            @for (item of infoItems; track item) {
-              <li class="row person-card__info-item">
-                <div class="col-sm-4 person-card__info-item-left">{{ item.key | translate }}</div>
-                <div class="col-sm-8 person-card__info-item-right">{{item.value}}</div>
-              </li>
-            }
-          </ul>
+          <div class="person-card__title">{{ 'PersonInfo_Developer' | translate }}</div>
         </div>
-      </div>
-      <div class="person-card__footer">
-        <app-social-links [theme]="'color'"></app-social-links>
+        <ul class="person-card__info-items">
+          @for (item of infoItems; track item) {
+          <li class="row person-card__info-item">
+            <div class="col-sm-4 person-card__info-item-left">{{ item.key | translate }}</div>
+            <div class="col-sm-8 person-card__info-item-right">{{item.value}}</div>
+          </li>
+          }
+        </ul>
       </div>
     </div>
+    <div class="person-card__footer">
+      <app-social-links [theme]="'color'"></app-social-links>
+    </div>
   </div>
+</div>

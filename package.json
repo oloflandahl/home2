@@ -6,11 +6,7 @@
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build",
-    "build:prod": "ng build --configuration=production",
-    "publish": "npm run build:prod",
-    "publish:gh-pages": "git subtree push --prefix dist/browser origin gh-pages",
-    "postpublish": "git add dist/browser/* && git commit -m \"Publish\" && git push && publish:gh-pages",
-    "deploy": "gh-pages -d dist/browser",
+    "deploy": "ng build --configuration=production && gh-pages -d dist/browser",
     "lint": "ng lint"
   },
   "private": false,
