@@ -7,7 +7,7 @@
     "start": "ng serve --open",
     "build": "ng build",
     "build:prod": "ng build --configuration=production",
-    "publish": "build:prod",
+    "publish": "npm run build:prod",
     "publish:gh-pages": "git subtree push --prefix dist/browser origin gh-pages",
     "postpublish": "git add dist/browser/* && git commit -m \"Publish\" && git push && publish:gh-pages",
     "lint": "ng lint"
