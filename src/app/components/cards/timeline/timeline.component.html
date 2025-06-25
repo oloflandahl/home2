@@ -1,25 +1,29 @@
 <div class="timeline" appScrollSection="experience">
   <div class="timeline__title">{{ 'Experience_Title' | translate }}</div>
   <div class="timeline-cards-container">
-    <div class="timeline-card-container" *ngFor="let item of timelineItems; let odd = odd; let even = even;" [ngClass]="{ 'timeline-card-container--left': even, 'timeline-card-container--right': odd }">
-      <span class="timeline__dot"></span>
-      <a [href]="item.url" target="_blank">
-        <div class="timeline-card">
-          <span class="timeline-card__arrow"></span>
-          <div class="timeline-card__years">
-            <span>{{item.startYear}}</span>
-            <span [hidden]="!item.endYear || item.startYear === item.endYear"> - {{item.endYear}}</span>
+    @for (item of timelineItems; track item; let odd = $odd; let even = $even) {
+      <div class="timeline-card-container" [ngClass]="{ 'timeline-card-container--left': even, 'timeline-card-container--right': odd }">
+        <span class="timeline__dot"></span>
+        <a [href]="item.url" target="_blank">
+          <div class="timeline-card">
+            <span class="timeline-card__arrow"></span>
+            <div class="timeline-card__years">
+              <span>{{item.startYear}}</span>
+              <span [hidden]="!item.endYear || item.startYear === item.endYear"> - {{item.endYear}}</span>
+            </div>
+            <div class="timeline-card__logo timeline-card__logo--{{item.logo}}" ></div>
+            <div class="timeline-card__city">{{item.city}}</div>
+            <div class="timeline-card__title">{{item.title}}</div>
+            <div class="timeline-card__subtitle">{{item.subTitleTranslationKey | translate}}</div>
+            <div class="timeline-card__description">{{item.descriptionTranslationKey | translate}}</div>
+            <div class="timeline-card__technologies">
+              @for (t of item.technologies; track t) {
+                <span class="timeline-card__technology" [ngClass]="{ 'timeline-card__technology--selected': selectedTech === t }" (click)="toggleTechnology(t)">{{t}}</span>
+              }
+            </div>
           </div>
-          <div class="timeline-card__logo timeline-card__logo--{{item.logo}}" ></div>
-          <div class="timeline-card__city">{{item.city}}</div>
-          <div class="timeline-card__title">{{item.title}}</div>
-          <div class="timeline-card__subtitle">{{item.subTitleTranslationKey | translate}}</div>
-          <div class="timeline-card__description">{{item.descriptionTranslationKey | translate}}</div>
-          <div class="timeline-card__technologies">
-            <span class="timeline-card__technology" *ngFor="let t of item.technologies;" [ngClass]="{ 'timeline-card__technology--selected': selectedTech === t }" (click)="toggleTechnology(t)">{{t}}</span>
-          </div>
-        </div>
-      </a>
-    </div>
+        </a>
+      </div>
+    }
   </div>
 </div>

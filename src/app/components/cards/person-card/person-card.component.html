@@ -6,23 +6,25 @@
         <div class="person-card__photo person-card__photo--large visible-xs-block"></div>
       </div>
       <div class="col-sm-8">
-          <div class="person-card__info-header">
-            <div class="person-card__greeting">{{ 'PersonInfo_Hello' | translate }}!</div>
-            <div class="person-card__name">
-              <span class="light">{{ 'PersonInfo_IAm' | translate }}</span>
-              <strong class="stronger">Olof Landahl</strong></div>
+        <div class="person-card__info-header">
+          <div class="person-card__greeting">{{ 'PersonInfo_Hello' | translate }}!</div>
+          <div class="person-card__name">
+            <span class="light">{{ 'PersonInfo_IAm' | translate }}</span>
+            <strong class="stronger">Olof Landahl</strong></div>
             <div class="person-card__title">{{ 'PersonInfo_Developer' | translate }}</div>
           </div>
           <ul class="person-card__info-items">
-            <li class="row person-card__info-item" *ngFor="let item of infoItems;">
-              <div class="col-sm-4 person-card__info-item-left">{{ item.key | translate }}</div>
-              <div class="col-sm-8 person-card__info-item-right">{{item.value}}</div>
-            </li>
+            @for (item of infoItems; track item) {
+              <li class="row person-card__info-item">
+                <div class="col-sm-4 person-card__info-item-left">{{ item.key | translate }}</div>
+                <div class="col-sm-8 person-card__info-item-right">{{item.value}}</div>
+              </li>
+            }
           </ul>
+        </div>
+      </div>
+      <div class="person-card__footer">
+        <app-social-links [theme]="'color'"></app-social-links>
       </div>
     </div>
-    <div class="person-card__footer">
-      <app-social-links [theme]="'color'"></app-social-links>
-    </div>
   </div>
-</div>

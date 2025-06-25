@@ -6,9 +6,11 @@
     </div>
     <ul class="navbar" [class.navbar--open]="isMenuOpen">
       <li class="navbar__item navbar__item--close-icon" (click)="closeMenu()"><i class="fa fa-close"></i></li>
-      <li class="navbar__item" [class.navbar__item--active]="item.isActive" *ngFor="let item of items;" pageScroll [href]="'#'+item.id" (click)="select(item)">
-        <span>{{ item.translationKey | translate }}</span>
-      </li>
+      @for (item of items; track item) {
+        <li class="navbar__item" [class.navbar__item--active]="item.isActive" pageScroll [href]="'#'+item.id" (click)="select(item)">
+          <span>{{ item.translationKey | translate }}</span>
+        </li>
+      }
       <li class="navbar__item navbar__item--box" (click)="switchLanguage()" (mouseenter)="switchLanguage()" (mouseleave)="switchLanguage()">
         <span title="{{ 'SwitchLanguage_Tooltip' | translate }}"><img src="assets/logos/{{currentLang}}.png" /></span>
       </li>

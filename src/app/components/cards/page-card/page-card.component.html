@@ -4,8 +4,10 @@
     <div class="page-card__description">{{ 'AboutPage_Description' | translate }}</div>
   </div>
   <div class="page-card__icons">
-    <a class="page-card__icon-link" *ngFor="let item of brandItems;" target="_blank" [href]="item.url" [title]="item.title">
-      <div class="page-card__icon" [style.background-image]="'url(/assets/logos/'+item.iconName+'.svg)'"></div>
-    </a>
+    @for (item of brandItems; track item) {
+      <a class="page-card__icon-link" target="_blank" [href]="item.url" [title]="item.title">
+        <div class="page-card__icon" [style.background-image]="'url(/assets/logos/'+item.iconName+'.svg)'"></div>
+      </a>
+    }
   </div>
 </div>
