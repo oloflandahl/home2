@@ -10,6 +10,7 @@
     "publish": "npm run build:prod",
     "publish:gh-pages": "git subtree push --prefix dist/browser origin gh-pages",
     "postpublish": "git add dist/browser/* && git commit -m \"Publish\" && git push && publish:gh-pages",
+    "deploy": "gh-pages -d dist/browser",
     "lint": "ng lint"
   },
   "private": false,
@@ -27,6 +28,7 @@
     "@ngx-translate/http-loader": "^16.0.1",
     "core-js": "^3.43.0",
     "font-awesome": "^4.7.0",
+    "gh-pages": "^6.3.0",
     "map-icons": "^3.0.3",
     "ngx-page-scroll": "^14.0.1",
     "ngx-page-scroll-core": "^14.0.1",
