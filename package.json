@@ -8,8 +8,8 @@
     "build": "ng build",
     "build:prod": "ng build --configuration=production",
     "publish": "build:prod",
-    "publish:gh-pages": "git subtree push --prefix dist origin gh-pages",
-    "postpublish": "git add dist/* && git commit -m \"Publish\" && git push && publish:gh-pages",
+    "publish:gh-pages": "git subtree push --prefix dist/browser origin gh-pages",
+    "postpublish": "git add dist/browser/* && git commit -m \"Publish\" && git push && publish:gh-pages",
     "lint": "ng lint"
   },
   "private": false,
