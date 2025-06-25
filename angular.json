@@ -17,7 +17,7 @@
             "index": "src/index.html",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": [
-              "src/polyfills.ts"
+              "zone.js"
             ],
             "assets": [
               "src/assets",
@@ -28,7 +28,7 @@
               "src/.nojekyll"
             ],
             "styles": [
-              "node_modules/reset-css/reset.less",
+              "node_modules/reset-css/less/reset.less",
               "node_modules/font-awesome/less/font-awesome.less",
               "node_modules/map-icons/dist/css/map-icons.min.css",
               "bootstrap/css/bootstrap.min.css",
