@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { ScrollService } from './services/scroll.service';
 import { ScrollSectionService } from './services/scroll-section.service';
@@ -29,41 +29,35 @@ import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');}
 
-@NgModule({
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-        loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-        }
-    }),
-    NgxPageScrollModule,
-    NgxPageScrollCoreModule.forRoot({ duration: 500, scrollOffset: 100 }),
-  ],
-  providers: [
-    ScrollService,
-    ScrollSectionService,
-  ],
-  declarations: [
-    ClickOutsideDirective,
-    ScrollSectionDirective,
-    AppComponent,
-    HeaderComponent,
-    BackImgComponent,
-    FooterComponent,
-    SocialLinksComponent,
-    PersonCardComponent,
-    ResumeSummaryComponent,
-    SkillsCardComponent,
-    TimelineComponent,
-    DemosComponent,
-    InterestsCardComponent,
-    PageCardComponent
-  ],
-  bootstrap: [ AppComponent ]
-})
+@NgModule({ declarations: [
+        ClickOutsideDirective,
+        ScrollSectionDirective,
+        AppComponent,
+        HeaderComponent,
+        BackImgComponent,
+        FooterComponent,
+        SocialLinksComponent,
+        PersonCardComponent,
+        ResumeSummaryComponent,
+        SkillsCardComponent,
+        TimelineComponent,
+        DemosComponent,
+        InterestsCardComponent,
+        PageCardComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        NgxPageScrollModule,
+        NgxPageScrollCoreModule.forRoot({ duration: 500, scrollOffset: 100 })], providers: [
+        ScrollService,
+        ScrollSectionService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 
 export class AppModule { }
