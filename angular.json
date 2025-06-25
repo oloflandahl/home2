@@ -77,7 +77,6 @@
       "projectType": "application"
     }
   },
-  "defaultProject": "home",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
