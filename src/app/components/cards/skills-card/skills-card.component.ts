@@ -4,9 +4,10 @@ import { KeyValueItem } from '../../../models/key-value-item';
 import { SKILL_ITEMS } from '../../../data/skill-items';
 
 @Component({
-  selector: 'app-skills-card',
-  templateUrl: 'skills-card.component.html',
-  styleUrls: ['skills-card.component.less']
+    selector: 'app-skills-card',
+    templateUrl: 'skills-card.component.html',
+    styleUrls: ['skills-card.component.less'],
+    standalone: false
 })
 
 export class SkillsCardComponent {

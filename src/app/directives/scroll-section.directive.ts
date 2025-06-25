@@ -3,10 +3,11 @@ import { Directive, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
 import { ScrollSectionService } from '../services/scroll-section.service';
 
 @Directive({
-  selector: '[appScrollSection]',
-  host: {
-    '[id]': 'id'
-  }
+    selector: '[appScrollSection]',
+    host: {
+        '[id]': 'id'
+    },
+    standalone: false
 })
 
 export class ScrollSectionDirective implements OnInit {

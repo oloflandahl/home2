@@ -2,7 +2,8 @@ import { Directive, HostListener, Output, EventEmitter, ElementRef } from '@angu
 import { DOCUMENT } from "@angular/common";
 
 @Directive({
-  selector: '[appClickOutside]'
+    selector: '[appClickOutside]',
+    standalone: false
 })
 
 export class ClickOutsideDirective {

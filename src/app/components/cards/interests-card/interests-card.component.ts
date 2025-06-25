@@ -5,9 +5,10 @@ import { InterestItem } from '../../../models/interest-item';
 import { INTEREST_ITEMS } from '../../../data/interest-items';
 
 @Component({
-  selector: 'app-interests-card',
-  templateUrl: 'interests-card.component.html',
-  styleUrls: ['interests-card.component.less']
+    selector: 'app-interests-card',
+    templateUrl: 'interests-card.component.html',
+    styleUrls: ['interests-card.component.less'],
+    standalone: false
 })
 
 export class InterestsCardComponent {

@@ -4,9 +4,10 @@ import { TimelineItem } from '../../../models/timeline-item';
 import { TIMELINE_ITEMS } from '../../../data/timeline-items';
 
 @Component({
-  selector: 'app-timeline',
-  templateUrl: 'timeline.component.html',
-  styleUrls: ['timeline.component.less']
+    selector: 'app-timeline',
+    templateUrl: 'timeline.component.html',
+    styleUrls: ['timeline.component.less'],
+    standalone: false
 })
 
 export class TimelineComponent {
