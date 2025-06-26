@@ -36,7 +36,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: "HiQ - Wireless Car - Renault Trucks",
     subTitleTranslationKey: "Role_MobileDeveloper",
     descriptionTranslationKey: "Experience_WirelessCar",
-    url: "https://www.renault-trucks.com/en/newsroom/press-releases/new-generation-renault-trucks-master-red-edition-efficient-and-versatile",
+    url: "https://play.google.com/store/apps/details?id=com.optifleet.lcvapp",
     technologies: [
       "React Native",
       "TypeScript",
@@ -148,7 +148,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     title: "HiQ - Freight Investor Services",
     subTitleTranslationKey: "Role_WebDeveloper",
     descriptionTranslationKey: "Experience_FIS",
-    url: "https://freightinvestorservices.com/",
+    url: "https://www.fis-live.com/",
     technologies: [
       "React",
       "TypeScript",
